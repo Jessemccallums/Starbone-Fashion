@@ -1,0 +1,409 @@
+<article class="py-8">
+  {% for block in section.blocks %}
+      {% case block.type %}
+          {% when 'article_title' %}
+              <div class="flex items-center justify-center">
+                  <div class="max-w-7xl text-center">
+                      <a href="{{ blog.url }}" class="text-base uppercase text-gray-500 hover:text-gray-900 font-bold">{{ blog.title }}</a>
+                      <h1 class="text-4xl md:text-6xl font-medium">{{ article.title }}</h1>
+                  </div>
+              </div>
+          {% when 'article_author' %}
+              <div class="flex items-center justify-center">
+                  <div class="max-w-7xl text-center">
+                      {% if section.settings.enable_author %}
+                          <small>{{ article.author }}</small>
+                      {% endif %}
+                  </div>
+              </div>
+          {% when 'article_published_date' %}
+              <div class="flex items-center justify-center">
+                  <div class="max-w-7xl text-center">
+                      {% if section.settings.enable_published_date %}
+                          <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'on_date' }}</time>
+                      {% endif %}
+                  </div>
+              </div>
+          {% when 'featured_image' %}
+              <div class="max-w-7xl bg-blue-100 rounded-lg mx-2 md:mx-auto overflow-hidden my-4">
+                  {% if article.image != blank %}
+                      <img class="w-full h-80 md:h-96 object-cover object-center" src="{{ article.image | img_url: 'large'}}" alt="{{ article.image.alt }}" width='100' height='200'>
+                  {% else %}
+                      {% assign placeholder_image = 'lifestyle-1' %}
+                      {{ placeholder_image | placeholder_svg_tag: 'w-full h-80 md:h-96 object-cover object-center p-5' }}
+                  {% endif %}
+              </div>
+              
+          {% when 'article_content' %}
+              <div class="flex items-center justify-center">
+                  <div class="max-w-4xl">
+                      {{ article.content }}
+                  </div>
+              </div> 
+          {% else %}
+      {% endcase %}
+  {% endfor %}
+</article>
+
+{% if blog.comments_enabled? %}
+  <div id="comments" class="my-8">
+      {% if article.comments_count > 0 %}
+          <div class="flex-1 items-center justify-center mx-auto max-w-4xl px-4">
+              <h1 class="text-lg mb-4 font-medium">See what people are saying</h1>
+
+              {% paginate article.comments by 5 %}
+                  {% for comment in article.comments %}
+                      <div class="flex-1 border my-4 px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
+                          <span class="comment-author">{{ comment.author }}</span> <span class="text-xs text-gray-400">{{ comment.created_at | date: format: 'default' }}</span>
+                          <p class="text-sm">{{ comment.content }}</p>
+                      </div>
+                  {% endfor %}
+
+                  {% if paginate.pages > 1 %}
+                      {{ paginate | default_pagination }}
+                  {% endif %}
+              {% endpaginate %}
+          </div>
+      {% else %}
+          There are no comments in this article
+      {% endif %}
+  </div>
+
+  <div id="comment_form" class="mb-8">
+      {% form 'new_comment', article %}
+          <div class="flex-1 mx-auto items-center justify-center max-w-4xl px-4">
+              {% if form.errors %}
+                  <div class="border p-5">
+                      <div class="flex flex-row items-center w-full my-3">
+                          <div class="text-red-500">
+                              {% render 'icon-failed' %}
+                          </div>
+                          <div class="text-sm font-medium ml-3">
+                              Oh no! Your comment was not posted
+                          </div>
+                      </div>
+                      <ul class="px-4 mb-3 ml-7 list-decimal">
+                          {% for error in form.errors %}
+                              <li>
+                                  <span>{{ form.errors.messages[error] }}</span>
+                              </li>
+                          {% endfor %}
+                      </ul>
+                  </div>
+              {% elsif form.posted_successfully? %}
+                  <div class="flex flex-row items-center w-full my-3 p-5">
+                      <div class="text-green-500">
+                          {% render 'icon-success' %}
+                      </div>
+                      <div class="text-sm font-medium ml-3">Comment is posted successfully</div>
+                  </div>
+              {% endif %}
+
+              <div class="px-1 md:flex mb-3">
+                  <div class="px-3 md:w-1/2">
+                      <label for="comment_author" class="text-gray-700 font-medium uppercase text-xs mb-2">Name</label>
+                      <input 
+                          type="text" 
+                          name="comment[author]" 
+                          id="comment_author" 
+                          class="w-full text-gray-700 border py-3 px-4 mb-3 focus:outline-none"
+                          placeholder="Jane Doe"
+                          required
+                      >
+                  </div>
+                  <div class="px-3 md:w-1/2">
+                      <label for="comment_email" class="text-gray-700 font-medium uppercase text-xs mb-2">Email</label>
+                      <input 
+                          type="email" 
+                          name="comment[email]" 
+                          id="comment_email" 
+                          class="w-full text-gray-700 border py-3 px-4 mb-3 focus:outline-none"
+                          placeholder="jane@doe.com"
+                          required
+                      >
+                  </div>
+              </div>
+              <div class="px-1 md:flex mb-3">
+                  <div class="md:w-full px-3">
+                      <label for="comment_content" class="text-gray-700 font-medium uppercase text-xs mb-2">Comment</label>
+                      <textarea class="w-full text-gray-700 resize-none h-20 py-2 px-3 focus:outline-none border" name="comment[body]" id="comment_content" required></textarea>
+                  </div>
+              </div>
+              <div class="px-1 md:flex mb-3">
+                  <div class="md:w-full px-3">
+                      <input type="submit" class="w-full cursor-pointer px-4 py-2 border text-base font-medium text-white bg-gray-900 hover:bg-gray-500" value="Post comment">
+                  </div>
+              </div>
+          </div>
+      {% endform %}
+  </div>
+{% endif %}
+
+
+<style>
+/* Base styles for the article */
+.py-8 {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  
+  /* Styles for article_title */
+  .flex.items-center.justify-center .max-w-7xl.text-center a.text-base.uppercase.text-gray-500.hover:text-gray-900.font-bold {
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: #718096;
+    font-weight: bold;
+    transition: color 0.2s ease-in-out;
+  }
+  .flex.items-center.justify-center .max-w-7xl.text-center h1.text-4xl.md\:text-6xl.font-medium {
+    font-size: 2.25rem;
+    font-weight: 500;
+  }
+  
+  /* Styles for article_author */
+  .flex.items-center.justify-center .max-w-7xl.text-center small {
+    font-size: 0.875rem;
+  }
+  
+  /* Styles for article_published_date */
+  .flex.items-center.justify-center .max-w-7xl.text-center time {
+    font-size: 1rem;
+    color: #718096;
+  }
+  
+  /* Styles for featured_image */
+  .max-w-7xl.bg-blue-100.rounded-lg.mx-2.md\:mx-auto.overflow-hidden.my-4 {
+    max-width: 88rem;
+    background-color: #ebf8ff;
+    border-radius: 0.5rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    overflow: hidden;
+    margin-top: 1rem;
+  }
+  .max-w-7xl.bg-blue-100.rounded-lg.mx-2.md\:mx-auto.overflow-hidden.my-4 img.w-full.h-80.md\:h-96.object-cover.object-center {
+    width: 100%;
+    height: 20rem;
+    object-fit: cover;
+    object-position: center;
+  }
+  .lifestyle-1 {
+    /* Define the styles for the placeholder image 'lifestyle-1' here */
+  }
+  
+  /* Styles for article_content */
+  .flex.items-center.justify-center .max-w-4xl {
+    max-width: 64rem;
+  }
+  
+  /* Styles for comments section */
+  #comments.my-8 {
+    width: 50%;
+    margin: auto;
+    text-align: center;
+  }
+  .flex-1.items-center.justify-center.mx-auto.max-w-4xl.px-4 h1.text-lg.mb-4.font-medium {
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+  .flex-1.border.my-4.px-4.py-2.sm\:px-6.sm\:py-4.leading-relaxed {
+    flex: 1;
+    border: 1px solid #e2e8f0;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    line-height: 1.625;
+  }
+  .comment-author {
+    font-size: 1rem;
+  }
+  .text-xs.text-gray-400 {
+    font-size: 0.75rem;
+    color: #718096;
+  }
+  .text-sm {
+    font-size: 0.875rem;
+  }
+  
+  /* Styles for comment form */
+  #comment_form.mb-8 {
+    width: 52%;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+  }
+  .flex-1.mx-auto.items-center.justify-center.max-w-4xl.px-4 {
+    flex: 1;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .border.p-5 {
+    border: 1px solid #e2e8f0;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    margin-top: 1.25rem;
+  }
+  .text-red-500 {
+    color: #e53e3e;
+  }
+  .text-sm.font-medium.ml-3 {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-left: 0.75rem;
+  }
+  .px-4.mb-3.ml-7.list-decimal li {
+    padding-left: 1rem;
+    margin-bottom: 0.75rem;
+  }
+  .text-green-500 {
+    color: #48bb78;
+  }
+  .text-sm.font-medium.ml-3 {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-left: 0.75rem;
+  }
+  .px-3.md\:w-1/2 label.text-gray-700.font-medium.uppercase.text-xs.mb-2 {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    font-size: 0.75rem;
+    color: #4a5568;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  input[type="text"].w-full.text-gray-700.border.py-3.px-4.mb-3.focus\:outline-none {
+    width: 100%;
+    color: #4a5568;
+    border: 1px solid #e2e8f0;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .px-3.md\:w-1/2 label.text-gray-700.font-medium.uppercase.text-xs.mb-2 {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    font-size: 0.75rem;
+    color: #4a5568;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  input[type="email"].w-full.text-gray-700.border.py-3.px-4.mb-3.focus\:outline-none {
+    width: 100%;
+    color: #4a5568;
+    border: 1px solid #e2e8f0;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .px-1.md\:flex.mb-3 {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    display: flex;
+    margin-bottom: 0.75rem;
+  }
+  .md\:w-full.px-3 {
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  textarea.w-full.text-gray-700.resize-none.h-20.py-2.px-3.focus\:outline-none.border {
+    width: 100%;
+    color: #4a5568;
+    resize: none;
+    height: 5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    border: 1px solid #e2e8f0;
+  }
+  .px-1.md\:flex.mb-3 {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    display: flex;
+    margin-bottom: 0.75rem;
+  }
+  .md\:w-full.px-3 {
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  input[type="submit"].w-full.cursor-pointer.px-4.py-2.border.text-base.font-medium.text-white.bg-gray-900.hover\:bg-gray-500 {
+    width: 100%;
+    cursor: pointer;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    background-color: #1a202c;
+    color: #ffffff;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+</style>
+
+
+
+{% schema %}
+{
+    "name": "Template Article",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "enable_author",
+            "default": true,
+            "label": "Display Author Name"
+        },
+        {
+            "type": "checkbox",
+            "id": "enable_published_date",
+            "default": true,
+            "label": "Display Published Date"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "article_title",
+            "name": "Title",
+            "limit": 1
+        },
+        {
+            "type": "article_author",
+            "name": "Author",
+            "limit": 1
+        },
+        {
+            "type": "article_published_date",
+            "name": "Published Date",
+            "limit": 1
+        },
+        {
+            "type": "featured_image",
+            "name": "Thumbnail",
+            "limit": 1
+        },
+        {
+            "type": "article_content",
+            "name": "Content",
+            "limit": 1
+        }
+    ]
+}
+{% endschema %}

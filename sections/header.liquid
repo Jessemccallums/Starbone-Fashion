@@ -1,28 +1,19 @@
-
 <!-- Navigation Bar -->
 <nav class="navbar">
     <div class='navtop'>
-        <div class='search'>
+        <div class='search' id='mobile'>
             {% render 'search' %}
         </div>
-        <div>
+        <div id='mobile'>
             <h1 class='h1'>{{ section.settings.text }}</h1>
         </div>
-        <div class='icons'>
+        <div class='icons' id='mobile'>
             {% render 'icon-bag' %}
         </div>
-    
     </div>
     <div class="navbar-container">
         <!-- Hamburger Menu Button -->
-        <button class="hamburger" id="hamburger">
-            ☰
-        </button>
-        
-        <!-- Logo -->
-        {% comment %} <a href="/" class="nav-logo" id='text'>
-            {{ section.settings.text }}
-        </a> {% endcomment %}
+        <button class="hamburger" id="hamburger">☰</button>
 
         <!-- Navigation Links -->
         <div class="nav-links" id="navLinks">
@@ -48,20 +39,9 @@
                 {% endif %}
             {% endfor %}
         </div>
-        
-        <!-- Account Links -->
-        {% comment %} <div class='links' id="navLinks">
-            <a href="/cart" class="nav-link">
-                {% render 'icon-shopping-bag' %} 
-                ({{ cart.item_count }})
-            </a>
-            {% if shop.customer_accounts_enabled %}
-                    <a href="{{ routes.account_login_url }}" class="nav-button">Login</a>
-                    <a href="{{ routes.account_register_url }}" class="nav-button register">Register</a>
-            {% endif %}
-        </div> {% endcomment %}
     </div>
 </nav>
+
 
 <!-- Styles for Dropdown Menu -->
 <style>
@@ -203,6 +183,7 @@
     .navbar-container {
         flex-direction: column;
         align-items: flex-start;
+        padding: 30px;
     }
 
     .nav-links,
@@ -359,7 +340,13 @@
 /* Responsive Styles */
 @media (max-width: 768px) {
     .hamburger {
+        display: block;        
         display: block;
+        color: black;
+        font-size: 50px;
+    }
+    #mobile{
+        display: none;
     }
 
     .nav-links {
@@ -378,6 +365,7 @@
     .navbar-container {
         flex-direction: column;
         align-items: flex-start;
+        padding: 30px
     }
 }
 
