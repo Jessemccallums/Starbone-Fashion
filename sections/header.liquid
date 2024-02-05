@@ -1,14 +1,18 @@
 <!-- Navigation Bar -->
 <nav class="navbar">
     <div class='navtop'>
-        <div class='search' id='mobile'>
+        {% for link in linklists.footer.links %}
+        <a href="{{ link.url }}" class='search' id='mobile'>
             {% render 'search' %}
-        </div>
+        </a>
+        {% endfor %}
         <div id='mobile'>
             <h1 class='h1'>{{ section.settings.text }}</h1>
         </div>
         <div class='icons' id='mobile'>
-            {% render 'icon-bag' %}
+            <a href="{{ routes.cart_url }}" class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900">
+                {% render 'icon-bag' %}
+            </a>
         </div>
     </div>
     <div class="navbar-container">
@@ -373,6 +377,7 @@
 .btn{
     display: flex;
     align-items: center;
+    color: black;
 }
 
 .icon{

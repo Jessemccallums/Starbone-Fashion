@@ -1,0 +1,74 @@
+{% if pagination.pages > 1 %}
+    <nav role="navigation" class="flex justify-center items-center my-8">
+        {% if pagination.previous %}
+            <a href="{{ pagination.previous.url }}" class="border border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white px-8 py-3 mx-1 rounded-sm font-medium">Previous</a>
+        {% endif %}
+        {% for part in pagination.parts %}
+            {% if part.is_link %}
+                <a href="{{ part.url }}" class="border border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white px-8 py-3 mx-1 rounded-sm font-medium">{{ part.title }}</a>
+            {% else %}
+                <span class="border border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white px-8 py-3 mx-1 rounded-sm font-medium">{{ part.title }}</span>
+            {% endif %}
+        {% endfor %}
+
+        {% if pagination.next %}
+            <a href="{{ pagination.next.url }}" class="border border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white px-8 py-3 mx-1 rounded-sm font-medium">Next</a>
+        {% endif %}
+    </nav>
+{% endif %}
+
+<style>
+/* Styles for the navigation container */
+nav[role="navigation"].flex.justify-center.items-center.my-8 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* Styles for the "Previous" and "Next" links */
+  a.border.border-gray-600.text-gray-600.hover\:bg-gray-600.hover\:text-white.px-8.py-3.mx-1.rounded-sm.font-medium {
+    border: 1px solid #718096;
+    color: #718096;
+    background-color: transparent;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+    border-radius: 0.125rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  }
+
+  span.border.border-gray-600.text-gray-600.hover\:bg-gray-600.hover\:text-white.px-8.py-3.mx-1.rounded-sm.font-medium {
+    border: 1px solid #718096;
+    color: #718096;
+    background-color: transparent;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+    border-radius: 0.125rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  }
+
+  span.border.border-gray-600.text-gray-600.hover\:bg-gray-600.hover\:text-white.px-8.py-3.mx-1.rounded-sm.font-medium:hover {
+    background-color: #718096;
+    color: #ffffff;
+  }
+  
+  a.border.border-gray-600.text-gray-600.hover\:bg-gray-600.hover\:text-white.px-8.py-3.mx-1.rounded-sm.font-medium:hover {
+    background-color: #718096;
+    color: #ffffff;
+  }
+  
+
+</style>
