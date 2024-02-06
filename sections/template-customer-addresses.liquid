@@ -1,0 +1,692 @@
+<div class="max-w-6xl mx-auto px-4 py-12" x-data="{ new_address: false }">
+    <div class="flex flex-col md:flex-row items-center justify-between my-5 gap-4">
+        <h1 class="text-2xl font-bold text-gray-700">Addresses</h1>
+        <button onclick="showNewAddressForm()" type="button" class="text-white font-medium bg-gray-700 hover:bg-gray-900 px-6 py-2">Create new address</button>
+        <a href="{{ routes.account_url }}" class="text-blue-600 hover:text-blue-800 font-medium underline">Back to account</a>
+    </div>
+
+    <div id="newAddressForm" class="h-full w-full fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto z-50" style="display: none;">
+        <div class="relative max-w-md mx-auto bg-white border top-20 p-4">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-medium">New address</h2>
+                <button onclick="closeNewAddressForm()" class="text-gray-500">x</button>
+            </div>
+
+            {% form 'customer_address', customer.new_address %}
+                <div class="mb-4">
+                    <label for="address_fname_{{ form.id }}" class="uppercase text-gray-700 text-xs font-medium mb-2">First name</label>
+                    <input 
+                        type="text" 
+                        name="address[first_name]" 
+                        id="address_fname_{{ form.id }}"
+                        value="{{ form.first_name }}"
+                        class="w-full text-gray-700 border px-4 py-3 focus:outline-none"
+                    >
+                </div>
+
+                <div class="mb-4">
+                    <label for="address_lname_{{ form.id }}" class="uppercase text-gray-700 text-xs font-medium mb-2">Last name</label>
+                    <input 
+                        type="text" 
+                        name="address[last_name]" 
+                        id="address_lname_{{ form.id }}"
+                        value="{{ form.last_name }}"
+                        class="w-full text-gray-700 border px-4 py-3 focus:outline-none"
+                    >
+                </div>
+
+                <div class="mb-4">
+                    <label for="address_company_{{ form.id }}" class="uppercase text-gray-700 text-xs font-medium mb-2">Company</label>
+                    <input 
+                        type="text" 
+                        name="address[company]" 
+                        id="address_company_{{ form.id }}"
+                        value="{{ form.company }}"
+                        class="w-full text-gray-700 border px-4 py-3 focus:outline-none"
+                    >
+                </div>
+
+                <div class="mb-4">
+                    <label for="address_address1_{{ form.id }}" class="uppercase text-gray-700 text-xs font-medium mb-2">Address 1</label>
+                    <input 
+                        type="text" 
+                        name="address[address1]" 
+                        id="address_address1_{{ form.id }}"
+                        value="{{ form.address1 }}"
+                        class="w-full text-gray-700 border px-4 py-3 focus:outline-none"
+                    >
+                </div>
+
+                <div class="mb-4">
+                    <label for="address_address2_{{ form.id }}" class="uppercase text-gray-700 text-xs font-medium mb-2">Address 2</label>
+                    <input 
+                        type="text" 
+                        name="address[address2]" 
+                        id="address_address2_{{ form.id }}"
+                        value="{{ form.address2 }}"
+                        class="w-full text-gray-700 border px-4 py-3 focus:outline-none"
+                    >
+                </div>
+
+                <div class="mb-4">
+                    <label for="address_city_{{ form.id }}" class="uppercase text-gray-700 text-xs font-medium mb-2">City</label>
+                    <input 
+                        type="text" 
+                        name="address[city]" 
+                        id="address_city_{{ form.id }}"
+                        value="{{ form.city }}"
+                        class="w-full text-gray-700 border px-4 py-3 focus:outline-none"
+                    >
+                </div>
+
+                <div class="mb-4">
+                    <label for="address_country_{{ form.id }}" class="uppercase text-gray-700 text-xs font-medium mb-2">Country</label>
+                    <select 
+                        name="address[country]" 
+                        id="address_country_{{ form.id }}"
+                        value="{{ form.country }}"
+                        class="w-full text-gray-700 border px-4 py-3 focus:outline-none"
+                        data-country-selector
+                        data-id="{{ form.id }}"
+                    >
+                        {{ all_country_option_tags }}
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="address_province_{{ form.id }}" class="uppercase text-gray-700 text-xs font-medium mb-2">Province</label>
+                    <select 
+                        name="address[province]" 
+                        id="address_province_{{ form.id }}"
+                        value="{{ form.province }}"
+                        class="w-full text-gray-700 border px-4 py-3 focus:outline-none"
+                    >
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="address_zip_{{ form.id }}" class="uppercase text-gray-700 text-xs font-medium mb-2">Postal/ZIP code</label>
+                    <input 
+                        type="text" 
+                        name="address[zip]" 
+                        id="address_zip_{{ form.id }}"
+                        value="{{ form.zip }}"
+                        class="w-full text-gray-700 border px-4 py-3 focus:outline-none"
+                    >
+                </div>
+
+                <div class="mb-4">
+                    <label for="address_phone_{{ form.id }}" class="uppercase text-gray-700 text-xs font-medium mb-2">Phone number</label>
+                    <input 
+                        type="tel" 
+                        name="address[phone]" 
+                        id="address_phone_{{ form.id }}"
+                        value="{{ form.phone }}"
+                        class="w-full text-gray-700 border px-4 py-3 focus:outline-none"
+                    >
+                </div>
+
+                <div class="mb-4">
+                    {{ form.set_as_default_checkbox }}
+                    <label for="address_default_address_{{ form.id }}" class="uppercase text-gray-700 text-xs font-medium mb-2">Set as default address</label>
+                </div>
+
+                <div class="flex flex-row gap-2">
+                    <button type="submit" class="w-full font-medium text-white bg-gray-700 hover:bg-gray-900 px-4 py-2">Create address</button>
+                    <button type="reset" class="w-full font-medium text-gray-700 border border-gray-700 px-4 py-2">Cancel</button>
+                </div>
+            {% endform %}
+        </div>
+    </div>
+    <div>
+        {% paginate customer.addresses by 10 %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-12 p-4 md:p-12">
+                {% for address in customer.addresses %}
+                    <div x-data="{ address_{{ address.id }}: false }">
+                        <div class="relative flex flex-col text-center border p-2">
+                            {% if address == customer.default_address %}
+                                <span class="text-xs font-medium text-white bg-green-700 px-4 py-2">Default</span>
+                            {% endif %}
+
+                            <div class="my-8 h-full">
+                                {{ address | format_address }}
+                            </div>
+
+                            <div class="flex flex-row gap-2">
+                                <button data-address-id="{{ address.id }}" class="edit-btn w-full text-xs text-white bg-gray-700 hover:bg-gray-900 font-medium py-2">Edit</button>
+                                <button 
+                                    class="w-full text-xs font-medium text-gray-700 border py-2"
+                                    data-url="{{ address.url }}"
+                                    data-delete-address
+                                >Delete</button>
+                            </div>
+
+                            <form method="post" action="{{ address.url }}">
+                                <input type="hidden" name="_method" value="delete">
+                            </form>
+                        </div>
+
+                        <div id="edit-form-{{ address.id }}" style="display: none;" class="h-full w-full fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto z-50">
+                            <div class="relative max-w-md mx-auto bg-white border top-20 bottom-20 p-4">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h2 class="text-lg font-medium">Edit address</h2>
+                                    <button onclick="closeForm('{{ address.id }}')" class="text-gray-500">x</button>
+                                </div>
+
+                                {% form 'customer_address', address %}
+                                    <div class="mb-4">
+                                        <label for="address_fname_{{ form.id }}" class="uppercase text-gray-700 text-xs font-medium mb-2">First name</label>
+                                        <input 
+                                            type="text" 
+                                            name="address[first_name]" 
+                                            id="address_fname_{{ form.id }}"
+                                            value="{{ form.first_name }}"
+                                            class="w-full text-gray-700 border px-4 py-3 focus:outline-none"
+                                        >
+                                    </div>
+                    
+                                    <div class="mb-4">
+                                        <label for="address_lname_{{ form.id }}" class="uppercase text-gray-700 text-xs font-medium mb-2">Last name</label>
+                                        <input 
+                                            type="text" 
+                                            name="address[last_name]" 
+                                            id="address_lname_{{ form.id }}"
+                                            value="{{ form.last_name }}"
+                                            class="w-full text-gray-700 border px-4 py-3 focus:outline-none"
+                                        >
+                                    </div>
+                    
+                                    <div class="mb-4">
+                                        <label for="address_company_{{ form.id }}" class="uppercase text-gray-700 text-xs font-medium mb-2">Company</label>
+                                        <input 
+                                            type="text" 
+                                            name="address[company]" 
+                                            id="address_company_{{ form.id }}"
+                                            value="{{ form.company }}"
+                                            class="w-full text-gray-700 border px-4 py-3 focus:outline-none"
+                                        >
+                                    </div>
+                    
+                                    <div class="mb-4">
+                                        <label for="address_address1_{{ form.id }}" class="uppercase text-gray-700 text-xs font-medium mb-2">Address 1</label>
+                                        <input 
+                                            type="text" 
+                                            name="address[address1]" 
+                                            id="address_address1_{{ form.id }}"
+                                            value="{{ form.address1 }}"
+                                            class="w-full text-gray-700 border px-4 py-3 focus:outline-none"
+                                        >
+                                    </div>
+                    
+                                    <div class="mb-4">
+                                        <label for="address_address2_{{ form.id }}" class="uppercase text-gray-700 text-xs font-medium mb-2">Address 2</label>
+                                        <input 
+                                            type="text" 
+                                            name="address[address2]" 
+                                            id="address_address2_{{ form.id }}"
+                                            value="{{ form.address2 }}"
+                                            class="w-full text-gray-700 border px-4 py-3 focus:outline-none"
+                                        >
+                                    </div>
+                    
+                                    <div class="mb-4">
+                                        <label for="address_city_{{ form.id }}" class="uppercase text-gray-700 text-xs font-medium mb-2">City</label>
+                                        <input 
+                                            type="text" 
+                                            name="address[city]" 
+                                            id="address_city_{{ form.id }}"
+                                            value="{{ form.city }}"
+                                            class="w-full text-gray-700 border px-4 py-3 focus:outline-none"
+                                        >
+                                    </div>
+                    
+                                    <div class="mb-4">
+                                        <label for="address_country_{{ form.id }}" class="uppercase text-gray-700 text-xs font-medium mb-2">Country</label>
+                                        <select 
+                                            name="address[country]" 
+                                            id="address_country_{{ form.id }}"
+                                            value="{{ form.country }}"
+                                            class="w-full text-gray-700 border px-4 py-3 focus:outline-none"
+                                            data-country-selector
+                                            data-id="{{ form.id }}"
+                                        >
+                                            {{ all_country_option_tags }}
+                                        </select>
+                                    </div>
+                    
+                                    <div class="mb-4">
+                                        <label for="address_province_{{ form.id }}" class="uppercase text-gray-700 text-xs font-medium mb-2">Province</label>
+                                        <select 
+                                            name="address[province]" 
+                                            id="address_province_{{ form.id }}"
+                                            value="{{ form.province }}"
+                                            class="w-full text-gray-700 border px-4 py-3 focus:outline-none"
+                                        >
+                                        </select>
+                                    </div>
+                    
+                                    <div class="mb-4">
+                                        <label for="address_zip_{{ form.id }}" class="uppercase text-gray-700 text-xs font-medium mb-2">Postal/ZIP code</label>
+                                        <input 
+                                            type="text" 
+                                            name="address[zip]" 
+                                            id="address_zip_{{ form.id }}"
+                                            value="{{ form.zip }}"
+                                            class="w-full text-gray-700 border px-4 py-3 focus:outline-none"
+                                        >
+                                    </div>
+                    
+                                    <div class="mb-4">
+                                        <label for="address_phone_{{ form.id }}" class="uppercase text-gray-700 text-xs font-medium mb-2">Phone number</label>
+                                        <input 
+                                            type="tel" 
+                                            name="address[phone]" 
+                                            id="address_phone_{{ form.id }}"
+                                            value="{{ form.phone }}"
+                                            class="w-full text-gray-700 border px-4 py-3 focus:outline-none"
+                                        >
+                                    </div>
+
+                                    <div class="mb-4">
+                                        {{ form.set_as_default_checkbox }}
+                                        <label for="address_default_address_{{ form.id }}" class="uppercase text-gray-700 text-xs font-medium mb-2">Set as default address</label>
+                                    </div>
+                    
+                                    <div class="flex flex-row gap-2">
+                                        <button type="submit" class="w-full font-medium text-white bg-gray-700 hover:bg-gray-900 px-4 py-2">Edit address</button>
+                                        <button type="reset" class="w-full font-medium text-gray-700 border border-gray-700 px-4 py-2">Cancel</button>
+                                    </div>
+                                {% endform %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            
+        {% endpaginate %}
+    </div>
+</div>
+
+
+<style>
+
+/* Styles for the container */
+.max-w-6xl {
+    max-width: 72rem; /* Equivalent to max-w-6xl in Tailwind */
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 3rem; /* Equivalent to py-12 in Tailwind */
+    padding-bottom: 3rem; /* Equivalent to py-12 in Tailwind */
+    padding-left: 1rem; /* Equivalent to px-4 in Tailwind */
+    padding-right: 1rem; /* Equivalent to px-4 in Tailwind */
+}
+
+/* Styles for the flex container */
+.flex {
+    display: flex;
+    flex-direction: column;
+}
+
+.md\:flex {
+    flex-direction: row; /* Equivalent to md:flex-row in Tailwind */
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.my-5 {
+    margin-top: 1.25rem; /* Equivalent to my-5 in Tailwind */
+    margin-bottom: 1.25rem; /* Equivalent to my-5 in Tailwind */
+}
+
+.gap-4 > * + * {
+    margin-top: 1rem; /* Equivalent to gap-4 in Tailwind */
+}
+
+/* Styles for the heading */
+.text-2xl {
+    font-size: 1.5rem; /* Equivalent to text-2xl in Tailwind */
+    font-weight: bold;
+    color: #4b5563; /* Equivalent to text-gray-700 in Tailwind */
+}
+
+/* Styles for the button */
+button {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border: none;
+    cursor: pointer;
+}
+
+.font-medium {
+    font-weight: 500;
+}
+
+.text-white {
+    color: #fff;
+}
+
+.bg-gray-700 {
+    background-color: #4b5563; /* Equivalent to bg-gray-700 in Tailwind */
+}
+
+.hover\:bg-gray-900:hover {
+    background-color: #1f2937; /* Equivalent to hover:bg-gray-900 in Tailwind */
+}
+
+.px-6 {
+    padding-left: 1.5rem; /* Equivalent to px-6 in Tailwind */
+    padding-right: 1.5rem; /* Equivalent to px-6 in Tailwind */
+}
+
+.py-2 {
+    padding-top: 0.5rem; /* Equivalent to py-2 in Tailwind */
+    padding-bottom: 0.5rem; /* Equivalent to py-2 in Tailwind */
+}
+
+/* Styles for the link */
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.text-blue-600 {
+    color: #3b82f6; /* Equivalent to text-blue-600 in Tailwind */
+}
+
+.hover\:text-blue-800:hover {
+    color: #2563eb; /* Equivalent to hover:text-blue-800 in Tailwind */
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+/* Styles for the address grid */
+.grid {
+    display: grid;
+}
+
+.grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr)); /* Equivalent to grid-cols-1 in Tailwind */
+}
+
+.md\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* Equivalent to md:grid-cols-2 in Tailwind */
+}
+
+.lg\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr)); /* Equivalent to lg:grid-cols-4 in Tailwind */
+}
+
+.gap-4 {
+    gap: 1rem; /* Equivalent to gap-4 in Tailwind */
+}
+
+.lg\:gap-12 {
+    gap: 3rem; /* Equivalent to lg:gap-12 in Tailwind */
+}
+
+.p-4 {
+    padding: 1rem; /* Equivalent to p-4 in Tailwind */
+}
+
+.md\:p-12 {
+    padding: 3rem; /* Equivalent to md:p-12 in Tailwind */
+}
+
+/* Styles for the individual address */
+.relative {
+    position: relative;
+}
+
+.flex {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border: 1px solid;
+    padding: 0.5rem; /* Equivalent to p-2 in Tailwind */
+}
+
+.text-center {
+    text-align: center;
+}
+
+.border {
+    border-width: 1px;
+    border-style: solid;
+}
+
+.p-2 {
+    padding: 0.5rem; /* Equivalent to p-2 in Tailwind */
+}
+
+/* Styles for the default address span */
+.text-xs {
+    font-size: 0.75rem; /* Equivalent to text-xs in Tailwind */
+}
+
+.font-medium {
+    font-weight: 500;
+}
+
+.text-white {
+    color: #fff;
+}
+
+.bg-green-700 {
+    background-color: #10b981; /* Equivalent to bg-green-700 in Tailwind */
+}
+
+.px-4 {
+    padding-left: 1rem; /* Equivalent to px-4 in Tailwind */
+    padding-right: 1rem; /* Equivalent to px-4 in Tailwind */
+}
+
+.py-2 {
+    padding-top: 0.5rem; /* Equivalent to py-2 in Tailwind */
+    padding-bottom: 0.5rem; /* Equivalent to py-2 in Tailwind */
+}
+
+/* Styles for the address content */
+.my-8 {
+    margin-top: 2rem; /* Equivalent to my-8 in Tailwind */
+    margin-bottom: 2rem; /* Equivalent to my-8 in Tailwind */
+}
+
+/* Styles for the edit and delete buttons */
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem; /* Equivalent to gap-2 in Tailwind */
+}
+
+.text-gray-700 {
+    color: #6b7280; /* Equivalent to text-gray-700 in Tailwind */
+}
+
+.border {
+    border-width: 1px;
+    border-style: solid;
+}
+
+/* Styles for the pagination */
+/* Note: Pagination styles should be added separately as per your pagination implementation */
+
+
+</style>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Select all edit buttons
+        const editButtons = document.querySelectorAll('.edit-btn');
+    
+        // Add click event listener to each button
+        editButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const addressId = this.getAttribute('data-address-id');
+                const formId = 'edit-form-' + addressId;
+                const form = document.getElementById(formId);
+    
+                // Toggle the form display
+                if (form.style.display === 'none') {
+                    form.style.display = 'block';
+                } else {
+                    form.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
+    <script>
+        class CustomerAddress {
+            constructor() {
+                this.initCustomerAddress();
+                this.customerAddressesSelector();
+                this.initDeleteAddressButtons();
+            }
+    
+            initDeleteAddressButtons() {
+                const deleteButtons = document.querySelectorAll("button[data-delete-address]");
+                if(deleteButtons.length < 1) return;
+    
+                deleteButtons.forEach(button => {
+                    button.addEventListener("click", function(e) {
+                        var url = this.dataset.url;
+    
+                        var confirmation = window.confirm("Do you really wish to delete this address?");
+    
+                        if(confirmation) {
+                            document.querySelector(`form[action="${url}"]`).submit();
+                        }
+                    })
+                })
+            }
+    
+            initCustomerAddress() {
+                const allAddressesSelector = document.querySelectorAll("select[data-country-selector]");
+                if(allAddressesSelector.length < 1) return;
+    
+                //console.log(allAddressesSelector);
+    
+                allAddressesSelector.forEach(select => {
+                    var selectedCountry = this.getSelectedCountry(select);
+    
+                    if(!selectedCountry) return;
+    
+                    var provinces = selectedCountry.dataset.provinces;
+                    var arrayOfProvince = JSON.parse(provinces);
+    
+                    var provinceSelector = document.querySelector(`#address_province_${select.dataset.id}`);
+    
+                    if(arrayOfProvince.length < 1) {
+                        provinceSelector.setAttribute('disabled', 'disabled');
+                    } else {
+                        provinceSelector.removeAttribute('disabled');
+                    }
+    
+                    provinceSelector.innerHTML = '';
+                    var options = '';
+                    for(var index = 0; index < arrayOfProvince.length; index++) {
+                        if(arrayOfProvince[index][0] === provinceSelector.getAttribute('value')) {
+                            options += `<option value="${arrayOfProvince[index][0]}" selected>${arrayOfProvince[index][0]}</option>`;
+                        } else {
+                            options += `<option value="${arrayOfProvince[index][0]}">${arrayOfProvince[index][0]}</option>`;
+                        }
+                    }
+    
+                    provinceSelector.innerHTML = options;
+                })
+            }
+    
+            getSelectedCountry(select) {
+                var option, selectedOption;
+                for(var index = 0; index < select.options.length; index++) {
+                    option = select.options[index];
+    
+                    if(option.value === select.getAttribute('value')) {
+                        selectedOption = option;
+                        selectedOption.setAttribute('selected', 'selected');
+                        break;
+                    }
+                }
+    
+                return selectedOption;
+            }
+        
+            customerAddressesSelector() {
+                const addressesSelector = document.querySelectorAll("select[data-country-selector]");
+                if(addressesSelector.length < 1) return;
+    
+                addressesSelector.forEach(select => {
+                    select.addEventListener('change', function(e) {
+                        var provinces = this.options[this.selectedIndex].dataset.provinces;
+                        var arrayOfProvince = JSON.parse(provinces);
+    
+                        var provinceSelector = document.querySelector(`#address_province_${this.dataset.id}`);
+    
+                        if(arrayOfProvince.length < 1) {
+                            provinceSelector.setAttribute('disabled', 'disabled');
+                        } else {
+                            provinceSelector.removeAttribute('disabled');
+                        }
+    
+                        provinceSelector.innerHTML = '';
+                        var options = '';
+                        for(var index = 0; index < arrayOfProvince.length; index++ ) {
+                            options += `<option value="${arrayOfProvince[index][0]}">${arrayOfProvince[index][0]}</option>`;
+                        }
+    
+                        provinceSelector.innerHTML = options;
+                    });
+                });
+            }
+        }
+    
+        const customerAddress = new CustomerAddress();
+    </script>    
+
+    <script>
+        // Espera a que el DOM esté completamente cargado
+        document.addEventListener('DOMContentLoaded', function () {
+            // Función para mostrar el formulario de edición
+            document.querySelectorAll('.edit-btn').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    var addressId = this.getAttribute('data-address-id');
+                    var formId = 'edit-form-' + addressId;
+                    document.getElementById(formId).style.display = 'block';
+                });
+            });
+        
+            // Función para ocultar el formulario de edición
+            window.closeForm = function(addressId) {
+                var formId = 'edit-form-' + addressId;
+                document.getElementById(formId).style.display = 'none';
+            }
+        });
+        </script>
+        <script>
+            function showNewAddressForm() {
+              document.getElementById('newAddressForm').style.display = 'block';
+            }
+          </script>
+          <script>
+            // Esta función muestra el formulario
+            function showNewAddressForm() {
+              document.getElementById('newAddressForm').style.display = 'block';
+            }
+          
+            // Esta función oculta el formulario
+            function closeNewAddressForm() {
+              document.getElementById('newAddressForm').style.display = 'none';
+            }
+          </script>
+          
