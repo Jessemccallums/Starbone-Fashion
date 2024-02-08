@@ -102,10 +102,7 @@
     margin-right: auto;
 }
 
-.px-4 {
-    padding-left: 1rem; /* 16px */
-    padding-right: 1rem; /* 16px */
-}
+
 
 .py-6 {
     padding-top: 1.5rem; /* 24px */
@@ -265,4 +262,9 @@
 
 .subtitle{
     color: black;
+}
+
+.main{
+    
+    overflow-x: hidden;
 }

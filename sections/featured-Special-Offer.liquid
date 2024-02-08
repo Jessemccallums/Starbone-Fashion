@@ -1,0 +1,112 @@
+<div class="custom-section">
+  <div class="container">
+    <div class="image">
+      {% if section.settings.image != blank %}
+        <img class='img' src="{{ section.settings.image | img_url: '800x' }}" alt="{{ section.settings.title | escape }}">
+      {% endif %}
+    </div>
+   </div>
+  
+      <div class="container2">
+        {% if section.settings.title != blank %}
+          <h2 class="title3">{{ section.settings.title }}</h2>
+        {% endif %}
+  
+        {% if section.settings.description != blank %}
+          <p class="text">{{ section.settings.description }}</p>
+        {% endif %}
+        
+        {% if section.settings.button_label != blank %}
+          <a href="{{ section.settings.button_link }}" class="text1">
+          {{ section.settings.button_label }}
+        </a>
+      {% endif %}
+  </div>
+  </div>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+    @font_face {
+      font-family: 'Pierson';
+      font-style: normal;
+      src: url(../fonts/TTF/Pierson-Light.ttf);
+  }
+    /* Add your styles here */
+    .img {
+      width: 100%;
+      height: 100%;
+    }
+    .container{
+    }
+    .container2{
+      position: relative;
+      z-index: 100;
+      top: -366px;
+      left: 137px;
+    }
+    .text{
+      font-family: 'Libre Baskerville', serif;
+      color: white;
+      font-size: 20px;
+    }
+    .text1{
+      position: relative;
+      font-family: 'Libre Baskerville', serif;
+      color: white;
+      font-size: 20px;
+      padding: 10px 20px;
+      background-color: none;
+      border: 2px solid white;
+      border-radius: 5px;
+      text-decoration: none;
+      margin-top: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: 13rem;
+    }
+    .title3{
+      font-family: 'Pierson';
+      color: white;
+      font-size: 40px;
+    }
+  </style>
+
+  
+  {% schema %}
+{
+  "name": "Special Offer",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Special Offer"
+    }
+  ]
+}
+{% endschema %}

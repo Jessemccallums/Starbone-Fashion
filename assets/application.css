@@ -548,3 +548,7 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(127 29 29 / var(--tw-bg-opacity));
 }
+.main{
+    
+  overflow-x: hidden;
+}

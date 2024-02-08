@@ -1,0 +1,150 @@
+<div class='container'>
+    <div class="displayx">
+        <h1 class="titlex">{{ section.settings.title }}</h1>
+
+    <div class="cardx">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            {% for collection in collections %}
+                {% if collection.all_products_count > 0 %}
+                    <div class="card">
+                        <div class="border  overflow-hidden">
+                            <a href="{{ collection.url }}">
+                                <div class="h-80 overflow-hidden">
+                                    {% if collection.featured_image != blank %}
+                                        {% assign collection_image = collection.featured_image %}
+                                    {% else %}
+                                        {% assign collection_image = collection.products.first.image %}
+                                    {% endif %}
+
+                                    <img class="imagex" src="{{ collection_image | img_url: 'medium' }}" alt="{{ collection.title | escape }}">
+                                </div>
+                            </a>
+
+                            <div class="boxc">
+                                <h1 class="titlecollection">{{ collection.title }}</h1>
+                                <a href="{{ collection.url }}" class='btnx'>
+                                    <h1 class="titlecollectionx">SHOP NOW</h1>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</div>
+
+<style>
+    .container {
+      background-color: #FFD5B9;
+    }
+    
+    .displayx {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .titlex {
+      font-family: 'Pierson', sans-serif;
+      text-align: center;
+      font-size: xxx-large;
+      margin-top: 64px;
+    }
+    
+    .cardx {
+      padding: 1rem;
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr); /* Default to single column for mobile */
+      gap: 6rem;
+      padding: 1rem;
+    }
+    
+    @media (min-width: 768px) {
+      /* Two columns for tablets */
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      /* Three columns for desktop */
+      .grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    
+    /* Adjustments for the card */
+    .card {
+      margin-bottom: 1rem;
+    }
+    
+    .imagex {
+      width: 100%;
+      height: auto; /* Make height automatic to maintain aspect ratio */
+    }
+    
+    .titlecollection {
+        font-family: 'Pierson', sans-serif;
+        text-align: center;
+        font-size: x-large;
+        color: white;
+        margin-top: -10rem;
+        position: absolute;
+        z-index: 2;
+    }
+    .boxc{
+    
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .titlecollectionx {
+      font-family: 'Pierson', sans-serif;
+      text-align: center;
+      font-size: 1rem; /* Adjust the font-size for better readability */
+      color: black;
+      background: white;
+      padding: 0.5rem;
+      border-radius: 6px;
+      position: relative;
+      z-index: 2;
+      transform: translateY(-100%); /* Adjust based on your needs */
+    }
+    
+    /* Additional global font-face declaration */
+    @font-face {
+      font-family: 'Pierson';
+      font-style: normal;
+      src: url('../fonts/TTF/Pierson-Light.ttf'); /* Adjust the path to your font file */
+    }
+    .btnx{
+        font-family: 'Libre Baskerville', serif;
+        position: relative;
+        top: -60px;
+    }
+    </style>
+    
+
+{% schema %}
+{
+    "name": "Categories",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "default": "Collections",
+            "label": "Title"
+        }
+    ],
+    "presets": [
+      {
+        "name": "Categories"
+      }
+    ]
+}
+{% endschema %}

@@ -1,5 +1,10 @@
 <div class="flex flex-col items-center my-8">
-    <h1 class="text-center text-3xl">{{ section.settings.title }}</h1>
+    <div>
+        {% if section.settings.image != blank %}
+            <img src="{{ section.settings.image | img_url: '800x' }}" alt="{{ section.settings.title | escape }}">
+        {% endif %}
+    </div>
+    <h1 class="title1">{{ section.settings.title }}</h1>
 
     <div class="max-w-6xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -14,41 +19,70 @@
     </div>
 </div>
 <style>
+    @font-face {
+        font-family: 'Pierson';
+        font-style: normal;
+        src: url('../fonts/TTF/Pierson-Light.ttf'); /* Ensure the path to your font file is correct */
+    }
+    
+    .title1 {
+        font-family: 'Pierson', sans-serif; /* Fallback to sans-serif if custom font fails to load */
+        text-align: center;
+        font-size: 50px; /* This is quite large for mobile; will be adjusted in media query */
+        margin: 1rem 0; /* Add some vertical spacing */
+    }
     
     /* Base styles for the container */
     .flex.flex-col.items-center.my-8 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-  }
-  
-  /* Styles for the section title */
-  .text-center.text-3xl {
-    text-align: center;
-    font-size: 1.875rem;
-  }
-  
-  /* Styles for the container with grid */
-  .max-w-6xl.mx-auto {
-    max-width: 72rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  /* Styles for the grid and grid items */
-  .grid.grid-cols-1.md\:grid-cols-4.gap-4 {
-    display: grid;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-    gap: 1rem;
-  }
-  
-  /* Placeholder styles (if used) */
-  /* Add your placeholder styles here */
-  
-  
-</style>
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    /* Styles for the container with grid */
+    .max-w-6xl.mx-auto {
+        max-width: 72rem; /* 6xl */
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    /* Styles for the grid and grid items */
+    .grid.grid-cols-1.md\:grid-cols-4.gap-4 {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr); /* Default to single column for mobile */
+        gap: 1rem; /* Space between grid items */
+    }
+    
+    /* Responsive adjustments */
+    @media (min-width: 768px) {
+        /* Two columns for tablets */
+        .grid.grid-cols-1.md\:grid-cols-4.gap-4 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    
+        /* Adjust title font-size for tablet */
+        .title1 {
+            font-size: 40px;
+        }
+    }
+    
+    @media (min-width: 1024px) {
+        /* Four columns for desktop */
+        .grid.grid-cols-1.md\:grid-cols-4.gap-4 {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+    
+        /* Adjust title font-size for desktop */
+        .title1 {
+            font-size: 50px;
+        }
+    }
+    
+    /* Add any additional styles for placeholders or other elements as needed */
+    </style>
+    
 
 {% schema %}
 {
@@ -72,6 +106,11 @@
             "max": 12,
             "default": 4,
             "label": "Number of products to show"
+        },
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
         }
     ],
     "presets": [

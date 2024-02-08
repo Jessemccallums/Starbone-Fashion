@@ -16,8 +16,14 @@
   <body>
   
   {% section 'header' %}
-    <main role="main">
+    <main class='main' role="main">
       {{ content_for_layout }}
     </main>
   </body>
+  <style>
+    .main{
+    
+      overflow-x: hidden;
+  }
+  </style>
   </html>
