@@ -1,7 +1,7 @@
 <div class="max-w-6xl mx-auto px-4 py-12" x-data="{ new_address: false }">
     <div class="flex flex-col md:flex-row items-center justify-between my-5 gap-4">
         <h1 class="text-2xl font-bold text-gray-700">Addresses</h1>
-        <button onclick="showNewAddressForm()" type="button" class="text-white font-medium bg-gray-700 hover:bg-gray-900 px-6 py-2">Create new address</button>
+        <button onclick="showNewAddressForm()" type="button" class="addrx  hover:bg-gray-900 ">Create new address</button>
         <a href="{{ routes.account_url }}" class="text-blue-600 hover:text-blue-800 font-medium underline">Back to account</a>
     </div>
 
@@ -132,7 +132,7 @@
                 </div>
 
                 <div class="flex flex-row gap-2">
-                    <button type="submit" class="w-full font-medium text-white bg-gray-700 hover:bg-gray-900 px-4 py-2">Create address</button>
+                    <button type="submit" class="addrx">Create address</button>
                     <button type="reset" class="w-full font-medium text-gray-700 border border-gray-700 px-4 py-2">Cancel</button>
                 </div>
             {% endform %}
@@ -153,7 +153,7 @@
                             </div>
 
                             <div class="flex flex-row gap-2">
-                                <button data-address-id="{{ address.id }}" class="edit-btn w-full text-xs text-white bg-gray-700 hover:bg-gray-900 font-medium py-2">Edit</button>
+                                <button data-address-id="{{ address.id }}" class="edit-btn w-full text-xs text-white bg-gray-700  font-medium py-2">Edit</button>
                                 <button 
                                     class="w-full text-xs font-medium text-gray-700 border py-2"
                                     data-url="{{ address.url }}"
@@ -309,220 +309,198 @@
 
 
 <style>
+    /* Base styles */
+    @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+    
 
-/* Styles for the container */
-.max-w-6xl {
-    max-width: 72rem; /* Equivalent to max-w-6xl in Tailwind */
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 3rem; /* Equivalent to py-12 in Tailwind */
-    padding-bottom: 3rem; /* Equivalent to py-12 in Tailwind */
-    padding-left: 1rem; /* Equivalent to px-4 in Tailwind */
-    padding-right: 1rem; /* Equivalent to px-4 in Tailwind */
-}
-
-/* Styles for the flex container */
-.flex {
-    display: flex;
-    flex-direction: column;
-}
-
-.md\:flex {
-    flex-direction: row; /* Equivalent to md:flex-row in Tailwind */
-}
-
-.items-center {
-    align-items: center;
-}
-
-.justify-between {
-    justify-content: space-between;
-}
-
-.my-5 {
-    margin-top: 1.25rem; /* Equivalent to my-5 in Tailwind */
-    margin-bottom: 1.25rem; /* Equivalent to my-5 in Tailwind */
-}
-
-.gap-4 > * + * {
-    margin-top: 1rem; /* Equivalent to gap-4 in Tailwind */
-}
-
-/* Styles for the heading */
-.text-2xl {
-    font-size: 1.5rem; /* Equivalent to text-2xl in Tailwind */
-    font-weight: bold;
-    color: #4b5563; /* Equivalent to text-gray-700 in Tailwind */
-}
-
-/* Styles for the button */
-button {
-    display: inline-block;
-    text-align: center;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border: none;
-    cursor: pointer;
-}
-
-.font-medium {
-    font-weight: 500;
-}
-
-.text-white {
-    color: #fff;
-}
-
-.bg-gray-700 {
-    background-color: #4b5563; /* Equivalent to bg-gray-700 in Tailwind */
-}
-
-.hover\:bg-gray-900:hover {
-    background-color: #1f2937; /* Equivalent to hover:bg-gray-900 in Tailwind */
-}
-
-.px-6 {
-    padding-left: 1.5rem; /* Equivalent to px-6 in Tailwind */
-    padding-right: 1.5rem; /* Equivalent to px-6 in Tailwind */
-}
-
-.py-2 {
-    padding-top: 0.5rem; /* Equivalent to py-2 in Tailwind */
-    padding-bottom: 0.5rem; /* Equivalent to py-2 in Tailwind */
-}
-
-/* Styles for the link */
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-.text-blue-600 {
-    color: #3b82f6; /* Equivalent to text-blue-600 in Tailwind */
-}
-
-.hover\:text-blue-800:hover {
-    color: #2563eb; /* Equivalent to hover:text-blue-800 in Tailwind */
-}
-
-.underline {
-    text-decoration: underline;
-}
-
-/* Styles for the address grid */
-.grid {
-    display: grid;
-}
-
-.grid-cols-1 {
-    grid-template-columns: repeat(1, minmax(0, 1fr)); /* Equivalent to grid-cols-1 in Tailwind */
-}
-
-.md\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr)); /* Equivalent to md:grid-cols-2 in Tailwind */
-}
-
-.lg\:grid-cols-4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr)); /* Equivalent to lg:grid-cols-4 in Tailwind */
-}
-
-.gap-4 {
-    gap: 1rem; /* Equivalent to gap-4 in Tailwind */
-}
-
-.lg\:gap-12 {
-    gap: 3rem; /* Equivalent to lg:gap-12 in Tailwind */
-}
-
-.p-4 {
-    padding: 1rem; /* Equivalent to p-4 in Tailwind */
-}
-
-.md\:p-12 {
-    padding: 3rem; /* Equivalent to md:p-12 in Tailwind */
-}
-
-/* Styles for the individual address */
-.relative {
-    position: relative;
-}
-
-.flex {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    border: 1px solid;
-    padding: 0.5rem; /* Equivalent to p-2 in Tailwind */
-}
-
-.text-center {
-    text-align: center;
-}
-
-.border {
-    border-width: 1px;
-    border-style: solid;
-}
-
-.p-2 {
-    padding: 0.5rem; /* Equivalent to p-2 in Tailwind */
-}
-
-/* Styles for the default address span */
-.text-xs {
-    font-size: 0.75rem; /* Equivalent to text-xs in Tailwind */
-}
-
-.font-medium {
-    font-weight: 500;
-}
-
-.text-white {
-    color: #fff;
-}
-
-.bg-green-700 {
-    background-color: #10b981; /* Equivalent to bg-green-700 in Tailwind */
-}
-
-.px-4 {
-    padding-left: 1rem; /* Equivalent to px-4 in Tailwind */
-    padding-right: 1rem; /* Equivalent to px-4 in Tailwind */
-}
-
-.py-2 {
-    padding-top: 0.5rem; /* Equivalent to py-2 in Tailwind */
-    padding-bottom: 0.5rem; /* Equivalent to py-2 in Tailwind */
-}
-
-/* Styles for the address content */
-.my-8 {
-    margin-top: 2rem; /* Equivalent to my-8 in Tailwind */
-    margin-bottom: 2rem; /* Equivalent to my-8 in Tailwind */
-}
-
-/* Styles for the edit and delete buttons */
-.flex-row {
-    display: flex;
-    flex-direction: row;
-    gap: 0.5rem; /* Equivalent to gap-2 in Tailwind */
-}
-
-.text-gray-700 {
-    color: #6b7280; /* Equivalent to text-gray-700 in Tailwind */
-}
-
-.border {
-    border-width: 1px;
-    border-style: solid;
-}
-
-/* Styles for the pagination */
-/* Note: Pagination styles should be added separately as per your pagination implementation */
-
-
-</style>
-
+    .mx-auto {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .px-4 {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .py-12 {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+    
+    /* Flexbox utilities */
+    .flex {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .items-center {
+        align-items: center;
+    }
+    
+    .justify-between {
+        justify-content: space-between;
+    }
+    
+    .gap-4 {
+        gap: 1rem; /* Adjust based on your design system */
+    }
+    
+    /* Typography */
+    .text-2xl {
+        font-size: 1.5rem; /* 24px */
+        font-family: 'Libre Baskerville', serif;
+    }
+    
+    .font-bold {
+        font-weight: bold;
+        font-family: 'Libre Baskerville', serif;
+    }
+    
+    .text-gray-700 {
+        color: #4a5568;
+        font-family: 'Libre Baskerville', serif;
+    }
+    
+    .text-lg {
+        font-size: 1.125rem; /* 18px */
+        font-family: 'Libre Baskerville', serif;
+    }
+    
+    .font-medium {
+        font-weight: 500;
+        font-family: 'Libre Baskerville', serif;
+    }
+    
+    .text-blue-600 {
+        color: #3182ce;
+        font-family: 'Libre Baskerville', serif;
+    }
+    
+    .hover\:text-blue-800:hover {
+        color: #2c5282;
+        font-family: 'Libre Baskerville', serif;
+    }
+    
+    .underline {
+        text-decoration: underline;
+    }
+    
+    /* Button styles */
+    .addrx {
+        background-color: #000000;
+        color: white;
+        padding: 10px 32px;
+        cursor: pointer;
+        font-family: 'Libre Baskerville', serif;
+    }
+    
+    .hover\:bg-gray-900:hover {
+        background-color: #1a202c;
+    }
+    
+    /* New address form overlay */
+    #newAddressForm {
+        position: fixed;
+        inset: 0;
+        background-color: rgba(75, 85, 99, 0.6); /* Semi-transparent overlay */
+        display: none; /* Hidden by default */
+        overflow-y: auto;
+        z-index: 50;
+    }
+    
+    .relative {
+        position: relative;
+    }
+    
+    .top-20 {
+        top: 5rem;
+    }
+    
+    .bg-white {
+        background-color: white;
+    }
+    
+    .border {
+        border: 1px solid #e2e8f0;
+    }
+    
+    .p-4 {
+        padding: 1rem;
+    }
+    
+    .max-w-md {
+        max-width: 28rem;
+    }
+    
+    /* Responsive design adjustments */
+    @media (min-width: 768px) {
+        .md\:flex-row {
+            flex-direction: row;
+        }
+    }
+    
+    /* Input and select styles */
+    input, select {
+        width: 100%;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+        border: 1px solid #cbd5e0;
+        border-radius: 0.375rem;
+        font-size: 0.875rem; /* 14px */
+    }
+    
+    /* Handling focus outline for accessibility */
+    :focus {
+        outline: 2px solid #4299e1; /* Blue outline to match your theme */
+        outline-offset: 2px;
+    }
+    
+    /* Grid layout for addresses */
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 1rem;
+    }
+    
+    @media (min-width: 1024px) {
+        .lg\:gap-12 {
+            gap: 3rem;
+        }
+    }
+    
+    /* Address card */
+    .border {
+        border: 1px solid #e2e8f0;
+    }
+    
+    .p-2 {
+        padding: 0.5rem;
+    }
+    
+    .text-xs {
+        font-size: 0.75rem;
+        font-family: 'Libre Baskerville', serif;
+    }
+    
+    .bg-green-700 {
+        background-color: #2f855a;
+    }
+    
+    .px-4 {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .py-2 {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+    
+    /* Utilizing JavaScript for interaction */
+    </style>
+    
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -690,3 +668,33 @@ a {
             }
           </script>
           
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    // Function to show the edit address form
+                    document.querySelectorAll('.edit-btn').forEach(function(button) {
+                        button.addEventListener('click', function() {
+                            var addressId = this.getAttribute('data-address-id');
+                            var formId = 'edit-form-' + addressId;
+                            // Show the edit form for the selected address
+                            document.getElementById(formId).style.display = 'block';
+                        });
+                    });
+                
+                    // Function to close the edit form
+                    window.closeEditForm = function(formId) {
+                        document.getElementById(formId).style.display = 'none';
+                    }
+                
+                    // Function to show the new address form
+                    window.showNewAddressForm = function() {
+                        document.getElementById('newAddressForm').style.display = 'block';
+                    }
+                
+                    // Function to close the new address form
+                    window.closeNewAddressForm = function() {
+                        document.getElementById('newAddressForm').style.display = 'none';
+                    }
+                });
+                </script>
+                

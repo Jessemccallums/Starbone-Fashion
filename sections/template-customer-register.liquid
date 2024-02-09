@@ -1,19 +1,19 @@
 <div class="h-full flex items-center justify-center py-12 px-6 md:px-4 lg:px-8">
     <div class="max-w-md w-full space-y-8">
         <div>
-            <h1 class="text-center text-3xl font-bold mt-6">Register an account</h1>
+            <h1 class="sign text-center text-3xl font-bold mt-6">Register an account</h1>
         </div>
         <div class="mt-8">
             {% form 'create_customer' %}
                 {% if form.errors %}
                     <div class="relative border border-red-400 bg-red-100 text-red 700 px-4 py-3" role="alert">
-                        <strong class="font-bold">Error!</strong>
-                        <p class="block sm:inline">{{ form.errors | default_errors }}</p>
+                        <strong class="sign font-bold">Error!</strong>
+                        <p class="sign block sm:inline">{{ form.errors | default_errors }}</p>
                     </div>
                 {% endif %}
 
                 <div class="my-2">
-                    <label for="first_name" class="sr-only">First name</label>
+                    <label for="first_name" class="sign sr-only">First name</label>
                     <input type="text"
                         name="customer[first_name]"
                         id="first_name"
@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="my-2">
-                    <label for="last_name" class="sr-only">Last name</label>
+                    <label for="last_name" class="sign sr-only">Last name</label>
                     <input type="text"
                         name="customer[last_name]"
                         id="last_name"
@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="my-2">
-                    <label for="birthday" class="sr-only">Birthday</label>
+                    <label for="birthday" class="sign sr-only">Birthday</label>
                     <input type="date"
                         name="customer[note][Birthday]"
                         id="birthday"
@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="my-2">
-                    <label for="email_address" class="sr-only">Email address</label>
+                    <label for="email_address" class="sign sr-only">Email address</label>
                     <input type="email"
                         name="customer[email]"
                         id="email_address"
@@ -56,7 +56,7 @@
 
                 
                 <div class="my-2">
-                    <label for="password" class="sr-only">Password</label>
+                    <label for="password" class="sign sr-only">Password</label>
                     <input type="password"
                         name="customer[password]"
                         id="password"
@@ -67,7 +67,7 @@
                 </div>
                 
                 <div>
-                    <button type="submit" class="relative w-full py-2 px-4 text-sm font-medium text-white bg-gray-600 hover:bg-gray-900">
+                    <button type="submit" class="sign relative w-full py-2 px-4 text-sm font-medium text-white bg-gray-600 hover:bg-gray-900">
                         Create account
                     </button>
                 </div>
@@ -79,6 +79,11 @@
 
 <style>
 /* Styles for the container */
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+.sign{
+    font-family: 'Libre Baskerville', serif;
+} 
+   
 .h-full {
     height: 100%;
 }
@@ -150,10 +155,10 @@
     color: #dc2626;
 }
 
-.px-4 {
+{% comment %} .px-4 {
     padding-left: 1rem; /* 4 * 0.25rem = 1rem */
     padding-right: 1rem; /* 4 * 0.25rem = 1rem */
-}
+} {% endcomment %}
 
 .py-3 {
     padding-top: 0.75rem; /* 3 * 0.25rem = 0.75rem */

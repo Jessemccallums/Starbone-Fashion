@@ -26,53 +26,83 @@
   
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
-    @font_face {
-      font-family: 'Pierson';
-      font-style: normal;
-      src: url(../fonts/TTF/Pierson-Light.ttf);
-  }
-    /* Add your styles here */
+    
+    .custom-section {
+      position: relative;
+      text-align: center; /* Center the text for smaller screens */
+    }
+    
     .img {
       width: 100%;
-      height: 100%;
+      height: auto; /* Maintain aspect ratio */
     }
-    .container{
-    }
-    .container2{
-      position: relative;
+    
+    .container2 {
+      position: absolute;
       z-index: 100;
-      top: -366px;
-      left: 137px;
-    }
-    .text{
-      font-family: 'Libre Baskerville', serif;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%); /* Center container2 */
       color: white;
-      font-size: 20px;
+      max-width: 90%; /* Limit the width to ensure padding on smaller screens */
     }
-    .text1{
-      position: relative;
+    
+    .title3 {
+      font-family: 'Pierson', 'Libre Baskerville', serif;
+      font-size: 2.5rem; /* Start with a reasonable size on mobile */
+      margin: 0.5rem 0; /* Add some vertical spacing */
+    }
+    
+    .text {
       font-family: 'Libre Baskerville', serif;
-      color: white;
-      font-size: 20px;
-      padding: 10px 20px;
-      background-color: none;
+      font-size: 1rem; /* 16px */
+      margin: 0.5rem 0; /* Add some vertical spacing */
+    }
+    
+    .text1 {
+      font-family: 'Libre Baskerville', serif;
+      background-color: transparent;
       border: 2px solid white;
       border-radius: 5px;
       text-decoration: none;
-      margin-top: 54px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      width: 13rem;
+      padding: 10px 20px;
+      display: inline-block; /* Use inline-block for proper spacing */
+      margin-top: 1rem; /* Add space above the button */
+      width: auto; /* Auto width for flexibility */
     }
-    .title3{
-      font-family: 'Pierson';
-      color: white;
-      font-size: 40px;
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .title3 {
+        font-size: 2rem; /* Reduce title size on tablets */
+      }
+    
+      .container2 {
+        left: 50%; /* Keep centered on mobile */
+        top: 50%; /* Adjust top position */
+        padding: 0 15px; /* Add padding on smaller screens */
+      }
+    
+      .text1 {
+        width: auto; /* Allow button width to adjust */
+      }
     }
-  </style>
-
-  
+    
+    @media (max-width: 480px) {
+      .title3 {
+        font-size: 1.5rem; /* Even smaller title size on mobile */
+      }
+    
+      .text {
+        font-size: 0.875rem; /* Smaller text on mobile */
+      }
+    
+      .container2 {
+        top: 40%; /* Adjust top position for mobile */
+      }
+    }
+    </style>
+    
   {% schema %}
 {
   "name": "Special Offer",

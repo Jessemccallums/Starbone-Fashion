@@ -1,329 +1,152 @@
-<div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-    <h1 class="text-2xl font-bold text-gray-700">Account</h1>
+<div class="account-container">
+    <h1 class="sign account-title">Account</h1>
 
-    <div class="block md:flex gap-4">
+    <div class="account-content">
         {% assign number_of_orders = customer.orders | size %}
         {% if number_of_orders > 0 %}
-            <div class="w-full my-6 md:my-12">
-                <h2 class="text-xl font-bold text-gray-700">Order history</h2>
+            <div class="order-history">
+                <h2 class="sign order-history-title">Order history</h2>
 
                 {% paginate customer.orders by 10 %}
-                    <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+                    <div class="orders-grid">
                         {% for order in customer.orders %}
-                            <div class="relative">
-                                <div class="w-full min-80 bg-gray-200 rounded-md overflow-hidden lg:h-80">
+                            <div class="order-card">
+                                <div class="order-image">
                                     {% if order.line_items.first.image %}
-                                        <img class="w-full h-full object-center object-cover" src="{{ order.line_items.first.image | img_url: 'medium' }}" alt="{{ order.line_items.first.image.alt }}">
-                                    {% else %}
-                                        {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-center object-cover' }}
+                                        <img src="{{ order.line_items.first.image | img_url: 'medium' }}" alt="{{ order.line_items.first.title }}">
                                     {% endif %}
                                 </div>
 
-                                <div class="mt-4 flex items-start justify-between">
-                                    <div>
-                                        <h3 class="text-sm text-gray-700">{{ order.name | link_to: order.customer_url }}</h3>
-
-                                        <p class="mt-1 text-sm text-gray-500">{{ order.financial_status_label }}</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="text-sm font-medium text-white bg-gray-700 rounded-full px-3 py-1">{{ order.fulfillment_status_label }}</p>
-                                        <p class="text-sm">{{ order.total_price | money }}</p>
-                                    </div>
+                                <div class="order-info">
+                                    <h3 class='sign'><a href="{{ order.customer_url }}" class='sign'>{{ order.name }}</a></h3>
+                                    <p class='sign'>{{ order.financial_status_label }}</p>
+                                </div>
+                                <div class="order-price">
+                                    <p class='sign'>{{ order.total_price | money }}</p>
                                 </div>
                             </div>
                         {% endfor %}
-
                     </div>
 
-                    <div class="max-w-6xl mx-auto">
+                    <div class="pagination">
                         {% render 'pagination', pagination: paginate %}
                     </div>
-
                 {% endpaginate %}
             </div>
         {% else %}
-            <div class="w-full h-80 flex items-center justify-center">
-                <h2 class="text-base md:text-2xl font-medium">You currently don't have any orders</h2>
+            <div class="no-orders">
+                <h2 class='sign'>You currently don't have any orders</h2>
             </div>
         {% endif %}
 
-
-        <div class="w-full md:w-1/4">
-            <h2 class="text-xl font-bold text-gray-700 mb-12">Account details</h2>
-
-            {{ customer.default_address | format_address }}
-
-            <a href="{{ routes.account_addresses_url }}" class="text-sm text-blue-600 hover:text-blue-900 underline">View addresses</a>
+        <div class="account-details">
+            <h2 class='sign'>Account details</h2>
+            <!-- Account details here -->
+            <a href="{{ routes.account_addresses_url }}" class='sign'>View addresses</a>
         </div>
     </div>
 </div>
 
 
-{% comment %} <style>
-/* Styles for the container */
-.max-w-2xl {
-    max-width: 42rem; /* Equivalent to max-w-2xl in Tailwind */
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 4rem; /* Equivalent to py-16 in Tailwind */
-    padding-bottom: 4rem; /* Equivalent to py-16 in Tailwind */
-    padding-left: 1rem; /* Equivalent to px-4 in Tailwind */
-    padding-right: 1rem; /* Equivalent to px-4 in Tailwind */
-}
 
-@media (min-width: 640px) {
-    /* Styles for small screens and above */
-    .max-w-2xl {
-        padding-top: 6rem; /* Equivalent to sm:py-24 in Tailwind */
-        padding-bottom: 6rem; /* Equivalent to sm:py-24 in Tailwind */
-        padding-left: 2rem; /* Equivalent to sm:px-6 in Tailwind */
-        padding-right: 2rem; /* Equivalent to sm:px-6 in Tailwind */
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+    .addrx{
+    
+        background: black;
+        color: white;
+        padding: 10px 48px;
     }
-}
-
-@media (min-width: 1024px) {
-    /* Styles for large screens and above */
-    .max-w-2xl {
-        max-width: 75rem; /* Equivalent to lg:max-w-7xl in Tailwind */
-        padding-left: 2rem; /* Equivalent to lg:px-8 in Tailwind */
-        padding-right: 2rem; /* Equivalent to lg:px-8 in Tailwind */
+    .sign{
+        font-family: 'Libre Baskerville', serif;
     }
-}
-
-/* Styles for the heading */
-.text-2xl {
-    font-size: 1.5rem; /* Equivalent to text-2xl in Tailwind */
-    font-weight: bold;
-    color: #4b5563; /* Equivalent to text-gray-700 in Tailwind */
-}
-
-/* Styles for the block and flex container */
-.block {
-    display: block;
-}
-
-.md\:flex {
-    display: flex;
-}
-
-.md\:gap-4 > * + * {
-    margin-left: 1rem; /* Equivalent to md:gap-4 in Tailwind */
-}
-
-/* Styles for the order history */
-.my-6 {
-    margin-top: 1.5rem; /* Equivalent to my-6 in Tailwind */
-    margin-bottom: 1.5rem; /* Equivalent to my-6 in Tailwind */
-}
-
-.md\:my-12 {
-    margin-top: 3rem; /* Equivalent to md:my-12 in Tailwind */
-    margin-bottom: 3rem; /* Equivalent to md:my-12 in Tailwind */
-}
-
-.text-xl {
-    font-size: 1.25rem; /* Equivalent to text-xl in Tailwind */
-    font-weight: bold;
-    color: #4b5563; /* Equivalent to text-gray-700 in Tailwind */
-}
-
-.text-base {
-    font-size: 1rem; /* Equivalent to text-base in Tailwind */
-    font-weight: 500;
-    color: #4b5563; /* Equivalent to text-gray-700 in Tailwind */
-}
-
-.text-gray-700 {
-    color: #4b5563; /* Equivalent to text-gray-700 in Tailwind */
-}
-
-/* Styles for the grid */
-.grid {
-    display: grid;
-}
-
-.grid-cols-1 {
-    grid-template-columns: repeat(1, minmax(0, 1fr)); /* Equivalent to grid-cols-1 in Tailwind */
-}
-
-.grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr)); /* Equivalent to grid-cols-2 in Tailwind */
-}
-
-.grid-cols-4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr)); /* Equivalent to grid-cols-4 in Tailwind */
-}
-
-.gap-y-10 > * + * {
-    margin-top: 2.5rem; /* Equivalent to gap-y-10 in Tailwind */
-}
-
-.gap-x-6 > * + * {
-    margin-left: 1.5rem; /* Equivalent to gap-x-6 in Tailwind */
-}
-
-.xl\:gap-x-8 > * + * {
-    margin-left: 2rem; /* Equivalent to xl:gap-x-8 in Tailwind */
-}
-
-/* Styles for the individual order items */
-.relative {
-    position: relative;
-}
-
-.w-full {
-    width: 100%;
-}
-
-.min-80 {
-    min-height: 20rem; /* Equivalent to min-80 in Tailwind */
-}
-
-.bg-gray-200 {
-    background-color: #edf2f7; /* Equivalent to bg-gray-200 in Tailwind */
-}
-
-.overflow-hidden {
-    overflow: hidden;
-}
-
-object-center {
-    object-position: center center;
-}
-
-.object-cover {
-    object-fit: cover;
-}
-
-.mt-4 {
-    margin-top: 1rem; /* Equivalent to mt-4 in Tailwind */
-}
-
-.flex {
-    display: flex;
-}
-
-.items-start {
-    align-items: flex-start;
-}
-
-.justify-between {
-    justify-content: space-between;
-}
-
-.text-sm {
-    font-size: 0.875rem; /* Equivalent to text-sm in Tailwind */
-}
-
-.text-gray-500 {
-    color: #6b7280; /* Equivalent to text-gray-500 in Tailwind */
-}
-
-.text-sm.text-gray-500 {
-    font-size: 0.875rem; /* Equivalent to text-sm in Tailwind */
-    color: #6b7280; /* Equivalent to text-gray-500 in Tailwind */
-}
-
-.text-sm.font-medium {
-    font-size: 0.875rem; /* Equivalent to text-sm in Tailwind */
-    font-weight: 500;
-}
-
-.text-white {
-    color: #fff;
-}
-
-.bg-gray-700 {
-    background-color: #4b5563; /* Equivalent to bg-gray-700 in Tailwind */
-}
-
-.rounded-full {
-    border-radius: 9999px; /* Equivalent to rounded-full in Tailwind */
-}
-
-.px-3 {
-    padding-left: 0.75rem; /* Equivalent to px-3 in Tailwind */
-    padding-right: 0.75rem; /* Equivalent to px-3 in Tailwind */
-}
-
-.py-1 {
-    padding-top: 0.25rem; /* Equivalent to py-1 in Tailwind */
-    padding-bottom: 0.25rem; /* Equivalent to py-1 in Tailwind */
-}
-
-.text-sm.font-medium.text-white.bg-gray-700.rounded-full.px-3.py-1 {
-    font-size: 0.875rem; /* Equivalent to text-sm in Tailwind */
-    font-weight: 500;
-    color: #fff;
-    background-color: #4b5563; /* Equivalent to bg-gray-700 in Tailwind */
-    border-radius: 9999px; /* Equivalent to rounded-full in Tailwind */
-    padding-left: 0.75rem; /* Equivalent to px-3 in Tailwind */
-    padding-right: 0.75rem; /* Equivalent to px-3 in Tailwind */
-    padding-top: 0.25rem; /* Equivalent to py-1 in Tailwind */
-    padding-bottom: 0.25rem; /* Equivalent to py-1 in Tailwind */
-}
-
-.text-sm.font-medium {
-    font-size: 0.875rem; /* Equivalent to text-sm in Tailwind */
-    font-weight: 500;
-}
-
-.text-white.bg-gray-700.rounded-full.px-3.py-1 {
-    color: #fff;
-    background-color: #4b5563; /* Equivalent to bg-gray-700 in Tailwind */
-    border-radius: 9999px; /* Equivalent to rounded-full in Tailwind */
-    padding-left: 0.75rem; /* Equivalent to px-3 in Tailwind */
-    padding-right: 0.75rem; /* Equivalent to px-3 in Tailwind */
-    padding-top: 0.25rem; /* Equivalent to py-1 in Tailwind */
-    padding-bottom: 0.25rem; /* Equivalent to py-1 in Tailwind */
-}
-
-/* Styles for the total price */
-.text-right {
-    text-align: right;
-}
-
-/* Styles for the pagination */
-.max-w-6xl {
-    max-width: 96rem; /* Equivalent to max-w-6xl in Tailwind */
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Styles for the "You currently don't have any orders" message */
-.w-full.h-80 {
-    width: 100%;
-    height: 20rem; /* Equivalent to h-80 in Tailwind */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Styles for the account details */
-.w-full {
-    width: 100%;
-}
-
-.md\:w-1\/4 {
-    width: 25%; /* Equivalent to md:w-1/4 in Tailwind */
-}
-
-.mb-12 {
-    margin-bottom: 3rem; /* Equivalent to mb-12 in Tailwind */
-}
-
-/* Styles for the account address link */
-.text-blue-600 {
-    color: #3b82f6; /* Equivalent to text-blue-600 in Tailwind */
-}
-
-.hover\:text-blue-900:hover {
-    color: #2563eb; /* Equivalent to hover:text-blue-900 in Tailwind */
-}
-
-.underline {
-    text-decoration: underline;
-}
-
-
-</style> {% endcomment %}
+    .account-container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 32px 16px;
+    }
+    
+    .account-title {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+    
+    .account-content {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+    
+    .order-history {
+        flex: 1;
+        min-width: 300px;
+        max-width: 800px;
+    }
+    
+    .order-history-title {
+        font-size: 20px;
+        margin-bottom: 15px;
+        color: #555;
+    }
+    
+    .orders-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 10px;
+    }
+    
+    .order-card {
+        background-color: #f9f9f9;
+        border: 1px solid #eaeaea;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    .order-image img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+    
+    .order-info h3, .order-info p, .order-price p {
+        padding: 8px;
+        margin: 0;
+        text-align: center;
+    }
+    
+    .no-orders {
+        text-align: center;
+    }
+    
+    .account-details {
+        flex-basis: 100%;
+        text-align: center;
+    }
+    
+    .account-details h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    
+    .account-details a {
+        display: inline-block;
+        margin-top: 10px;
+        color: #007bff;
+        text-decoration: none;
+    }
+    
+    .account-details a:hover {
+        text-decoration: underline;
+    }
+    
+    @media (max-width: 768px) {
+        .account-content {
+            flex-direction: column;
+        }
+    }
+    </style>
+    
