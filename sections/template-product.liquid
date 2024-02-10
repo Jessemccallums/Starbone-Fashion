@@ -23,7 +23,7 @@
                 <option class='producte' value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>
             {% endfor %}
             </select>
-            <input type="submit" value="Add to Cart">
+            <input type="submit" class='btncart' value="Add to Cart">
         </form>
         <div class="producte pe product-description">
             {{ product.description }}
@@ -103,7 +103,12 @@
         width: 50%;
       }
     }
-  
+    .btncart{
+    
+      padding: 10px 40px;
+      background: black;
+      color: white;
+    }
     /* More styles can be added here for other responsive breakpoints */
   </style>
   

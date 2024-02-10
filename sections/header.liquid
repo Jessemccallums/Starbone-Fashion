@@ -1,15 +1,15 @@
 <!-- Navigation Bar -->
-<nav class="navbar">
+<nav class="navbar desktop">
     <div class='navtop'>
         {% for link in linklists.footer.links %}
-        <a href="{{ link.url }}" class='search' id='mobile'>
+        <a href="{{ link.url }}" class='search' >
             {% render 'search' %}
         </a>
         {% endfor %}
-        <div id='mobile'>
+        <div >
             <h1 class='h1'>{{ section.settings.text }}</h1>
         </div>
-        <div class='login'  id='mobile'>
+        <div class='login'  >
             {% if shop.customer_accounts_enabled %}
                 {% if customer %}
                     <a href="{{ routes.account_url }}" class="text-base text-gray-500 hover:text-gray-900">account</a>
@@ -26,12 +26,12 @@
             </div>
         </div>
     </div>
-    <div class="navbar-container">
+    <div class="navbar-container mobile">
         <!-- Hamburger Menu Button -->
-        <button class="hamburger" id="hamburger">☰</button>
+        
 
         <!-- Navigation Links -->
-        <div class="nav-links" id="navLinks">
+        <div class="desktop-menu" >
             {% for link in linklists.main-menu.links %}
                 {% if link.links != blank %}
                     <div>
@@ -56,10 +56,143 @@
         </div>
     </div>
 </nav>
+<!-- Navigation Bar -->
+<nav class="navbar mobile">
+    <!-- Top Bar: Search, Logo, Account, and Cart Icons -->
+    <div class='navtop desktop'>
+        <!-- Search Icon -->
+        {% for link in linklists.footer.links %}
+        <a href="{{ link.url }}" class='search' id='mobile'>
+            {% render 'search' %}
+        </a>
+        {% endfor %}
+        <!-- Brand Logo -->
+        <div id='mobile'>
+            <h1 class='brand'>{{ section.settings.text }}</h1>
+        </div>
+        <!-- Account and Cart Icons -->
+        <div class='account-cart-icons' id='mobile'>
+            <!-- Account Links -->
+            {% if shop.customer_accounts_enabled %}
+                {% if customer %}
+                    <a href="{{ routes.account_url }}" class="account-link">Account</a>
+                    {{ 'Log out' | customer_logout_link | replace: '<a', '<a class="account-link"' }}
+                {% else %}
+                    {{ 'Log in' | customer_login_link | replace: '<a', '<a class="account-link"' }}
+                    {{ 'Register' | customer_register_link | replace: '<a', '<a class="account-link"' }}
+                {% endif %}
+            {% endif %}
+            <!-- Cart Icon -->
+            <a href="{{ routes.cart_url }}" class="cart-icon">
+                {% render 'icon-bag' %}
+            </a>
+        </div>
+    </div>
+    <!-- Main Navigation Bar Container -->
+    <div class="navbar-container">
+        <!-- Hamburger Menu Button -->
+        <button class="hamburger" id="hamburger" aria-label="Menu">&#9776;</button>
+        <!-- Navigation Links -->
+        <div class="nav-links" id="navLinks">
+            {% for link in linklists.main-menu.links %}
+                <a href="{{ link.url }}" class="nav-link">{{ link.title }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</nav>
+
+<!-- Styles for Navigation Bar -->
+<style>
+    /* ... [existing styles] ... */
+
+    /* Improved Styles for navbar-container */
+    .navbar-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px; /* Adjusted padding for better spacing */
+        background-color: #FFD5B9; /* To match the nav-links background */
+    }
+
+    .nav-links {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1; /* Allow nav-links to take up available space */
+        gap: 20px; /* Consistent spacing between links */
+    }
+
+    .nav-link {
+        color: black;
+        padding: 10px 15px;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: bold;
+        transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+        /* Rounded corners for hover effect */
+    }
+
+    .hamburger {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        display: none; /* Initially hidden, will be shown in responsive design */
+    }
+
+    /* ... [responsive styles] ... */
+    
+    @media (max-width: 768px) {
+        .hamburger {
+            display: block;
+            color: black;
+            font-size: 43px;
+        }
+
+        .nav-links {
+            flex-direction: column;
+            width: 100%;
+            display: none; /* Hidden by default, shown when hamburger is clicked */
+        }
+        
+        /* When nav-links are displayed (mobile view), show as a dropdown */
+        .nav-links.active {
+            display: flex;
+        }
+    }
+</style>
+
+<!-- JavaScript -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var hamburger = document.getElementById('hamburger');
+        var navLinks = document.getElementById('navLinks');
+        
+        // Toggle mobile menu
+        hamburger.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+        });
+    });
+</script>
 
 
 <!-- Styles for Dropdown Menu -->
 <style>
+    .mobile{
+        display: none;
+    }
+    .desktop-menu{    
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        background-color: #FFD5B9;
+        padding: 20px;
+        border-top: 2px solid black;
+        gap: 24px;
+    }
 
     .menu{
     
@@ -70,7 +203,6 @@
         display: flex;
         width: 100%;
         justify-content: center;
-        background-color: #FFD5B9;
         padding: 20px;
         border-top: 2px solid black;
     
@@ -121,7 +253,6 @@
     }
 
     .dropdown-content a:hover {
-        background-color: #f1f1f1;
     }
     .h1{
         color: black
@@ -198,6 +329,10 @@
         flex-direction: column;
         align-items: flex-start;
         padding: 30px;
+        background: white;
+    }
+    .mobile{
+        display: block;
     }
 
     .nav-links,
@@ -347,23 +482,17 @@
 /* Existing styles... */
 
 /* Hamburger Menu Button */
-.hamburger {
-    display: none;
-    font-size: 24px;
-    user-select: none;
-    cursor: pointer;
-}
+
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-    .hamburger {
-        display: block;        
+    
+    .mobile{
         display: block;
-        color: black;
-        font-size: 50px;
     }
-    #mobile{
-        display: none;
+    
+    .desktop{
+    display: none;
     }
 
     .nav-links {
@@ -377,6 +506,7 @@
         padding: 10px;
         text-align: left;
         width: 100%;
+        color: black;
     }
 
     .navbar-container {
@@ -407,11 +537,8 @@
     color: black;
 }
 </style>
-
-<!-- JavaScript -->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        var hamburger = document.getElementById('hamburger');
         var navLinks = document.getElementById('navLinks');
         
         // Busca todos los botones de clase "dropdown-button"
@@ -428,12 +555,10 @@
             });
         });
 
-        // Agrega un evento clic al botón del menú hamburguesa para ocultar los sub-enlaces
-        hamburger.addEventListener('click', function() {
-            navLinks.style.display = navLinks.style.display === 'block' ? 'none' : 'block';
-        });
+        
     });
 </script>
+
 
 
 {% schema %}

@@ -2,10 +2,10 @@
   {% if cart.item_count > 0 %}
       <div class="text-center my-8">
           <h1 class="sign text-3xl font-semibold">Your cart</h1>
-          <a href="{{ routes.all_products_collection_url }}" class="sign text-blue-500 hover:text-blue-700 underline mt-4 inline-block">Continue shopping</a>
+          <a href="{{ routes.all_products_collection_url }}" class="up sign text-blue-500 hover:text-blue-700 underline mt-4 inline-block">Continue shopping</a>
       </div>
 
-      <form action="{{ routes.cart_url }}" method="POST" novalidate class="w-full max-w-6xl mx-auto">
+      <form action="{{ routes.cart_url }}" method="POST" novalidate class="up w-full max-w-6xl mx-auto">
           <div class="overflow-x-auto">
               <table class="min-w-full divide-y divide-gray-200 mt-6">
                   <thead class="bg-gray-50">
@@ -42,7 +42,7 @@
                   </tbody>
               </table>
           </div>
-          <div class="flex justify-between items-center mt-8">
+          <div class="up flex justify-between items-center mt-8">
               <textarea name="note" id="cart_note" placeholder="Add a note to your order" class="sign form-textarea mt-1 block w-full"></textarea>
               <div>
                   <button type="submit" name="update" class="sign update-btn">Update cart</button>
@@ -61,7 +61,12 @@
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
-    .imgcart{
+.up{
+
+    margin-top: 26px;
+}
+  
+  .imgcart{
     width: 100%;
     }
     .imgcartx{
