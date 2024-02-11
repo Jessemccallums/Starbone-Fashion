@@ -1,11 +1,22 @@
 {
-    "sections": {
-        "featured-collection": {
-            "type": "featured-collection",
-            "settings": {
-                "featured_collection": "all"
-            }
-        }
+  "sections": {
+    "featured_hero_section_pwmYNb": {
+      "type": "featured-hero-section",
+      "settings": {
+        "image": "shopify:\/\/shop_images\/girls.png"
+      }
     },
-    "order": ["featured-hero-section", "featured-collection", "featured-Special-Offer"]
+    "featured-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Featured Collection",
+        "featured_collection": "all",
+        "number_of_products_to_show": 4
+      }
+    }
+  },
+  "order": [
+    "featured_hero_section_pwmYNb",
+    "featured-collection"
+  ]
 }
