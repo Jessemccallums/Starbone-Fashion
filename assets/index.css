@@ -1,12 +1,15 @@
-/* index.css */
-@font_face {
-    font-family: 'Pierson';
-    font-style: normal;
+@font-face {
+    font-family: testing;
+    src: url(./Pierson-Light.woff); 
 }
 
-h1{
-    font-family: 'Pierson';
+h1 {
+    font-family: testing;
 }
+
+
+
+
 
 /* Navigation Styles */
 .navbar {

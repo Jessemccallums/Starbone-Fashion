@@ -1,194 +1,190 @@
 <footer class="site-footer">
-    <div class="footer-top">
-      <div class="footer-about">
-        <h2 class='titlef'>{{ section.settings.footer_title }}</h2>
-        <p class='pf'>{{ section.settings.footer_about_us }}</p>
-      </div>
-      {% for block in section.blocks %}
-        {% case block.type %}
-          {% when 'newsletter_signup' %}
-            <div class="footer-newsletter">
-              <h3>{{ block.settings.title }}</h3>
-              <p>{{ block.settings.description }}</p>
-              <form action="/contact" method="post">
-                <input class='input' type="email" name="contact[email]" placeholder="{{ block.settings.placeholder }}" required>
-                <button class='btnf' type="submit">{{ block.settings.button_text }}</button>
-              </form>
-            </div>
-        {% endcase %}
-      {% endfor %}
+  <div class="footer-top">
+    <div class="footer-about">
+      <h1 class="titlef">{{ section.settings.footer_title }}</h1>
+      <p class="pf">{{ section.settings.footer_about_us }}</p>
     </div>
-    <div class="footer-bottom">
-      <p>{{ section.settings.footer_copyright }}</p>
-    </div>
-  </footer>
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'newsletter_signup' %}
+          <div class="footer-newsletter">
+            <h3>{{ block.settings.title }}</h3>
+            <p>{{ block.settings.description }}</p>
+            <form action="/contact" method="post">
+              <input
+                class="input"
+                type="email"
+                name="contact[email]"
+                placeholder="{{ block.settings.placeholder }}"
+                required
+              >
+              <button class="btnf" type="submit">{{ block.settings.button_text }}</button>
+            </form>
+          </div>
+      {% endcase %}
+    {% endfor %}
+  </div>
+  <div class="footer-bottom">
+    <p>{{ section.settings.footer_copyright }}</p>
+  </div>
+</footer>
 
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
 
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
-    
-    .site-footer {
-      background-color: #FFD5B9;
-      padding: 45px;
-      font-size: 14px;
+  .site-footer {
+    background-color: #ffd5b9;
+    padding: 45px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .footer-top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .footer-about,
+  .footer-newsletter {
+    flex: 1;
+    min-width: 260px; /* Set a minimum width for each footer column */
+    margin: 20px; /* Add some space around the columns */
+  }
+
+  .titlef {
+    text-align: left;
+    font-size: 76px;
+    margin-bottom: 20px;
+  }
+
+  .footer-about p {
+    text-align: left;
+    font-family: 'Libre Baskerville', serif;
+  }
+
+  .input {
+    width: 100%; /* Full width for responsiveness */
+    background: none;
+    padding: 13px 16px;
+    border: 2px solid black;
+    color: black;
+    margin-top: 10px;
+  }
+
+  .btnf {
+    width: 100%; /* Full width for responsiveness */
+    background: black;
+    color: white;
+    padding: 10px;
+    margin-top: 10px; /* Add space above the button */
+    font-family: 'Libre Baskerville', serif;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+  }
+
+  @media (max-width: 1024px) {
+    .titlef {
+      font-size: 22px; /* Slightly smaller font size for tablets */
+    }
+  }
+
+  @media (max-width: 768px) {
+    .footer-top {
+      flex-direction: column;
+      margin-left: -24px;
+    }
+
+    .titlef {
+      font-size: 48px; /* Even smaller font size for mobile devices */
       text-align: center;
     }
-    
-    .footer-top {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      align-items: center;
-      margin-bottom: 20px;
+    .footer-about p {
+      text-align: center;
+      font-family: 'Libre Baskerville', serif;
     }
-    
+
     .footer-about,
     .footer-newsletter {
-      flex: 1;
-      min-width: 260px; /* Set a minimum width for each footer column */
-      margin: 20px; /* Add some space around the columns */
+      width: auto; /* Allow columns to fill the available space */
+      text-align: center; /* Center text for mobile */
     }
-    
-    .titlef {
-      font-family: 'Pierson', 'Libre Baskerville', serif;
-      text-align: left;
-      font-size: 76px;  
-      margin-bottom: 20px;
-    }
-    
-    .footer-about p {
-      text-align: left;
-      font-family: 'Libre Baskerville', serif;
-    }
-    
-    .input {
-      width: 100%; /* Full width for responsiveness */
-      background: none;
-      padding: 13px 16px;
-      border: 2px solid black;
-      color: black;
-      margin-top: 10px;
-    }
-    
+
+    .input,
     .btnf {
-      width: 100%; /* Full width for responsiveness */
-      background: black;
-      color: white;
-      padding: 10px;
-      margin-top: 10px; /* Add space above the button */
-      font-family: 'Libre Baskerville', serif;
+      width: auto; /* Let input and button fill available space */
+      max-width: 300px; /* Max width to keep them manageable on mobile */
+      margin-left: auto;
+      margin-right: auto; /* Center input and button if not full width */
     }
-    
-    .footer-bottom {
-      border-top: 1px solid #ddd;
-      padding-top: 20px;
-    }
-    
-    @media (max-width: 1024px) {
-      .titlef {
-        font-size: 22px; /* Slightly smaller font size for tablets */
-      }
-    }
-    
-    @media (max-width: 768px) {
-      .footer-top {
-        flex-direction: column;
-        margin-left: -24px;
-      }
-    
-      .titlef {
-        font-size: 48px;/* Even smaller font size for mobile devices */
-        text-align: center;
-      }
-      .footer-about p {
-        text-align: center;
-        font-family: 'Libre Baskerville', serif;
-      }
-    
-      .footer-about,
-      .footer-newsletter {
-        width: auto; /* Allow columns to fill the available space */
-        text-align: center; /* Center text for mobile */
-      }
-    
-      .input,
-      .btnf {
-        width: auto; /* Let input and button fill available space */
-        max-width: 300px; /* Max width to keep them manageable on mobile */
-        margin-left: auto;
-        margin-right: auto; /* Center input and button if not full width */
-      }
-    }
-    
-    @font-face {
-      font-family: 'Pierson';
-      font-style: normal;
-      src: url('../fonts/TTF/Pierson-Light.ttf');
-    }
-    </style>
-    
-    
-    {% schema %}
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Custom Footer",
+  "settings": [
     {
-      "name": "Custom Footer",
+      "type": "text",
+      "id": "footer_title",
+      "label": "Footer Title",
+      "default": "STAR BONE"
+    },
+    {
+      "type": "richtext",
+      "id": "footer_about_us",
+      "label": "About Us Text",
+      "default": "<p>Located in Beverly Hills, Starbone is a boutique...</p>"
+    },
+    {
+      "type": "text",
+      "id": "footer_copyright",
+      "label": "Copyright Text",
+      "default": "© 2024 Starbone. All rights reserved."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "newsletter_signup",
+      "name": "Newsletter Signup",
       "settings": [
         {
           "type": "text",
-          "id": "footer_title",
-          "label": "Footer Title",
-          "default": "STAR BONE"
-        },
-        {
-          "type": "richtext",
-          "id": "footer_about_us",
-          "label": "About Us Text",
-          "default": "<p>Located in Beverly Hills, Starbone is a boutique...</p>"
+          "id": "title",
+          "label": "Title",
+          "default": "Join our email list"
         },
         {
           "type": "text",
-          "id": "footer_copyright",
-          "label": "Copyright Text",
-          "default": "© 2024 Starbone. All rights reserved."
-        }
-      ],
-      "blocks": [
+          "id": "description",
+          "label": "Description",
+          "default": "Enjoy a 15% discount on your initial purchase!"
+        },
         {
-          "type": "newsletter_signup",
-          "name": "Newsletter Signup",
-          "settings": [
-            {
-              "type": "text",
-              "id": "title",
-              "label": "Title",
-              "default": "Join our email list"
-            },
-            {
-              "type": "text",
-              "id": "description",
-              "label": "Description",
-              "default": "Enjoy a 15% discount on your initial purchase!"
-            },
-            {
-              "type": "text",
-              "id": "placeholder",
-              "label": "Email Placeholder",
-              "default": "Enter your email"
-            },
-            {
-              "type": "text",
-              "id": "button_text",
-              "label": "Button Text",
-              "default": "Subscribe"
-            }
-          ]
-        }
-      ],
-      "presets": [
+          "type": "text",
+          "id": "placeholder",
+          "label": "Email Placeholder",
+          "default": "Enter your email"
+        },
         {
-          "name": "Custom Footer",
-          "category": "Footer"
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Subscribe"
         }
       ]
     }
-    {% endschema %}
-    
+  ],
+  "presets": [
+    {
+      "name": "Custom Footer",
+      "category": "Footer"
+    }
+  ]
+}
+{% endschema %}

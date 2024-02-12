@@ -13,11 +13,11 @@
 
   <div class="container2">
     {% if section.settings.title != blank %}
-      <h2 class="title3">{{ section.settings.title }}</h2>
+      <h1 class="title3">{{ section.settings.title }}</h1>
     {% endif %}
 
     {% if section.settings.description != blank %}
-      <p class="text">{{ section.settings.description }}</p>
+      <h1 class="text">{{ section.settings.description }}</h1>
     {% endif %}
 
     {% if section.settings.button_label != blank %}
@@ -52,19 +52,16 @@
   }
 
   .title3 {
-    font-family: 'Pierson', 'Libre Baskerville', serif;
     font-size: 2.5rem; /* Start with a reasonable size on mobile */
     margin: 0.5rem 0; /* Add some vertical spacing */
   }
 
   .text {
-    font-family: 'Pierson', 'Libre Baskerville', serif;
     font-size: 1rem; /* 16px */
     margin: 0.5rem 0; /* Add some vertical spacing */
   }
 
   .text1 {
-    font-family: 'Pierson', 'Libre Baskerville', serif;
     background-color: transparent;
     border: 2px solid white;
     border-radius: 5px;
