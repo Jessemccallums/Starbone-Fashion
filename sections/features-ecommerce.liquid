@@ -1,61 +1,61 @@
 <div class="features-section">
-    {% for block in section.blocks %}
-      <div class="feature" id="feature-{{ block.id }}">
-        <div class="feature-icon">
-          {% if block.settings.icon != blank %}
-            <img src="{{ block.settings.icon | img_url: 'original' }}" alt="{{ block.settings.title | escape }}">
-          {% endif %}
-        </div>
-        <h3 class="feature-title">{{ block.settings.title }}</h3>
-        <p class="feature-description">{{ block.settings.description }}</p>
+  {% for block in section.blocks %}
+    <div class="feature" id="feature-{{ block.id }}">
+      <div class="feature-icon">
+        {% if block.settings.icon != blank %}
+          <img src="{{ block.settings.icon | img_url: 'original' }}" alt="{{ block.settings.title | escape }}">
+        {% endif %}
       </div>
-    {% endfor %}
-  </div>
-  <style>
+      <h1 class="feature-title">{{ block.settings.title }}</h1>
+      <p class="feature-description">{{ block.settings.description }}</p>
+    </div>
+  {% endfor %}
+</div>
+<style>
+  .features-section {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    padding: 45px;
+    background: #fff3eb;
+  }
+
+  .feature {
+    flex: 1;
+    margin: 0 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .feature-icon img {
+    max-width: 60px; /* Control the size of the icons */
+    height: auto;
+    margin-bottom: 10px;
+  }
+
+  .feature-title {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+
+  .feature-description {
+    font-size: 14px;
+  }
+
+  @media (max-width: 768px) {
     .features-section {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        text-align: center;
-        padding: 45px;
-        background: #FFF3EB;
+      flex-direction: column;
     }
-    
+
     .feature {
-        flex: 1;
-        margin: 0 10px;
-        padding: 10px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+      margin-bottom: 20px;
     }
-    
-    .feature-icon img {
-      max-width: 60px; /* Control the size of the icons */
-      height: auto;
-      margin-bottom: 10px;
-    }
-    
-    .feature-title {
-      font-size: 18px;
-      margin-bottom: 5px;
-    }
-    
-    .feature-description {
-      font-size: 14px;
-    }
-    
-    @media (max-width: 768px) {
-      .features-section {
-        flex-direction: column;
-      }
-    
-      .feature {
-        margin-bottom: 20px;
-      }
-    }
-    </style>
-    {% schema %}
+  }
+</style>
+{% schema %}
 {
   "name": "Feature Section",
   "blocks": [

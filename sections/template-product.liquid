@@ -1,141 +1,141 @@
 <!-- Product Section -->
 <div class="product-section max-w-6xl mx-auto my-8">
-    <!-- Product Images Carousel -->
-    <div class="product-carousel">
-      <button class="carousel-button prev">‹</button>
-      <div class="carousel-images">
-        {% for media in product.media %}
-          <div class="carousel-image{% unless forloop.first %} hidden{% endunless %}">
-            {% render 'product-media', media: media %}
-          </div>
-        {% endfor %}
-      </div>
-      <button class="carousel-button next">›</button>
-    </div>
-  
-    <!-- Product Information -->
-    <div class="product-information">
-        <h1 class="producte product-title">{{ product.title }}</h1>
-        <p class="producte product-price">{{ product.price | money }}</p>
-        <form action="/cart/add" method="post">
-            <select name="id">
-            {% for variant in product.variants %}
-                <option class='producte' value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>
-            {% endfor %}
-            </select>
-            <input type="submit" class='btncart' value="Add to Cart">
-        </form>
-        <div class="producte pe product-description">
-            {{ product.description }}
+  <!-- Product Images Carousel -->
+  <div class="product-carousel">
+    <button class="carousel-button prev">‹</button>
+    <div class="carousel-images">
+      {% for media in product.media %}
+        <div class="carousel-image{% unless forloop.first %} hidden{% endunless %}">
+          {% render 'product-media', media: media %}
         </div>
+      {% endfor %}
+    </div>
+    <button class="carousel-button next">›</button>
+  </div>
+
+  <!-- Product Information -->
+  <div class="product-information">
+    <h1 class="productey product-title">{{ product.title }}</h1>
+    <p class="producte product-price">{{ product.price | money }}</p>
+    <form action="/cart/add" method="post">
+      <select name="id">
+        {% for variant in product.variants %}
+          <option class="producte" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>
+        {% endfor %}
+      </select>
+      <input type="submit" class="btncart" value="Add to Cart">
+    </form>
+    <div class="producte pe product-description">
+      {{ product.description }}
     </div>
   </div>
-  <!-- Styles -->
+</div>
+<!-- Styles -->
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
-  
-    .producte {
-      font-family: 'Libre Baskerville', serif;
-    }
-    .product-title {
-      font-size: 45px;
-    }
-    .pe {
-      width: 100%;
-    }
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+  .producte {
+    font-family: 'Libre Baskerville', serif;
+  }
+  .productey {
+    font-family: 'Pierson';
+  }
+  .product-title {
+    font-size: 45px;
+  }
+  .pe {
+    width: 100%;
+  }
+  .product-section {
+    display: flex;
+    flex-wrap: wrap; /* Wrap items for responsiveness */
+    gap: 20px;
+    justify-content: center; /* Center the content */
+  }
+  .product-carousel {
+    position: relative;
+    width: 100%;
+    max-width: 500px; /* Set a max-width for the images */
+    margin: auto; /* Center the carousel */
+  }
+  .carousel-images {
+    display: flex;
+    overflow: hidden;
+  }
+  .carousel-image {
+    min-width: 100%;
+    transition: transform 0.5s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Box shadow for the image */
+    border-radius: 8px; /* Rounded corners for the image */
+  }
+  .carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  .prev {
+    left: 10px;
+  }
+  .next {
+    right: 10px;
+  }
+  .hidden {
+    display: none;
+  }
+  .product-information {
+    width: 100%;
+    max-width: 500px; /* Set a max-width for the information box */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+    margin: auto; /* Center the information box */
+  }
+
+  /* Responsive media query */
+  @media (min-width: 768px) {
     .product-section {
-      display: flex;
-      flex-wrap: wrap; /* Wrap items for responsiveness */
-      gap: 20px;
-      justify-content: center; /* Center the content */
+      flex-wrap: nowrap;
     }
-    .product-carousel {
-      position: relative;
-      width: 100%;
-      max-width: 500px; /* Set a max-width for the images */
-      margin: auto; /* Center the carousel */
-    }
-    .carousel-images {
-      display: flex;
-      overflow: hidden;
-    }
-    .carousel-image {
-      min-width: 100%;
-      transition: transform 0.5s ease;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Box shadow for the image */
-      border-radius: 8px; /* Rounded corners for the image */
-    }
-    .carousel-button {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      font-size: 24px;
-      cursor: pointer;
-    }
-    .prev {
-      left: 10px;
-    }
-    .next {
-      right: 10px;
-    }
-    .hidden {
-      display: none;
-    }
+    .product-carousel,
     .product-information {
-      width: 100%;
-      max-width: 500px; /* Set a max-width for the information box */
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 30px;
-      margin: auto; /* Center the information box */
+      width: 50%;
     }
-  
-    /* Responsive media query */
-    @media (min-width: 768px) {
-      .product-section {
-        flex-wrap: nowrap;
-      }
-      .product-carousel,
-      .product-information {
-        width: 50%;
-      }
+  }
+  .btncart {
+    padding: 10px 40px;
+    background: black;
+    color: white;
+  }
+  /* More styles can be added here for other responsive breakpoints */
+</style>
+
+<!-- JavaScript -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const prevButton = document.querySelector('.carousel-button.prev');
+    const nextButton = document.querySelector('.carousel-button.next');
+    const images = document.querySelectorAll('.carousel-image');
+    let currentIndex = 0;
+
+    function showImage(index) {
+      images[currentIndex].classList.add('hidden');
+      images[index].classList.remove('hidden');
+      currentIndex = index;
     }
-    .btncart{
-    
-      padding: 10px 40px;
-      background: black;
-      color: white;
-    }
-    /* More styles can be added here for other responsive breakpoints */
-  </style>
-  
-  
-  <!-- JavaScript -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const prevButton = document.querySelector('.carousel-button.prev');
-      const nextButton = document.querySelector('.carousel-button.next');
-      const images = document.querySelectorAll('.carousel-image');
-      let currentIndex = 0;
-  
-      function showImage(index) {
-        images[currentIndex].classList.add('hidden');
-        images[index].classList.remove('hidden');
-        currentIndex = index;
-      }
-  
-      prevButton.addEventListener('click', function() {
-        const nextIndex = currentIndex > 0 ? currentIndex - 1 : images.length - 1;
-        showImage(nextIndex);
-      });
-  
-      nextButton.addEventListener('click', function() {
-        const nextIndex = currentIndex < images.length - 1 ? currentIndex + 1 : 0;
-        showImage(nextIndex);
-      });
+
+    prevButton.addEventListener('click', function () {
+      const nextIndex = currentIndex > 0 ? currentIndex - 1 : images.length - 1;
+      showImage(nextIndex);
     });
-  </script>
-  
+
+    nextButton.addEventListener('click', function () {
+      const nextIndex = currentIndex < images.length - 1 ? currentIndex + 1 : 0;
+      showImage(nextIndex);
+    });
+  });
+</script>

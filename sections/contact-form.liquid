@@ -1,246 +1,250 @@
-<div class='contact'>
-    <div class='title'>
-        {% if section.settings.title != blank %}
-            <h1 class="text-3xl font-medium my-8 md:my-16">{{ section.settings.title }}</h1>
-        {% endif %}
-    </div>
-    {% form 'contact' %}
-        <div class="flex-1 mx-auto items-center justify-center max-w-4xl px-4">
-                {% if form.errors %}
-                    <div class="border p-5">
-                        <div class="flex flex-row items-center w-full my-3">
-                            <div class="text-red-500">
-                                {% render 'icon-failed' %}
-                            </div>
-                            <div class="text-sm font-medium ml-3">
-                                Oh no! Your message is not sent
-                            </div>
-                        </div>
-                        <ul class="px-4 mb-3 ml-7 list-decimal">
-                            {% for error in form.errors %}
-                                <li>
-                                    <span>{{ form.errors.messages[error] }}</span>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                {% elsif form.posted_successfully? %}
-                    <div class="flex flex-row items-center w-full my-3 p-5">
-                        <div class="text-green-500">
-                            {% render 'icon-success' %}
-                        </div>
-                        <div class="text-sm font-medium ml-3">Message was sent successfully</div>
-                    </div>
-                {% endif %}
-
-                <div class="px-1 md:flex mb-3">
-                    <div class="px-3 md:w-1/2">
-                        <label for="contact_name" class="text-gray-700 font-medium uppercase text-xs mb-2">Name</label>
-                        <input 
-                            type="text" 
-                            name="contact[name]" 
-                            id="contact_name" 
-                            class="w-full text-gray-700 border py-3 px-4 mb-3 focus:outline-none"
-                            placeholder="Jane Doe"
-                            required
-                        >
-                    </div>
-                    <div class="px-3 md:w-1/2">
-                        <label for="comment_email" class="text-gray-700 font-medium uppercase text-xs mb-2">Email</label>
-                        <input 
-                            type="email" 
-                            name="contact[email]" 
-                            id="contact_email" 
-                            class="w-full text-gray-700 border py-3 px-4 mb-3 focus:outline-none"
-                            placeholder="jane@doe.com"
-                            required
-                        >
-                    </div>
-                </div>
-                <div class="px-1 md:flex mb-3">
-                    <div class="message">
-                        <label for="contact_message" class="text-gray-700 font-medium uppercase text-xs mb-2">Comment</label>
-                        <textarea class="w-full text-gray-700 resize-none h-20 py-2 px-3 focus:outline-none border" name="contact[body]" id="contact_message" required></textarea>
-                    </div>
-                </div>
-                <div class="px-1 md:flex mb-3">
-                    <div class="btn">
-                        <input type="submit" class="w-full cursor-pointer px-4 py-2 border text-base font-medium text-white bg-gray-900 hover:bg-gray-500" value="Submit message">
-                    </div>
-                </div>
+<div class="contact">
+  <div class="pierson">
+    {% if section.settings.title != blank %}
+      <h1>{{ section.settings.title }}</h1>
+    {% endif %}
+  </div>
+  {% form 'contact' %}
+    <div class="flex-1 mx-auto items-center justify-center max-w-4xl px-4">
+      {% if form.errors %}
+        <div class="border p-5">
+          <div class="flex flex-row items-center w-full my-3">
+            <div class="text-red-500">
+              {% render 'icon-failed' %}
             </div>
-        {% endform %}
+            <div class="text-sm font-medium ml-3">Oh no! Your message is not sent</div>
+          </div>
+          <ul class="px-4 mb-3 ml-7 list-decimal">
+            {% for error in form.errors %}
+              <li>
+                <span>{{ form.errors.messages[error] }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% elsif form.posted_successfully? %}
+        <div class="flex flex-row items-center w-full my-3 p-5">
+          <div class="text-green-500">
+            {% render 'icon-success' %}
+          </div>
+          <div class="text-sm font-medium ml-3">Message was sent successfully</div>
+        </div>
+      {% endif %}
+
+      <div class="px-1 md:flex mb-3">
+        <div class="px-3 md:w-1/2">
+          <label for="contact_name" class="text-gray-700 font-medium uppercase text-xs mb-2">Name</label>
+          <input
+            type="text"
+            name="contact[name]"
+            id="contact_name"
+            class="w-full text-gray-700 border py-3 px-4 mb-3 focus:outline-none"
+            placeholder="Jane Doe"
+            required
+          >
+        </div>
+        <div class="px-3 md:w-1/2">
+          <label for="comment_email" class="text-gray-700 font-medium uppercase text-xs mb-2">Email</label>
+          <input
+            type="email"
+            name="contact[email]"
+            id="contact_email"
+            class="w-full text-gray-700 border py-3 px-4 mb-3 focus:outline-none"
+            placeholder="jane@doe.com"
+            required
+          >
+        </div>
+      </div>
+      <div class="px-1 md:flex mb-3">
+        <div class="message">
+          <label for="contact_message" class="text-gray-700 font-medium uppercase text-xs mb-2">Comment</label>
+          <textarea
+            class="w-full text-gray-700 resize-none h-20 py-2 px-3 focus:outline-none border"
+            name="contact[body]"
+            id="contact_message"
+            required
+          ></textarea>
+        </div>
+      </div>
+      <div class="px-1 md:flex mb-3">
+        <div class="btn">
+          <input
+            type="submit"
+            class="w-full cursor-pointer px-4 py-2 border text-base font-medium text-white bg-gray-900 hover:bg-gray-500"
+            value="Submit message"
+          >
+        </div>
+      </div>
+    </div>
+  {% endform %}
 </div>
 
 <style>
-.contact{
-    
+  .contact {
     width: 69%;
     margin: auto;
-}
+  }
 
-.message{
+  .message {
     width: 100%;
-}
+  }
 
-/* Base styles */
-.flex {
+  /* Base styles */
+  .flex {
     display: flex;
-}
+  }
 
-.flex-col {
+  .flex-col {
     flex-direction: column;
-}
+  }
 
-.items-center {
+  .items-center {
     align-items: center;
-}
+  }
 
-.my-8 {
+  .my-8 {
     margin-top: 2rem;
     margin-bottom: 2rem;
-}
-.btn{
+  }
+  .btn {
     width: 100%;
-}
-.text-3xl {
+  }
+  .text-3xl {
     font-size: 1.875rem;
-}
+  }
 
-.font-medium {
+  .font-medium {
     font-weight: 500;
-}
+  }
 
-/* Responsive styles */
-@media (min-width: 768px) {
+  /* Responsive styles */
+  @media (min-width: 768px) {
     .my-16 {
-        margin-top: 4rem;
-        margin-bottom: 4rem;
+      margin-top: 4rem;
+      margin-bottom: 4rem;
     }
 
     .md\:w-1\/2 {
-        width: 50%;
+      width: 50%;
     }
-}
+  }
 
-/* Form styles */
-.uppercase {
+  /* Form styles */
+  .uppercase {
     text-transform: uppercase;
-}
+  }
 
-.text-xs {
+  .text-xs {
     font-size: 0.75rem;
-}
+  }
 
-.text-gray-500 {
+  .text-gray-500 {
     color: #6b7280;
-}
+  }
 
-.text-gray-700 {
+  .text-gray-700 {
     color: #4b5563;
-}
+  }
 
-.text-gray-900 {
+  .text-gray-900 {
     color: #1f2937;
-}
+  }
 
-.text-red-500 {
+  .text-red-500 {
     color: #ef4444;
     width: 30px;
-}
+  }
 
-.box{
-
+  .box {
     padding: 6px;
-    border: 1px solid black;}
+    border: 1px solid black;
+  }
 
-.text-sm {
+  .text-sm {
     font-size: 0.875rem;
-}
+  }
 
-.text-green-500 {
+  .text-green-500 {
     color: #10b981;
     width: 30px;
-}
+  }
 
-.border {
+  .border {
     border-width: 1px;
     border-style: solid;
-}
+  }
 
-.py-3 {
+  .py-3 {
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
-}
+  }
 
-
-
-.px-1 {
+  .px-1 {
     padding-left: 0.25rem;
     padding-right: 0.25rem;
-}
+  }
 
-.mb-3 {
+  .mb-3 {
     margin-bottom: 0.75rem;
-}
+  }
 
-.ml-7 {
+  .ml-7 {
     margin-left: 1.75rem;
-}
+  }
 
-.w-full {
+  .w-full {
     width: 100%;
-}
+  }
 
-.cursor-pointer {
+  .cursor-pointer {
     cursor: pointer;
-}
+  }
 
-.py-2 {
+  .py-2 {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-}
+  }
 
-/* Background and hover styles */
-.bg-gray-900 {
+  /* Background and hover styles */
+  .bg-gray-900 {
     background-color: #111827;
-}
+  }
 
-.bg-gray-700 {
+  .bg-gray-700 {
     background-color: #4b5563;
-}
+  }
 
-.hover\:bg-gray-700:hover {
+  .hover\:bg-gray-700:hover {
     background-color: #4b5563;
-}
+  }
 
-/* Button styles */
-.border-gray-900 {
+  /* Button styles */
+  .border-gray-900 {
     border-color: #111827;
-}
+  }
 
-.bg-gray-900 {
+  .bg-gray-900 {
     background-color: #111827;
-}
+  }
 
-.text-base {
+  .text-base {
     font-size: 1rem;
-}
+  }
 
-.font-medium {
+  .font-medium {
     font-weight: 500;
-}
+  }
 
-.text-white {
+  .text-white {
     color: #ffffff;
-}
+  }
 
-.hover\:bg-gray-700:hover {
+  .hover\:bg-gray-700:hover {
     background-color: #4b5563;
-}
+  }
 
-/* Form input styles */
-.input {
+  /* Form input styles */
+  .input {
     display: block;
     width: 100%;
     padding: 0.75rem 1rem;
@@ -251,60 +255,61 @@
     line-height: 1.5;
     color: #374151;
     background-color: #f3f4f6;
-}
+  }
 
-/* Other styles */
-.hidden {
+  /* Other styles */
+  .hidden {
     display: none;
-}
+  }
 
-/* Icon styles (You may need to adjust these based on your actual icon styles) */
-.icon-failed{
+  /* Icon styles (You may need to adjust these based on your actual icon styles) */
+  .icon-failed {
     width: 30px;
-    color: red
-}
-.icon-success{
+    color: red;
+  }
+  .icon-success {
     width: 30px;
     color: green;
-}
+  }
 
-.icon-dropdown,
-.icon-bag {
+  .icon-dropdown,
+  .icon-bag {
     /* Add your icon styles here */
-}
+  }
 
-/* Responsive styles */
-@media (max-width: 768px) {
+  /* Responsive styles */
+  @media (max-width: 768px) {
     /* Add your responsive styles here */
-}
+  }
 
+  @font-face {
+    font-family: testing;
+    src: url(../fonts/Pierson-Light.woff);
+  }
 
-.title{
+  h1 {
     font-family: 'Pierson';
+    font-size: 50px;
+    color: black;
+    margin-left: 20px;
     text-align: center;
-}
-@font_face {
-    font-family: 'Pierson';
-    font-style: normal;
-    src: url(../fonts/TTF/Pierson-Light.ttf);
-}
-
+  }
 </style>
 
 {% schema %}
 {
-    "name": "Contact Form",
-    "settings": [
-        {
-            "type": "text",
-            "id": "title",
-            "label": "Title"
-        }
-    ],
-    "presets": [
-        {
-            "name": "Contact Form"
-        }
-    ]
+  "name": "Contact Form",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Form"
+    }
+  ]
 }
 {% endschema %}

@@ -1,131 +1,141 @@
 <div class="about-section">
-    <div class="about-text">
-      <h2 class='titley'>{{ section.settings.title }}</h2>
-      <h3 class='subtitley' >{{ section.settings.subtitle }}</h3>
-      <p class='py'>{{ section.settings.description }}</p>
-      <div class="contact-info">
-        <h4  class='contacty'>Contact Information</h4>
-        <p  class='detaily'>Phone: {{ section.settings.phone_number }}</p>
-        <p  class='detaily'>Email: <a href="mailto:{{ section.settings.email_address }}">{{ section.settings.email_address }}</a></p>
-      </div>
-      {% if section.settings.button_label != blank %}
-        <a href="{{ section.settings.button_link }}" class="texty">
+  <div class="about-text">
+    <h1 class="titley">{{ section.settings.title }}</h1>
+    <h1 class="subtitley">{{ section.settings.subtitle }}</h1>
+    <p class="py">{{ section.settings.description }}</p>
+    <div class="contact-info">
+      <h4 class="contacty">Contact Information</h4>
+      <p class="detaily">Phone: {{ section.settings.phone_number }}</p>
+      <p class="detaily">
+        Email: <a href="mailto:{{ section.settings.email_address }}">{{ section.settings.email_address }}</a>
+      </p>
+    </div>
+    {% if section.settings.button_label != blank %}
+      <a href="{{ section.settings.button_link }}" class="texty">
         {{ section.settings.button_label }}
       </a>
     {% endif %}
-    </div>
-    <div class="about-image">
-      {% if section.settings.image != blank %}
-        <img src="{{ section.settings.image | img_url: '800x' }}" alt="{{ section.settings.title | escape }}">
-      {% else %}
-        <img src="https://via.placeholder.com/800" alt="placeholder">
-      {% endif %}
-    </div>
   </div>
+  <div class="about-image">
+    {% if section.settings.image != blank %}
+      <img src="{{ section.settings.image | img_url: '800x' }}" alt="{{ section.settings.title | escape }}">
+    {% else %}
+      <img src="https://via.placeholder.com/800" alt="placeholder">
+    {% endif %}
+  </div>
+</div>
 
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
-    
-    .about-section {
-      display: flex;
-      flex-wrap: wrap; /* Allow the items to wrap for smaller screens */
-      font-family: 'Libre Baskerville', serif;
-      margin-bottom: 100px;
-    }
-    
-    .about-text {
-      flex: 1 1 50%; /* Take up half of the space on larger screens, but allow shrinking */
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 22px;
-    }
-    
-    .about-image {
-      flex: 1 1 50%; /* Take up half of the space on larger screens, but allow shrinking */
-      display: flex;
-      justify-content: center; /* Center image within the space */
-    }
-    
-    .about-image img {
-      width: 100%; /* Make the image responsive */
-      height: auto; /* Maintain aspect ratio */
-      max-width: 800px; /* Max image width */
-    }
-    
-    .titley, .subtitley, .py, .contacty, .detaily {
-      text-align: left;
-    }
-    
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+  .about-section {
+    display: flex;
+    flex-wrap: wrap; /* Allow the items to wrap for smaller screens */
+    font-family: 'Libre Baskerville', serif;
+    margin-bottom: 100px;
+  }
+
+  .about-text {
+    flex: 1 1 50%; /* Take up half of the space on larger screens, but allow shrinking */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .about-image {
+    flex: 1 1 50%; /* Take up half of the space on larger screens, but allow shrinking */
+    display: flex;
+    justify-content: center; /* Center image within the space */
+  }
+
+  .about-image img {
+    width: 100%; /* Make the image responsive */
+    height: auto; /* Maintain aspect ratio */
+    max-width: 800px; /* Max image width */
+  }
+
+  .titley,
+  .subtitley,
+  .py,
+  .contacty,
+  .detaily {
+    text-align: left;
+  }
+
+  .titley {
+    font-size: 62px;
+  }
+
+  .subtitley {
+    font-size: 35px;
+  }
+
+  .py {
+    font-size: 15px;
+  }
+
+  .contacty {
+    font-size: 22px;
+  }
+
+  .detaily {
+    font-size: 18px;
+  }
+
+  .texty {
+    padding: 10px 20px;
+    border: 2px solid black;
+    width: fit-content; /* Fit to content size */
+    display: block; /* Make it block to allow for margin */
+    text-align: center;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 1024px) {
     .titley {
-      font-size: 62px;
+      font-size: 48px; /* Slightly smaller font size for tablets */
     }
-    
+
     .subtitley {
-      font-size: 35px;
+      font-size: 28px;
     }
-    
-    .py {
-      font-size: 15px;
-    }
-    
-    .contacty {
-      font-size: 22px;
-    }
-    
+
+    .py,
+    .contacty,
     .detaily {
-      font-size: 18px;
+      font-size: 16px;
     }
-    
-    .texty {
-      padding: 10px 20px;
-      border: 2px solid black;
-      width: fit-content; /* Fit to content size */
-      display: block; /* Make it block to allow for margin */
-      text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .about-section {
+      flex-direction: column; /* Stack the elements on smaller screens */
     }
-    
-    /* Responsive adjustments */
-    @media (max-width: 1024px) {
-      .titley {
-        font-size: 48px; /* Slightly smaller font size for tablets */
-      }
-    
-      .subtitley {
-        font-size: 28px;
-      }
-    
-      .py, .contacty, .detaily {
-        font-size: 16px;
-      }
+
+    .about-text,
+    .about-image {
+      width: 100%; /* Full width on small screens */
+      max-width: none; /* Override any max-width set */
     }
-    
-    @media (max-width: 768px) {
-      .about-section {
-        flex-direction: column; /* Stack the elements on smaller screens */
-      }
-    
-      .about-text, .about-image {
-        width: 100%; /* Full width on small screens */
-        max-width: none; /* Override any max-width set */
-      }
-    
-      .titley {
-        font-size: 36px; /* Even smaller font size for mobile devices */
-      }
-    
-      .subtitley {
-        font-size: 24px;
-      }
-    
-      .py, .contacty, .detaily {
-        font-size: 14px;
-      }
+
+    .titley {
+      font-size: 36px; /* Even smaller font size for mobile devices */
     }
-    </style>
-    
-  
-  {% schema %}
+
+    .subtitley {
+      font-size: 24px;
+    }
+
+    .py,
+    .contacty,
+    .detaily {
+      font-size: 14px;
+    }
+  }
+</style>
+
+{% schema %}
 {
   "name": "About Us Section",
   "settings": [
@@ -166,14 +176,14 @@
       "info": "Upload an image for the about section."
     },
     {
-        "type": "url",
-        "id": "button_link",
-        "label": "Button Link"
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
     },
     {
-        "type": "text",
-        "id": "button_label",
-        "label": "Button Label"
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label"
     }
   ],
   "presets": [

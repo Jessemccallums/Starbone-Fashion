@@ -1,4 +1,12 @@
 /* index.css */
+@font_face {
+    font-family: 'Pierson';
+    font-style: normal;
+}
+
+h1{
+    font-family: 'Pierson';
+}
 
 /* Navigation Styles */
 .navbar {

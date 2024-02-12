@@ -2,108 +2,112 @@
   <div class="container">
     <div class="image">
       {% if section.settings.image != blank %}
-        <img class='img' src="{{ section.settings.image | img_url: '800x' }}" alt="{{ section.settings.title | escape }}">
+        <img
+          class="img"
+          src="{{ section.settings.image | img_url: '800x' }}"
+          alt="{{ section.settings.title | escape }}"
+        >
       {% endif %}
     </div>
-   </div>
-  
-      <div class="container2">
-        {% if section.settings.title != blank %}
-          <h2 class="title3">{{ section.settings.title }}</h2>
-        {% endif %}
-  
-        {% if section.settings.description != blank %}
-          <p class="text">{{ section.settings.description }}</p>
-        {% endif %}
-        
-        {% if section.settings.button_label != blank %}
-          <a href="{{ section.settings.button_link }}" class="text1">
-          {{ section.settings.button_label }}
-        </a>
-      {% endif %}
   </div>
+
+  <div class="container2">
+    {% if section.settings.title != blank %}
+      <h2 class="title3">{{ section.settings.title }}</h2>
+    {% endif %}
+
+    {% if section.settings.description != blank %}
+      <p class="text">{{ section.settings.description }}</p>
+    {% endif %}
+
+    {% if section.settings.button_label != blank %}
+      <a href="{{ section.settings.button_link }}" class="text1">
+        {{ section.settings.button_label }}
+      </a>
+    {% endif %}
   </div>
-  
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
-    
-    .custom-section {
-      position: relative;
-      text-align: center; /* Center the text for smaller screens */
-    }
-    
-    .img {
-      width: 100%;
-      height: auto; /* Maintain aspect ratio */
-    }
-    
-    .container2 {
-      position: absolute;
-      z-index: 100;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%); /* Center container2 */
-      color: white;
-      max-width: 90%; /* Limit the width to ensure padding on smaller screens */
-    }
-    
+</div>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+  .custom-section {
+    position: relative;
+    text-align: center; /* Center the text for smaller screens */
+  }
+
+  .img {
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+  }
+
+  .container2 {
+    position: absolute;
+    z-index: 100;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center container2 */
+    color: white;
+    max-width: 90%; /* Limit the width to ensure padding on smaller screens */
+  }
+
+  .title3 {
+    font-family: 'Pierson', 'Libre Baskerville', serif;
+    font-size: 2.5rem; /* Start with a reasonable size on mobile */
+    margin: 0.5rem 0; /* Add some vertical spacing */
+  }
+
+  .text {
+    font-family: 'Pierson', 'Libre Baskerville', serif;
+    font-size: 1rem; /* 16px */
+    margin: 0.5rem 0; /* Add some vertical spacing */
+  }
+
+  .text1 {
+    font-family: 'Pierson', 'Libre Baskerville', serif;
+    background-color: transparent;
+    border: 2px solid white;
+    border-radius: 5px;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: inline-block; /* Use inline-block for proper spacing */
+    margin-top: 1rem; /* Add space above the button */
+    width: auto; /* Auto width for flexibility */
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
     .title3 {
-      font-family: 'Pierson', 'Libre Baskerville', serif;
-      font-size: 2.5rem; /* Start with a reasonable size on mobile */
-      margin: 0.5rem 0; /* Add some vertical spacing */
+      font-size: 2rem; /* Reduce title size on tablets */
     }
-    
-    .text {
-      font-family: 'Libre Baskerville', serif;
-      font-size: 1rem; /* 16px */
-      margin: 0.5rem 0; /* Add some vertical spacing */
+
+    .container2 {
+      left: 50%; /* Keep centered on mobile */
+      top: 50%; /* Adjust top position */
+      padding: 0 15px; /* Add padding on smaller screens */
     }
-    
+
     .text1 {
-      font-family: 'Libre Baskerville', serif;
-      background-color: transparent;
-      border: 2px solid white;
-      border-radius: 5px;
-      text-decoration: none;
-      padding: 10px 20px;
-      display: inline-block; /* Use inline-block for proper spacing */
-      margin-top: 1rem; /* Add space above the button */
-      width: auto; /* Auto width for flexibility */
+      width: auto; /* Allow button width to adjust */
     }
-    
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-      .title3 {
-        font-size: 2rem; /* Reduce title size on tablets */
-      }
-    
-      .container2 {
-        left: 50%; /* Keep centered on mobile */
-        top: 50%; /* Adjust top position */
-        padding: 0 15px; /* Add padding on smaller screens */
-      }
-    
-      .text1 {
-        width: auto; /* Allow button width to adjust */
-      }
+  }
+
+  @media (max-width: 480px) {
+    .title3 {
+      font-size: 1.5rem; /* Even smaller title size on mobile */
     }
-    
-    @media (max-width: 480px) {
-      .title3 {
-        font-size: 1.5rem; /* Even smaller title size on mobile */
-      }
-    
-      .text {
-        font-size: 0.875rem; /* Smaller text on mobile */
-      }
-    
-      .container2 {
-        top: 40%; /* Adjust top position for mobile */
-      }
+
+    .text {
+      font-size: 0.875rem; /* Smaller text on mobile */
     }
-    </style>
-    
-  {% schema %}
+
+    .container2 {
+      top: 40%; /* Adjust top position for mobile */
+    }
+  }
+</style>
+
+{% schema %}
 {
   "name": "Special Offer",
   "settings": [
