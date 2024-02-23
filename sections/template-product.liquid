@@ -1,22 +1,31 @@
-<!-- Product Section -->
-<div class="product-section max-w-6xl mx-auto my-8">
+<div class="">
   <!-- Product Images Carousel -->
-  <div class="product-carousel">
-    <button class="carousel-button prev">‹</button>
-    <div class="carousel-images">
-      {% for media in product.media %}
-        <div class="carousel-image{% unless forloop.first %} hidden{% endunless %}">
-          {% render 'product-media', media: media %}
-        </div>
-      {% endfor %}
-    </div>
-    <button class="carousel-button next">›</button>
+  <div id="left" class="product-carousel sticky">
+    <!-- Carousel buttons and images here -->
+    {% for media in product.media %}
+      <div class="carousel-image{% unless forloop.first %} hidden{% endunless %}">
+        {% render 'product-media', media: media %}
+      </div>
+    {% endfor %}
   </div>
 
   <!-- Product Information -->
-  <div class="product-information">
+  <div id="right" class="product-information sticky">
     <h1 class="productey product-title">{{ product.title }}</h1>
+
+    <!-- Display original price crossed out if the product is on sale -->
+    {% if product.compare_at_price > product.price %}
+      <p>
+        <del>{{ product.compare_at_price | money }}</del>
+      </p>
+    {% endif %}
+
     <p class="producte product-price">{{ product.price | money }}</p>
+
+    <!-- Quantity Selector -->
+    <label for="quantity">Quantity:</label>
+    <input type="number" id="quantity" name="quantity" min="1" value="1">
+
     <form action="/cart/add" method="post">
       <select name="id">
         {% for variant in product.variants %}
@@ -24,22 +33,93 @@
         {% endfor %}
       </select>
       <input type="submit" class="btncart" value="Add to Cart">
+
+      <!-- Buy It Now Button -->
+      <button type="button" class="btncart">Buy It Now</button>
+
+      <!-- Product Description -->
+      <div class="producte pe product-description">
+        {{ product.description }}
+      </div>
     </form>
-    <div class="producte pe product-description">
-      {{ product.description }}
-    </div>
   </div>
 </div>
 <!-- Styles -->
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
-
+  #right {
+    float: right;
+    width: 50%;
+    height: 50%;
+    margin: 0;
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+    margin: auto;
+  }
+  #right.stick {
+    position: fixed;
+    top: 50px;
+    right: 0;
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+    margin: auto;
+  }
+  #left {
+    float: left;
+    width: 100%;
+    height: 100%;
+    background: red;
+    margin-top: 0;
+  }
   .producte {
     font-family: 'Libre Baskerville', serif;
   }
   .product-title {
     font-size: 45px;
   }
+  /* Styles for the Quantity Selector */
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  input[type='number'] {
+    width: 60px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+
+  /* Styles for the Buy It Now Button */
+  button.btncart {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+
+  button.btncart:hover {
+    background-color: #444;
+  }
+
   .pe {
     width: 100%;
   }
@@ -113,7 +193,7 @@
 
 <!-- JavaScript -->
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+  {% comment %} document.addEventListener('DOMContentLoaded', function () {
     const prevButton = document.querySelector('.carousel-button.prev');
     const nextButton = document.querySelector('.carousel-button.next');
     const images = document.querySelectorAll('.carousel-image');
@@ -134,5 +214,21 @@
       const nextIndex = currentIndex < images.length - 1 ? currentIndex + 1 : 0;
       showImage(nextIndex);
     });
-  });
+  }); {% endcomment %}
+    // set everything outside the onscroll event (less work per scroll)
+    var right = document.getElementById("right");
+    var stop = (right.offsetTop - 60);
+
+    window.onscroll = function (e) {
+        var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+        console.log(scrollTop, right.offsetTop);
+
+
+        if (scrollTop >= stop) {
+            right.className = 'stick';
+        } else {
+            right.className = '';
+        }
+
+    }
 </script>

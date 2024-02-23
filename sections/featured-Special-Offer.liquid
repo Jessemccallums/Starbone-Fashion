@@ -1,142 +1,183 @@
-<div class="custom-section">
-  <div class="container">
-    <div class="image">
-      {% if section.settings.image != blank %}
-        <img
-          class="img"
-          src="{{ section.settings.image | img_url: '800x' }}"
-          alt="{{ section.settings.title | escape }}"
+{% comment %}
+  Customizable Slideshow Section with Editable Button Background Color and Text Sizes
+{% endcomment %}
+
+<div class="slideshow-container">
+  {% for block in section.blocks %}
+    <div class="mySlides fade">
+      <img src="{{ block.settings.image | img_url: '800x' }}" alt="" style="width:100%;">
+      <div class="slide-text" style="font-size: {{ block.settings.text_size }}px;">
+        {{ block.settings.slide_text }}
+        <a
+          href="{{ block.settings.button_url }}"
+          class="slide-button"
+          style="background-color: {{ block.settings.button_bg_color }}; font-size: {{ block.settings.button_text_size }}px;"
         >
-      {% endif %}
+          {{- block.settings.button_text -}}
+        </a>
+      </div>
     </div>
-  </div>
-
-  <div class="container2">
-    {% if section.settings.title != blank %}
-      <h1 class="title3">{{ section.settings.title }}</h1>
-    {% endif %}
-
-    {% if section.settings.description != blank %}
-      <h1 class="text">{{ section.settings.description }}</h1>
-    {% endif %}
-
-    {% if section.settings.button_label != blank %}
-      <a href="{{ section.settings.button_link }}" class="text1">
-        {{ section.settings.button_label }}
-      </a>
-    {% endif %}
-  </div>
+  {% endfor %}
+  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  <a class="next" onclick="plusSlides(1)">&#10095;</a>
 </div>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
-
-  .custom-section {
+  .slideshow-container {
     position: relative;
-    text-align: center; /* Center the text for smaller screens */
+    max-width: 100%;
+    height: 500px;
+    margin: auto;
+    overflow: hidden;
   }
 
-  .img {
+  .mySlides {
+    display: none;
+    position: relative;
+    height: 100%;
+  }
+
+  .mySlides img {
     width: 100%;
-    height: auto; /* Maintain aspect ratio */
+    height: 100%;
+    object-fit: cover;
   }
 
-  .container2 {
+  .slide-text {
     position: absolute;
-    z-index: 100;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Center container2 */
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white; /* Adjust based on your needs */
+  }
+
+  .slide-button {
+    display: inline-block;
     color: white;
-    max-width: 90%; /* Limit the width to ensure padding on smaller screens */
-  }
-
-  .title3 {
-    font-size: 2.5rem; /* Start with a reasonable size on mobile */
-    margin: 0.5rem 0; /* Add some vertical spacing */
-  }
-
-  .text {
-    font-size: 1rem; /* 16px */
-    margin: 0.5rem 0; /* Add some vertical spacing */
-  }
-
-  .text1 {
-    background-color: transparent;
-    border: 2px solid white;
-    border-radius: 5px;
-    text-decoration: none;
     padding: 10px 20px;
-    display: inline-block; /* Use inline-block for proper spacing */
-    margin-top: 1rem; /* Add space above the button */
-    width: auto; /* Auto width for flexibility */
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
   }
 
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .title3 {
-      font-size: 2rem; /* Reduce title size on tablets */
-    }
-
-    .container2 {
-      left: 50%; /* Keep centered on mobile */
-      top: 50%; /* Adjust top position */
-      padding: 0 15px; /* Add padding on smaller screens */
-    }
-
-    .text1 {
-      width: auto; /* Allow button width to adjust */
-    }
+  .slide-button:hover {
+    opacity: 0.8;
   }
 
-  @media (max-width: 480px) {
-    .title3 {
-      font-size: 1.5rem; /* Even smaller title size on mobile */
-    }
+  .prev,
+  .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    user-select: none;
+  }
 
-    .text {
-      font-size: 0.875rem; /* Smaller text on mobile */
-    }
+  .next {
+    right: 0;
+  }
 
-    .container2 {
-      top: 40%; /* Adjust top position for mobile */
-    }
+  .prev {
+    left: 0;
   }
 </style>
 
+<script>
+  var slideIndex = 1;
+  showSlides(slideIndex);
+
+  function plusSlides(n) {
+    showSlides((slideIndex += n));
+  }
+
+  function showSlides(n) {
+    var i;
+    var slides = document.getElementsByClassName('mySlides');
+    if (n > slides.length) {
+      slideIndex = 1;
+    }
+    if (n < 1) {
+      slideIndex = slides.length;
+    }
+    for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = 'none';
+    }
+    slides[slideIndex - 1].style.display = 'block';
+  }
+</script>
+
 {% schema %}
 {
-  "name": "Special Offer",
-  "settings": [
+  "name": "Customizable Slideshow",
+  "max_blocks": 5,
+  "blocks": [
     {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Image"
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Title"
-    },
-    {
-      "type": "textarea",
-      "id": "description",
-      "label": "Description"
-    },
-    {
-      "type": "text",
-      "id": "button_label",
-      "label": "Button Label"
-    },
-    {
-      "type": "url",
-      "id": "button_link",
-      "label": "Button Link"
+      "type": "image",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "slide_text",
+          "label": "Slide Text",
+          "default": "Your Slide Text Here"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button URL",
+          "default": "http://example.com"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Learn More"
+        },
+        {
+          "type": "color",
+          "id": "button_bg_color",
+          "label": "Button Background Color",
+          "default": "#007bff"
+        },
+        {
+          "type": "range",
+          "id": "button_text_size",
+          "label": "Button Text Size",
+          "min": 10,
+          "max": 24,
+          "step": 1,
+          "default": 16,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "text_size",
+          "label": "Text Size",
+          "min": 10,
+          "max": 24,
+          "step": 1,
+          "default": 20,
+          "unit": "px"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "Special Offer"
+      "name": "Customizable Slideshow",
+      "category": "Image"
     }
   ]
 }
