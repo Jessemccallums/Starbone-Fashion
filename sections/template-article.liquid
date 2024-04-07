@@ -45,7 +45,10 @@
         </div>
 
       {% when 'article_content' %}
-        <div class="flex items-center justify-center">
+        <div
+          class="flex items-center justify-center"
+          style="padding: 50px;"
+        >
           <div itemprop="articleBody" class="max-w-4xl">
             {{ article.content }}
           </div>
