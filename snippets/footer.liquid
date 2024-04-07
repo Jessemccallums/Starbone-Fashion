@@ -33,7 +33,7 @@
   @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
 
   .site-footer {
-    background-color: {{ section.settings.color }};
+    background-color: #ffd5b9;
     padding: 45px;
     font-size: 14px;
     text-align: center;
@@ -146,12 +146,6 @@
       "id": "footer_copyright",
       "label": "Copyright Text",
       "default": "© 2024 Starbone. All rights reserved."
-    },
-    {
-      "type": "color",
-      "id": "color",
-      "label": "Section Color",
-      "default": "#FFFFFF"
     }
   ],
   "blocks": [
@@ -184,6 +178,12 @@
           "default": "Subscribe"
         }
       ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Footer",
+      "category": "Footer"
     }
   ]
 }

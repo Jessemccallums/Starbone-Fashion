@@ -1,234 +1,112 @@
-<div class="">
-  <!-- Product Images Carousel -->
-  <div id="left" class="product-carousel sticky">
-    <!-- Carousel buttons and images here -->
-    {% for media in product.media %}
-      <div class="carousel-image{% unless forloop.first %} hidden{% endunless %}">
-        {% render 'product-media', media: media %}
+<div class="container mx-auto py-12 px-4 md:px-6 2xl:px-20">
+  <div class="md:flex md:flex-nowrap">
+    <!-- Product Media Carousel -->
+  <div class="md:flex md:flex-nowrap">
+    <div class="md:w-1/2 lg:w-2/6 mb-6 md:mb-0 space-y-4">
+      {% for media in product.media %}
+        <div class="carousel-image">
+          {% render 'product-media', media: media %}
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Product Information -->
+    <div class="md:w-1/2 lg:w-3/5 lg:pl-10">
+      <div class="border-b border-gray-200 pb-6">
+        <p class="text-sm text-gray-600">{{ product.vendor }}</p>
+        <h1 class="text-2xl font-semibold text-gray-800 mt-2">{{ product.title }}</h1>
       </div>
-    {% endfor %}
-  </div>
 
-  <!-- Product Information -->
-  <div id="right" class="product-information sticky">
-    <h1 class="productey product-title">{{ product.title }}</h1>
-
-    <!-- Display original price crossed out if the product is on sale -->
-    {% if product.compare_at_price > product.price %}
-      <p>
-        <del>{{ product.compare_at_price | money }}</del>
-      </p>
-    {% endif %}
-
-    <p class="producte product-price">{{ product.price | money }}</p>
-
-    <!-- Quantity Selector -->
-    <label for="quantity">Quantity:</label>
-    <input type="number" id="quantity" name="quantity" min="1" value="1">
-
-    <form action="/cart/add" method="post">
-      <select name="id">
-        {% for variant in product.variants %}
-          <option class="producte" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>
-        {% endfor %}
-      </select>
-      <input type="submit" class="btncart" value="Add to Cart">
-
-      <!-- Buy It Now Button -->
-      <button type="button" class="btncart">Buy It Now</button>
-
-      <!-- Product Description -->
-      <div class="producte pe product-description">
-        {{ product.description }}
+      <div class="py-4">
+        {% if product.compare_at_price_max > product.price %}
+          <p class="text-sm line-through text-gray-500">{{ product.compare_at_price | money }}</p>
+        {% endif %}
+        <p class="text-2xl font-semibold text-gray-800">{{ product.price | money }}</p>
+        {% if product.compare_at_price_max > product.price %}
+          <p class="text-lg text-red-500">
+            Save
+            {{
+              product.compare_at_price_max
+              | minus: product.price
+              | times: 100.0
+              | divided_by: product.compare_at_price_max
+              | round
+            -}}
+            %
+          </p>
+        {% endif %}
       </div>
-    </form>
+
+      <div class="py-4">
+        <p class="text-gray-600">{{ product.description }}</p>
+      </div>
+
+      <!-- Variants -->
+      {% if product.variants.size > 1 %}
+        <div class="variants space-y-4">
+          {% for variant in product.variants %}
+            <div class="flex items-center space-x-3">
+              <label class="text-gray-700">
+                {{ variant.title }}
+                {% if variant.available %}
+                  <input
+                    type="radio"
+                    name="id"
+                    value="{{ variant.id }}"
+                    {% if forloop.first %}
+                      checked
+                    {% endif %}
+                    class="ml-2"
+                  >
+                {% else %}
+                  <span class="text-gray-500 line-through">Sold out</span>
+                {% endif %}
+              </label>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- Quantity Selector -->
+      <div class="flex items-center mt-4">
+        <button class="quantity-decrease px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-600">-</button>
+        <input type="number" name="quantity" value="1" class="w-12 text-center bg-gray-200 mx-2" min="1">
+        <button class="quantity-increase px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-600">+</button>
+      </div>
+
+      <!-- Add to Cart Button -->
+      <form action="/cart/add" method="post" enctype="multipart/form-data" class="mt-4">
+        <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+        <button
+          type="submit"
+          class="bg-black text-white py-4 w-full hover:bg-gray-900 transition duration-300 text-lg font-semibold"
+        >
+          Add to cart
+        </button>
+      </form>
+    </div>
   </div>
 </div>
-<!-- Styles -->
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
-  #right {
-    float: right;
-    width: 50%;
-    height: 50%;
-    margin: 0;
-    width: 100%;
-    max-width: 500px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 30px;
-    margin: auto;
-  }
-  #right.stick {
-    position: fixed;
-    top: 50px;
-    right: 0;
-    width: 100%;
-    max-width: 500px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 30px;
-    margin: auto;
-  }
-  #left {
-    float: left;
-    width: 100%;
-    height: 100%;
-    background: red;
-    margin-top: 0;
-  }
-  .producte {
-    font-family: 'Libre Baskerville', serif;
-  }
-  .product-title {
-    font-size: 45px;
-  }
-  /* Styles for the Quantity Selector */
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 16px;
-    font-weight: bold;
-  }
 
-  input[type='number'] {
-    width: 60px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-  }
+<!-- Tailwind CSS -->
+<link href="https://cdn.tailwindcss.com" rel="stylesheet">
 
-  /* Styles for the Buy It Now Button */
-  button.btncart {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #000;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: background 0.3s ease;
-  }
-
-  button.btncart:hover {
-    background-color: #444;
-  }
-
-  .pe {
-    width: 100%;
-  }
-  .product-section {
-    display: flex;
-    flex-wrap: wrap; /* Wrap items for responsiveness */
-    gap: 20px;
-    justify-content: center; /* Center the content */
-  }
-  .product-carousel {
-    position: relative;
-    width: 100%;
-    max-width: 500px; /* Set a max-width for the images */
-    margin: auto; /* Center the carousel */
-  }
-  .carousel-images {
-    display: flex;
-    overflow: hidden;
-  }
-  .carousel-image {
-    min-width: 100%;
-    transition: transform 0.5s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Box shadow for the image */
-    border-radius: 8px; /* Rounded corners for the image */
-  }
-  .carousel-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-  }
-  .prev {
-    left: 10px;
-  }
-  .next {
-    right: 10px;
-  }
-  .hidden {
-    display: none;
-  }
-  .product-information {
-    width: 100%;
-    max-width: 500px; /* Set a max-width for the information box */
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 30px;
-    margin: auto; /* Center the information box */
-  }
-
-  /* Responsive media query */
-  @media (min-width: 768px) {
-    .product-section {
-      flex-wrap: nowrap;
-    }
-    .product-carousel,
-    .product-information {
-      width: 50%;
-    }
-  }
-  .btncart {
-    padding: 10px 40px;
-    background: black;
-    color: white;
-  }
-  /* More styles can be added here for other responsive breakpoints */
-</style>
-
-<!-- JavaScript -->
 <script>
-  {% comment %} document.addEventListener('DOMContentLoaded', function () {
-    const prevButton = document.querySelector('.carousel-button.prev');
-    const nextButton = document.querySelector('.carousel-button.next');
-    const images = document.querySelectorAll('.carousel-image');
-    let currentIndex = 0;
+  document.addEventListener('DOMContentLoaded', function () {
+    const decreaseButton = document.querySelector('.quantity-decrease');
+    const increaseButton = document.querySelector('.quantity-increase');
+    const quantityInput = document.querySelector('input[name="quantity"]');
 
-    function showImage(index) {
-      images[currentIndex].classList.add('hidden');
-      images[index].classList.remove('hidden');
-      currentIndex = index;
-    }
-
-    prevButton.addEventListener('click', function () {
-      const nextIndex = currentIndex > 0 ? currentIndex - 1 : images.length - 1;
-      showImage(nextIndex);
+    decreaseButton.addEventListener('click', function (e) {
+      e.preventDefault();
+      const currentValue = Number(quantityInput.value);
+      quantityInput.value = currentValue > 1 ? currentValue - 1 : 1;
     });
 
-    nextButton.addEventListener('click', function () {
-      const nextIndex = currentIndex < images.length - 1 ? currentIndex + 1 : 0;
-      showImage(nextIndex);
+    increaseButton.addEventListener('click', function (e) {
+      e.preventDefault();
+      const currentValue = Number(quantityInput.value);
+      quantityInput.value = currentValue + 1;
     });
-  }); {% endcomment %}
-    // set everything outside the onscroll event (less work per scroll)
-    var right = document.getElementById("right");
-    var stop = (right.offsetTop - 60);
-
-    window.onscroll = function (e) {
-        var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
-        console.log(scrollTop, right.offsetTop);
-
-
-        if (scrollTop >= stop) {
-            right.className = 'stick';
-        } else {
-            right.className = '';
-        }
-
-    }
+  });
 </script>

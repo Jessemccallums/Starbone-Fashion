@@ -1,0 +1,147 @@
+<!-- Multirow Section -->
+<section
+  class="multirow-section"
+  style="width: 100%;margin-top: 30px;margin-bottom: 30px;padding-bottom: 70px;"
+>
+  {% for block in section.blocks %}
+    {% assign index_is_even = forloop.index0 | modulo: 2 %}
+    {% assign row_class = 'flex-row' %}
+    {% if index_is_even == 1 %}
+      {% assign row_class = 'flex-row-reverse' %}
+    {% endif %}
+
+    <div
+      class="multirow flex {{ row_class }} items-center  bg-white shadow-lg  overflow-hidden"
+      style="width: 100%;"
+    >
+      <div class="multirow-image-wrapper w-full md:w-1/2">
+        <img
+          src="{% if block.settings.image != blank %}{{ block.settings.image | img_url: '3800x' }}{% else %}https://images.unsplash.com/photo-1544198365-f5d60b6d8190?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D{% endif %}"
+
+          alt="{{ block.settings.title }}"
+          class="img_row multirow-image w-full h-full object-cover"
+          style="height: {{ block.settings.image_height }}px;"
+        >
+      </div>
+      <div class="multirow-content w-full md:w-1/2 p-6">
+        <h1
+          class="multirow-title text-2xl font-bold mb-4"
+          style="font-size: {{ block.settings.title_font_size_desktop }}px;"
+        >
+          {{ block.settings.title }}
+        </h1>
+        <p
+          class="multirow-description text-md text-gray-600 mb-4"
+          style="font-size: {{ block.settings.description_text_size_desktop }}px;"
+        >
+          {{ block.settings.description }}
+        </p>
+        <a
+          href="{{ block.settings.button_url }}"
+          class="multirow-button inline-block text-white font-bold py-2 px-4  transition-colors duration-300"
+          style="background-color: {{ block.settings.button_bg_color }}; padding: {{ block.settings.button_padding_y }}px {{ block.settings.button_padding_x }}px; font-size: {{ block.settings.button_text_size }}px;"
+        >
+          <p>{{ block.settings.button_text }}</p>
+        </a>
+      </div>
+    </div>
+  {% endfor %}
+</section>
+
+<style>
+  .img_row {
+    object-fit: cover;
+    height: 487px;
+  }
+
+  @media (max-width: 767px) {
+    .multirow {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+</style>
+{% schema %}
+{
+  "name": "Multirow Section",
+  "max_blocks": 10,
+  "blocks": [
+    {
+      "type": "multirow",
+      "name": "Row",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Lorem Ipsum Dolor Sit Amet"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse porttitor id metus dictum imperdiet. Sed id arcu sapien. Sed leo purus, mattis et enim ac, luctus euismod lacus. Sed eu efficitur est, a porttitor libero. In eget tempor dui, ac interdum quam. Vestibulum sit amet ligula turpis. Phasellus ut mollis elit, vitae luctus turpis."
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button URL"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "read more"
+        },
+        {
+          "type": "color",
+          "id": "button_bg_color",
+          "label": "Button Background Color",
+          "default": "#000000"
+        },
+        {
+          "type": "number",
+          "id": "button_padding_y",
+          "label": "Button Padding Y",
+          "default": 10
+        },
+        {
+          "type": "number",
+          "id": "button_padding_x",
+          "label": "Button Padding X",
+          "default": 20
+        },
+        {
+          "type": "number",
+          "id": "title_font_size_desktop",
+          "label": "Title Font Size Desktop",
+          "default": 24
+        },
+        {
+          "type": "number",
+          "id": "description_text_size_desktop",
+          "label": "Description Text Size Desktop",
+          "default": 16
+        },
+        {
+          "type": "number",
+          "id": "button_text_size",
+          "label": "Button Text Size",
+          "default": 16
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Multirow Section",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

@@ -1,110 +1,131 @@
 <div class="container mx-auto p-4">
   {% if cart.item_count > 0 %}
-      <div class="text-center my-8">
-          <h1 class="sign text-3xl font-semibold">Your cart</h1>
-          <a href="{{ routes.all_products_collection_url }}" class="up sign text-blue-500 hover:text-blue-700 underline mt-4 inline-block">Continue shopping</a>
-      </div>
+    <div class="text-center my-8">
+      <h1 class="sign text-3xl font-semibold">Your cart</h1>
+      <a
+        href="{{ routes.all_products_collection_url }}"
+        class="up sign text-blue-500 hover:text-blue-700 underline mt-4 inline-block"
+        >Continue shopping</a
+      >
+    </div>
 
-      <form action="{{ routes.cart_url }}" method="POST" novalidate class="up w-full max-w-6xl mx-auto">
-          <div class="overflow-x-auto">
-              <table class="min-w-full divide-y divide-gray-200 mt-6">
-                  <thead class="bg-gray-50">
-                      <tr>
-                          <th class="sign px-6 py-3 text-left text-sm font-medium text-gray-500">Product</th>
-                          <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Quantity</th>
-                          <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Total Price</th>
-                      </tr>
-                  </thead>
-                  <tbody class="bg-white divide-y divide-gray-200">
-                      {% for item in cart.items %}
-                          <tr>
-                              <td class="py-4 px-6">
-                                  <div class="flex items-center">
-                                      <div class="imgcartx flex-shrink-0 h-10 w-10">
-                                          {% if item.image %}
-                                              <img class="imgcart h-10 w-10 rounded-full" src="{{ item.image | img_url: '50x50' }}" alt="{{ item.title | escape }}">
-                                          {% endif %}
-                                      </div>
-                                      <div class="ml-4">
-                                          <div class="sign text-sm font-medium text-gray-900">{{ item.product.title | truncatewords: 5 }}</div>
-                                          <div class="sign text-sm text-gray-500">{{ item.variant.title }}</div>
-                                      </div>
-                                  </div>
-                              </td>
-                              <td class="py-4 px-6">
-                                  <input type="number" name="updates[]" id="updates_{{ forloop.index }}" value="{{ item.quantity }}" min="1" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                              </td>
-                              <td class="sign py-4 px-6">
-                                  {{ item.line_price | money }}
-                              </td>
-                          </tr>
-                      {% endfor %}
-                  </tbody>
-              </table>
-          </div>
-          <div class="up flex justify-between items-center mt-8">
-              <textarea name="note" id="cart_note" placeholder="Add a note to your order" class="sign form-textarea mt-1 block w-full"></textarea>
-              <div>
-                  <button type="submit" name="update" class="sign update-btn">Update cart</button>
-                  <button type="submit" name="checkout" class="sign checkout-btn">Proceed to checkout</button>
-              </div>
-          </div>
-      </form>
-  {% else %}
-      <div class="text-center my-10">
-          <h1 class="sign text-3xl my-4">Your cart is empty</h1>
-          <a href="{{ routes.all_products_collection_url }}" class="sign continue-shopping-btn">Continue shopping</a>
+    <form action="{{ routes.cart_url }}" method="POST" novalidate class="up w-full max-w-6xl mx-auto">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200 mt-6">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="sign px-6 py-3 text-left text-sm font-medium text-gray-500">Product</th>
+              <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Quantity</th>
+              <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Total Price</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            {% for item in cart.items %}
+              <tr>
+                <td class="py-4 px-6">
+                  <div class="flex items-center">
+                    <div class="imgcartx flex-shrink-0 h-10 w-10">
+                      {% if item.image %}
+                        <img
+                          class="imgcart h-10 w-10 rounded-full"
+                          src="{{ item.image | img_url: '3800x' }}"
+                          alt="{{ item.title | escape }}"
+                        >
+                      {% endif %}
+                    </div>
+                    <div class="ml-4">
+                      <div class="sign text-sm font-medium text-gray-900">
+                        {{ item.product.title | truncatewords: 5 }}
+                      </div>
+                      <div class="sign text-sm text-gray-500">{{ item.variant.title }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="py-4 px-6">
+                  <input
+                    type="number"
+                    name="updates[]"
+                    id="updates_{{ forloop.index }}"
+                    value="{{ item.quantity }}"
+                    min="1"
+                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                  >
+                </td>
+                <td class="sign py-4 px-6">
+                  {{ item.line_price | money }}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
+      <div class="up flex justify-between items-center mt-8">
+        <textarea
+          name="note"
+          id="cart_note"
+          placeholder="Add a note to your order"
+          class="sign form-textarea mt-1 block w-full"
+        ></textarea>
+        <div>
+          <button type="submit" name="update" class="sign update-btn">Update cart</button>
+          <button type="submit" name="checkout" class="sign checkout-btn">Proceed to checkout</button>
+        </div>
+      </div>
+    </form>
+  {% else %}
+    <div class="text-center my-10">
+      <h1 class="sign text-3xl my-4">Your cart is empty</h1>
+      <a href="{{ routes.all_products_collection_url }}" class="sign continue-shopping-btn">Continue shopping</a>
+    </div>
   {% endif %}
 </div>
 
-
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
-.up{
-
+  .up {
     margin-top: 26px;
-}
-  
-  .imgcart{
+  }
+
+  .imgcart {
     width: 100%;
-    }
-    .imgcartx{
-    
-      width: 30%;
-    
-    }
-    .sign{
-      font-family: 'Libre Baskerville', serif;
-    }
+  }
+  .imgcartx {
+    width: 30%;
+  }
+  .sign {
+    font-family: 'Libre Baskerville', serif;
+  }
   /* Container */
   .container {
-      max-width: 6xl;
-      margin: auto;
-      padding: 1rem;
+    max-width: 6xl;
+    margin: auto;
+    padding: 1rem;
   }
-  
+
   /* Table styling */
   table {
-      width: 100%;
-      border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
   }
-  
+
   thead {
-      background-color: #f9fafb;
+    background-color: #f9fafb;
   }
-  
-  th, td {
-      text-align: left;
-      padding: 12px;
+
+  th,
+  td {
+    text-align: left;
+    padding: 12px;
   }
-  
+
   tbody tr:hover {
-      background-color: #f4f4f4;
+    background-color: #f4f4f4;
   }
-  
+
   /* Buttons */
-  .update-btn, .checkout-btn, .continue-shopping-btn {
+  .update-btn,
+  .checkout-btn,
+  .continue-shopping-btn {
     display: inline-block;
     padding: 12px 28px;
     margin: 5px;
@@ -112,83 +133,89 @@
     color: #fff;
     cursor: pointer;
   }
-  
+
   .update-btn {
     background-color: #ffffff;
     color: black;
     border: 2px solid black;
   }
-  
+
   .checkout-btn {
     background-color: #000000;
   }
-  
+
   .continue-shopping-btn {
-      background-color: #3b82f6;
-      border: 1px solid transparent;
+    background-color: #3b82f6;
+    border: 1px solid transparent;
   }
-  
-  .update-btn:hover, .checkout-btn:hover, .continue-shopping-btn:hover {
-      opacity: 0.8;
+
+  .update-btn:hover,
+  .checkout-btn:hover,
+  .continue-shopping-btn:hover {
+    opacity: 0.8;
   }
-  
+
   /* Form elements */
-  input[type="number"] {
-      padding: 0.5rem;
-      border: 1px solid #d1d5db;
-      border-radius: 0.375rem;
-      width: 50px;
+  input[type='number'] {
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    width: 50px;
   }
-  
+
   textarea {
-      padding: 0.5rem;
-      border: 1px solid #d1d5db;
-      border-radius: 0.375rem;
-      resize: vertical;
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    resize: vertical;
   }
-  
+
   /* Responsive adjustments */
   @media (max-width: 640px) {
-      .container {
-          padding: 0.5rem;
-      }
-  
-      .flex, .flex-1 {
-          flex-direction: column;
-      }
-  
-      input[type="number"], textarea, .update-btn, .checkout-btn, .continue-shopping-btn {
-          width: 100%;
-          margin-top: 0.5rem;
-      }
-  
-      .update-btn, .checkout-btn {
-          padding: 10px 0; /* Increase padding for mobile buttons */
-      }
-  }
-  </style>
-  
+    .container {
+      padding: 0.5rem;
+    }
 
+    .flex,
+    .flex-1 {
+      flex-direction: column;
+    }
+
+    input[type='number'],
+    textarea,
+    .update-btn,
+    .checkout-btn,
+    .continue-shopping-btn {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    .update-btn,
+    .checkout-btn {
+      padding: 10px 0; /* Increase padding for mobile buttons */
+    }
+  }
+</style>
 
 {% schema %}
 {
-    "name": "Template Cart",
-    "blocks": [
-        {
-            "type": "subtotal",
-            "name": "Subtotal",
-            "limit": 1
-        },
-        {
-            "type": "update_button",
-            "name": "Update Button",
-            "limit": 1
-        },
-        {
-            "type": "checkout_button",
-            "name": "Checkout Button",
-            "limit": 1
-        }
-    ]
+  "name": "Template Cart",
+  "blocks": [
+    {
+      "type": "subtotal",
+      "name": "Subtotal",
+      "limit": 1
+    },
+    {
+      "type": "update_button",
+      "name": "Update Button",
+      "limit": 1
+    },
+    {
+      "type": "checkout_button",
+      "name": "Checkout Button",
+      "limit": 1
+    }
+  ]
 }
 {% endschema %}

@@ -1,0 +1,305 @@
+<!-- Advanced Rich Text Section -->
+<section
+  class="advanced-rich-text-section"
+  style="background-color: {{ section.settings.background_color }};"
+>
+  {% for block in section.blocks %}
+    <div
+      class="rich-text-block"
+      style="text-align: {{ section.settings.content_position }}; "
+    >
+      <h1
+        class="rich-title"
+        style="color: {{ section.settings.title_color }}; "
+      >
+        {{ block.settings.title }}
+      </h1>
+      <div
+        class="rich-text-description"
+        style="color: {{ section.settings.text_color }}; "
+      >
+        {{ block.settings.description }}
+      </div>
+      {% if block.settings.button_text %}
+        <a
+          href="{{ block.settings.button_url }}"
+          class="rich-text-button"
+          style="background-color: {{ block.settings.button_bg_color }}; color: {{ block.settings.button_text_color }}; border-color: {{ block.settings.button_border_color }}; padding: 10px {{ section.settings.button_padding }}px; "
+        >
+          {{ block.settings.button_text }}
+        </a>
+      {% endif %}
+    </div>
+  {% endfor %}
+</section>
+
+<!-- Styles -->
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+    @media (max-width: 767px) {
+      .rich-text-button{
+          font-size: {{ section.settings.button_text_size_mobile }}px;
+
+      }
+      .rich-text-description{
+          font-size: {{ section.settings.description_text_size_mobile }}px;
+      }
+      .rich-title{
+          font-size: {{ section.settings.title_text_size_mobile }}px;
+      }
+      .advanced-rich-text-section {
+        text-align: {{ section.settings.content_position_mobile_text }};
+        padding: {{ section.settings.section_padding_mobile }}px;
+      }
+  }
+
+      .advanced-rich-text-section .rich-text-block {
+        margin-bottom: 2rem;
+      }
+
+      .advanced-rich-text-section .rich-text-description {
+        margin-bottom: 1rem;
+      }
+      .rich-text-description .rich-text-button {
+      font-family: 'Libre Baskerville', serif;
+    }
+
+      .advanced-rich-text-section .rich-text-button {
+        display: inline-block;
+        text-decoration: none;
+        border: 2px solid transparent;
+        transition: background-color 0.3s ease;
+      }
+
+      /* Responsive adjustments */
+      @media (min-width: 768px) {
+        .advanced-rich-text-section {
+          text-align: {{ section.settings.content_position_desktop_text }};
+        }
+        .rich-text-button{
+            font-size: {{ section.settings.button_text_size }}px;
+
+        }
+        .rich-text-description{
+            font-size: {{ section.settings.description_text_size }}px;
+        }
+        .rich-title{
+            font-size: {{ section.settings.title_text_size }}px;
+        }
+        .advanced-rich-text-section {
+            padding: {{ section.settings.section_padding }}px;
+        }
+      }
+</style>
+
+{% schema %}
+{
+  "name": "Rich Text",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#333333"
+    },
+    {
+      "type": "select",
+      "id": "content_position_mobile_text",
+      "label": "Mobile Content Position Text",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "content_position_desktop_text",
+      "label": "Desktop Content Position Text",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Section Padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_mobile",
+      "label": "Section Padding For Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "title_text_size",
+      "label": "Title Text Size",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "default": 24,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "title_text_size_mobile",
+      "label": "Title Text Size Mobile",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "default": 24,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "description_text_size",
+      "label": "Description Text Size",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "description_text_size_mobile",
+      "label": "Description Text Size Mobile",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "button_text_size",
+      "label": "Button Text Size",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "button_text_size_mobile",
+      "label": "Button Text Size Mobile",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "button_padding",
+      "label": "Button Padding",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 10,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "rich-text",
+      "name": "Rich Text Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Welcome to our store"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store."
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button URL"
+        },
+        {
+          "type": "color",
+          "id": "button_bg_color",
+          "label": "Button Background Color",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "button_text_color",
+          "label": "Button Text Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "button_border_color",
+          "label": "Button Border Color",
+          "default": "#333333"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "Rich text",
+      "category": "Text"
+    }
+  ]
+}
+{% endschema %}

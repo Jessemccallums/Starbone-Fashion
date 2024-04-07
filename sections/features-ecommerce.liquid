@@ -3,7 +3,7 @@
     <div class="feature" id="feature-{{ block.id }}">
       <div class="feature-icon">
         {% if block.settings.icon != blank %}
-          <img src="{{ block.settings.icon | img_url: 'original' }}" alt="{{ block.settings.title | escape }}">
+          <img src="{{ block.settings.icon | img_url: '3800x' }}" alt="{{ block.settings.title | escape }}">
         {% endif %}
       </div>
       <h1 class="feature-title">{{ block.settings.title }}</h1>
@@ -18,7 +18,7 @@
     align-items: center;
     text-align: center;
     padding: 45px;
-    background: #fff3eb;
+    background: {{ section.settings.color }};
   }
 
   .feature {
@@ -57,7 +57,15 @@
 </style>
 {% schema %}
 {
-  "name": "Feature Section",
+  "name": "Ecommerce Features",
+  "settings": [
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Background Color",
+      "default": "#FFFFFF"
+    }
+  ],
   "blocks": [
     {
       "type": "feature",

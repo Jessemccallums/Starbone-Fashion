@@ -1,7 +1,7 @@
 <div class="contact">
   <div class="pierson">
     {% if section.settings.title != blank %}
-      <h1>{{ section.settings.title }}</h1>
+      <h1 class="h1">{{ section.settings.title }}</h1>
     {% endif %}
   </div>
   {% form 'contact' %}
@@ -31,47 +31,48 @@
         </div>
       {% endif %}
 
-      <div class="px-1 md:flex mb-3">
-        <div class="px-3 md:w-1/2">
-          <label for="contact_name" class="text-gray-700 font-medium uppercase text-xs mb-2">Name</label>
+      <div class="gap-name-email px-1 md:flex mb-3">
+        <div class=" md:w-1/2">
+          {% comment %} <label for="contact_name" class="text-gray-700 font-medium uppercase text-xs mb-2">Name</label> {% endcomment %}
           <input
             type="text"
             name="contact[name]"
             id="contact_name"
-            class="w-full text-gray-700 border py-3 px-4 mb-3 focus:outline-none"
-            placeholder="Jane Doe"
+            class="black-contact placeholder-contact-form w-full border py-3 px-4 mb-3 "
+            placeholder="Name"
             required
           >
         </div>
-        <div class="px-3 md:w-1/2">
-          <label for="comment_email" class="text-gray-700 font-medium uppercase text-xs mb-2">Email</label>
+        <div class="md:w-1/2">
+          {% comment %} <label for="comment_email" class="text-gray-700 font-medium uppercase text-xs mb-2">Email</label> {% endcomment %}
           <input
             type="email"
             name="contact[email]"
             id="contact_email"
-            class="w-full text-gray-700 border py-3 px-4 mb-3 focus:outline-none"
-            placeholder="jane@doe.com"
+            class="black-contact placeholder-contact-form w-full border py-3 px-4 mb-3 focus:outline-none"
+            placeholder="Email *"
             required
           >
         </div>
       </div>
       <div class="px-1 md:flex mb-3">
         <div class="message">
-          <label for="contact_message" class="text-gray-700 font-medium uppercase text-xs mb-2">Comment</label>
+          {% comment %} <label for="contact_message" class="text-gray-700 font-medium uppercase text-xs mb-2">Comment</label> {% endcomment %}
           <textarea
-            class="w-full text-gray-700 resize-none h-20 py-2 px-3 focus:outline-none border"
+            class="black-contact placeholder-contact-form w-full resize-none h-20 py-2 px-3 focus:outline-none border"
             name="contact[body]"
             id="contact_message"
+            placeholder="Comment"
             required
           ></textarea>
         </div>
       </div>
       <div class="px-1 md:flex mb-3">
-        <div class="btn">
+        <div class="btn-contact ">
           <input
             type="submit"
-            class="w-full cursor-pointer px-4 py-2 border text-base font-medium text-white bg-gray-900 hover:bg-gray-500"
-            value="Submit message"
+            class="btn-contact-text  w-full cursor-pointer px-4 py-2 border text-base font-medium text-white bg-gray-900 hover:bg-gray-500"
+            value="Send"
           >
         </div>
       </div>
@@ -80,11 +81,22 @@
 </div>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
   .contact {
     width: 69%;
     margin: auto;
+    margin-bottom: 140px;
   }
-
+  .black-contact {
+    color: black;
+  }
+  .placeholder-contact-form {
+    font-family: 'Montserrat', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+  }
   .message {
     width: 100%;
   }
@@ -106,8 +118,8 @@
     margin-top: 2rem;
     margin-bottom: 2rem;
   }
-  .btn {
-    width: 100%;
+  .btn-contact {
+    width: 11rem;
   }
   .text-3xl {
     font-size: 1.875rem;
@@ -115,6 +127,9 @@
 
   .font-medium {
     font-weight: 500;
+  }
+  .gap-name-email {
+    gap: 70px;
   }
 
   /* Responsive styles */
@@ -171,7 +186,13 @@
 
   .border {
     border-width: 1px;
-    border-style: solid;
+    border: 1px solid #c7c7c7;
+  }
+  .btn-contact-text {
+    font-family: 'Montserrat', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
   }
 
   .py-3 {
@@ -282,7 +303,7 @@
     /* Add your responsive styles here */
   }
 
-  h1 {
+  .h1 {
     font-size: 50px;
     color: black;
     margin-left: 20px;

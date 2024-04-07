@@ -1,152 +1,155 @@
 <div class="account-container">
-    <h1 class="sign account-title">Account</h1>
+  <h1 class="sign account-title">Account</h1>
 
-    <div class="account-content">
-        {% assign number_of_orders = customer.orders | size %}
-        {% if number_of_orders > 0 %}
-            <div class="order-history">
-                <h2 class="sign order-history-title">Order history</h2>
+  <div class="account-content">
+    {% assign number_of_orders = customer.orders | size %}
+    {% if number_of_orders > 0 %}
+      <div class="order-history">
+        <h2 class="sign order-history-title">Order history</h2>
 
-                {% paginate customer.orders by 10 %}
-                    <div class="orders-grid">
-                        {% for order in customer.orders %}
-                            <div class="order-card">
-                                <div class="order-image">
-                                    {% if order.line_items.first.image %}
-                                        <img src="{{ order.line_items.first.image | img_url: 'medium' }}" alt="{{ order.line_items.first.title }}">
-                                    {% endif %}
-                                </div>
+        {% paginate customer.orders by 10 %}
+          <div class="orders-grid">
+            {% for order in customer.orders %}
+              <div class="order-card">
+                <div class="order-image">
+                  {% if order.line_items.first.image %}
+                    <img
+                      src="{{ order.line_items.first.image | img_url: '3800x' }}"
+                      alt="{{ order.line_items.first.title }}"
+                    >
+                  {% endif %}
+                </div>
 
-                                <div class="order-info">
-                                    <h3 class='sign'><a href="{{ order.customer_url }}" class='sign'>{{ order.name }}</a></h3>
-                                    <p class='sign'>{{ order.financial_status_label }}</p>
-                                </div>
-                                <div class="order-price">
-                                    <p class='sign'>{{ order.total_price | money }}</p>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
+                <div class="order-info">
+                  <h3 class="sign">
+                    <a href="{{ order.customer_url }}" class="sign">{{ order.name }}</a>
+                  </h3>
+                  <p class="sign">{{ order.financial_status_label }}</p>
+                </div>
+                <div class="order-price">
+                  <p class="sign">{{ order.total_price | money }}</p>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
 
-                    <div class="pagination">
-                        {% render 'pagination', pagination: paginate %}
-                    </div>
-                {% endpaginate %}
-            </div>
-        {% else %}
-            <div class="no-orders">
-                <h2 class='sign'>You currently don't have any orders</h2>
-            </div>
-        {% endif %}
+          <div class="pagination">
+            {% render 'pagination', pagination: paginate %}
+          </div>
+        {% endpaginate %}
+      </div>
+    {% else %}
+      <div class="no-orders">
+        <h2 class="sign">You currently don't have any orders</h2>
+      </div>
+    {% endif %}
 
-        <div class="account-details">
-            <h2 class='sign'>Account details</h2>
-            <!-- Account details here -->
-            <a href="{{ routes.account_addresses_url }}" class='sign'>View addresses</a>
-        </div>
+    <div class="account-details">
+      <h2 class="sign">Account details</h2>
+      <!-- Account details here -->
+      <a href="{{ routes.account_addresses_url }}" class="sign">View addresses</a>
     </div>
+  </div>
 </div>
 
-
-
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
-    .addrx{
-    
-        background: black;
-        color: white;
-        padding: 10px 48px;
-    }
-    .sign{
-        font-family: 'Libre Baskerville', serif;
-    }
-    .account-container {
-        max-width: 1200px;
-        margin: auto;
-        padding: 32px 16px;
-    }
-    
-    .account-title {
-        font-size: 24px;
-        font-weight: bold;
-        text-align: center;
-        margin-bottom: 20px;
-        color: #333;
-    }
-    
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+  .addrx {
+    background: black;
+    color: white;
+    padding: 10px 48px;
+  }
+  .sign {
+    font-family: 'Libre Baskerville', serif;
+  }
+  .account-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 32px 16px;
+  }
+
+  .account-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .account-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .order-history {
+    flex: 1;
+    min-width: 300px;
+    max-width: 800px;
+  }
+
+  .order-history-title {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #555;
+  }
+
+  .orders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+  }
+
+  .order-card {
+    background-color: #f9f9f9;
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .order-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .order-info h3,
+  .order-info p,
+  .order-price p {
+    padding: 8px;
+    margin: 0;
+    text-align: center;
+  }
+
+  .no-orders {
+    text-align: center;
+  }
+
+  .account-details {
+    flex-basis: 100%;
+    text-align: center;
+  }
+
+  .account-details h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .account-details a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  .account-details a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
     .account-content {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        justify-content: center;
+      flex-direction: column;
     }
-    
-    .order-history {
-        flex: 1;
-        min-width: 300px;
-        max-width: 800px;
-    }
-    
-    .order-history-title {
-        font-size: 20px;
-        margin-bottom: 15px;
-        color: #555;
-    }
-    
-    .orders-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 10px;
-    }
-    
-    .order-card {
-        background-color: #f9f9f9;
-        border: 1px solid #eaeaea;
-        border-radius: 8px;
-        overflow: hidden;
-    }
-    
-    .order-image img {
-        width: 100%;
-        height: auto;
-        object-fit: cover;
-    }
-    
-    .order-info h3, .order-info p, .order-price p {
-        padding: 8px;
-        margin: 0;
-        text-align: center;
-    }
-    
-    .no-orders {
-        text-align: center;
-    }
-    
-    .account-details {
-        flex-basis: 100%;
-        text-align: center;
-    }
-    
-    .account-details h2 {
-        font-size: 20px;
-        margin-bottom: 10px;
-    }
-    
-    .account-details a {
-        display: inline-block;
-        margin-top: 10px;
-        color: #007bff;
-        text-decoration: none;
-    }
-    
-    .account-details a:hover {
-        text-decoration: underline;
-    }
-    
-    @media (max-width: 768px) {
-        .account-content {
-            flex-direction: column;
-        }
-    }
-    </style>
-    
+  }
+</style>

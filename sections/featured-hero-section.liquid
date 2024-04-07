@@ -1,21 +1,21 @@
-<div class="custom-section" style="height: {{ section.settings.banner_height }}px; position: relative;">
-  <div class="container mx-auto px-4 flex items-center justify-{{ section.settings.desktop_alignment }} relative">
-    {% if section.settings.image1 != blank %}
-      <div class="image-wrapper{% if section.settings.image2 != blank %} w-full h-full{% endif %}">
-        <img
-          class="img"
-          src="{{ section.settings.image1 | img_url: '1920x' }}"
-          alt="{{ section.settings.title | escape }}"
-        >
-        <div class="overlay" style="opacity: {{ section.settings.overlay_opacity }};"></div>
-      </div>
-    {% endif %}
+<div class="custom-section" style="height: {{ section.settings.banner_height }}%; position: relative;">
+  <div class="container-2 mx-auto flex items-center justify-{{ section.settings.desktop_alignment }} relative">
+    <!-- Conditional check and display for Image 1 with a default fallback -->
+    <div class="{% if section.settings.image2 != blank %}img_hero{% else %}img_one{% endif %}">
+      <img
+        class="img"
+        src="{% if section.settings.image1 != blank %}{{ section.settings.image1 | img_url: '3800x' }}{% else %}https://images.unsplash.com/photo-1711976972831-d81e4a3c9d33?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90oy1wYWdlfHx8fGVufDB8fHx8fA%3D%3D{% endif %}"
+        alt="{{ section.settings.title | escape }}"
+      >
+      <div class="overlay" style="opacity: {{ section.settings.overlay_opacity }};"></div>
+    </div>
 
+    <!-- Conditional check and display for Image 2 -->
     {% if section.settings.image2 != blank %}
-      <div class="image-wrapper{% if section.settings.image1 != blank %} w-full h-full{% endif %}">
+      <div class="img_hero">
         <img
           class="img"
-          src="{{ section.settings.image2 | img_url: '1920x' }}"
+          src="{{ section.settings.image2 | img_url: '3800x' }}"
           alt="{{ section.settings.title | escape }}"
         >
         <div class="overlay" style="opacity: {{ section.settings.overlay_opacity }};"></div>
@@ -31,13 +31,9 @@
         <a
           href="{{ section.settings.button_link }}"
           class="btnhero"
-          style="
-            font-size: {{ section.settings.button_size }}px;
-            color: {{ section.settings.button_text_color }};
-            background-color: {{ section.settings.button_bg_color }};
-          "
+          style="font-size: {{ section.settings.button_size }}px; color: {{ section.settings.button_text_color }}; background-color: {{ section.settings.button_bg_color }}; border-color: {{ section.settings.button_border_color }};"
         >
-          {{- section.settings.button_text -}}
+          {{ section.settings.button_text }}
         </a>
       </div>
     </div>
@@ -52,11 +48,23 @@
     height: 100%;
     object-fit: cover;
   }
-  .image-wrapper {
+  .img_one{
+
+    object-fit: cover;
+    width: 100rem;
+    height: 33rem;
+  }
+  .img_hero{
+
+    height: 500px;
+    width: 1292px;
+    object-fit: cover;
+  }
+  {% comment %} .image-wrapper {
     position: relative;
     overflow: hidden;
-    height: {{ section.settings.banner_height }}px; /* Asegura que ambas imágenes tengan el mismo tamaño */
-  }
+    height: {{ section.settings.banner_height }}%; /* Asegura que ambas imágenes tengan el mismo tamaño */
+  } {% endcomment %}
   .overlay {
     position: absolute;
     top: 0;
@@ -84,6 +92,21 @@
     border-radius: 5px;
     border: 1px solid;
   }
+  @media (min-width: 768px) {
+    .container-2 {
+      max-width: 100%;
+      margin: 0 auto; /* Center the container */
+    }
+    .text-button-container{
+      padding: {{  section.settings.section_padding_desktop }}px;
+    }
+  }
+
+  @media (max-width: 768px) {
+   .text-button-container{
+    padding: {{  section.settings.section_padding_mobile }}px;
+  }
+  }
 </style>
 
 {% schema %}
@@ -103,7 +126,28 @@
     {
       "type": "text",
       "id": "text",
-      "label": "Text"
+      "label": "Text",
+      "default": "Welcome to our store"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_mobile",
+      "label": "Section Padding Mobile (px)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_desktop",
+      "label": "Section Padding Desktop (px)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 20,
+      "unit": "px"
     },
     {
       "type": "url",
@@ -113,7 +157,8 @@
     {
       "type": "text",
       "id": "button_text",
-      "label": "Button Text"
+      "label": "Button Text",
+      "default": "read more"
     },
     {
       "type": "range",
@@ -164,15 +209,21 @@
       "id": "text_size",
       "label": "Text Size",
       "min": 10,
-      "max": 50,
+      "max": 80,
       "step": 1,
-      "default": 16
+      "default": 50
     },
     {
       "type": "color",
       "id": "button_text_color",
       "label": "Button Text Color",
       "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button Border Color",
+      "default": "#000000"
     },
     {
       "type": "range",
@@ -187,7 +238,7 @@
       "type": "color",
       "id": "button_bg_color",
       "label": "Button Background Color",
-      "default": "#333333"
+      "default": "#000000"
     }
   ],
   "presets": [
@@ -197,3 +248,6 @@
   ]
 }
 {% endschema %}
+<script>
+  ScrollReveal().reveal('.custom-section', { delay: 500, reset: false });
+</script>

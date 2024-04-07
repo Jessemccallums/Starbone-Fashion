@@ -1,0 +1,203 @@
+<!-- Multi-Column Section -->
+<div class="multi-column-container">
+  <h1>{{ section.settings.heading }}</h1>
+  {% for block in section.blocks %}
+    <div class="multi-column">
+      <img
+        src="{% if block.settings.image != blank %}{{ block.settings.image | img_url: '3800x' }}{% else %}https://images.unsplash.com/photo-1711968558286-c298d76faf1f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D{% endif %}"
+        alt="{{ block.settings.title }}"
+        class="multi-column-image"
+      >
+      <div class="text-column">
+        <h1 class="multi-column-title">{{ block.settings.title }}</h1>
+        <p class="multi-column-description">{{ block.settings.description }}</p>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<!-- Styles -->
+<style>
+  .multi-column-title .multi-column-description {
+    text-align: start;
+  }
+  .multi-column-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+    padding: 80px;
+  }
+  .text-column {
+    padding: 20px;
+  }
+
+  .multi-column {
+    flex-basis: calc(33.333% - 20px);
+    text-align: start;
+    background: #f1f1f1;
+  }
+
+  .multi-column-image {
+    max-width: 100%;
+    height: 450px;
+    padding: 21px;
+    object-fit: cover;
+  }
+
+  @media (max-width: 768px) {
+    .multi-column {
+      flex-basis: calc(33.33% - -76px);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .multi-column {
+      flex-basis: 100%;
+    }
+    .multi-column-image {
+      width: 1000px;
+      height: 511px;
+      padding: 21px;
+      object-fit: cover;
+    }
+  }
+  @media (max-width: 800px) {
+    .multi-column-container {
+      display: flex;
+      gap: 20px;
+      padding: 80px;
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .multi-column-image {
+      width: 1000px;
+      height: 511px;
+      padding: 21px;
+      object-fit: cover;
+    }
+  }
+  @media (max-width: 900px) {
+    .multi-column-container {
+      display: flex;
+      gap: 20px;
+      padding: 80px;
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .multi-column-image {
+      width: 1000px;
+      height: 511px;
+      padding: 21px;
+      object-fit: cover;
+    }
+  }
+  @media (max-width: 990px) {
+    .multi-column-container {
+      display: flex;
+      gap: 20px;
+      padding: 80px;
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .multi-column-image {
+      width: 1000px;
+      height: 511px;
+      padding: 21px;
+      object-fit: cover;
+    }
+  }
+  @media (min-width: 1200px) {
+    .multi-column-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 20px;
+      padding: 10px;
+    }
+    .multi-column-image {
+      width: 1000px;
+      height: 511px;
+      padding: 21px;
+      object-fit: cover;
+    }
+  }
+</style>
+<style>
+  .multi-column-container {
+    background-color: {{ section.settings.section_bg_color }};
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+    padding: 30px;
+  }
+
+  .multi-column-title, .multi-column-description {
+    color: {{ section.settings.text_color }};
+  }
+
+  .multi-column-title {
+    color: {{ section.settings.title_color }};
+  }
+
+  /* Remaining styles unchanged... */
+</style>
+
+{% schema %}
+{
+  "name": "Multi-Column Section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Section Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#000000"
+    }
+  ],
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Column",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Column Title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Your description here."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Default Multi-Column",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

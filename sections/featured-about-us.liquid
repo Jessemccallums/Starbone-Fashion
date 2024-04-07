@@ -18,9 +18,12 @@
   </div>
   <div class="about-image">
     {% if section.settings.image != blank %}
-      <img src="{{ section.settings.image | img_url: '800x' }}" alt="{{ section.settings.title | escape }}">
+      <img src="{{ section.settings.image | img_url: '3800x' }}" alt="{{ section.settings.title | escape }}">
     {% else %}
-      <img src="https://via.placeholder.com/800" alt="placeholder">
+      <img
+        src="https://images.unsplash.com/photo-1554629947-334ff61d85dc?q=80&w=1936&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        alt="placeholder"
+      >
     {% endif %}
   </div>
 </div>
@@ -50,9 +53,9 @@
   }
 
   .about-image img {
-    width: 100%; /* Make the image responsive */
-    height: auto; /* Maintain aspect ratio */
-    max-width: 800px; /* Max image width */
+    width: 1000px;
+    height: 602px;
+    object-fit: cover;
   }
 
   .titley,

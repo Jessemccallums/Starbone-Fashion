@@ -7,26 +7,52 @@
     <meta name="description" content="{{ page_description | escape }}">
     <link rel="canonical" href="{{ canonical_url }}">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-    {{ content_for_header }}
-    <!-- Header hook for plugins -->
-    {{ 'application.css' | asset_url | stylesheet_tag }}
-    {{ 'application.js' | asset_url | script_tag }}
-    {{ 'index.css' | asset_url | stylesheet_tag }}
-    <!-- Add these lines in the <head> section -->
+    <!-- Add Slick slider CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
-    <script src="https://unpkg.com/scrollreveal"></script>
-    <!-- Add this line before the closing </body> tag -->
-    <script src="https://cdn.jsdelivr.net/jquery.slick/1.8.1/slick.min.js"></script>
+    <!-- Add Slick slider Theme CSS (Optional) -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"
+    >
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <!-- Header Content: CSS, JavaScript, and Meta Tags -->
+    {{ content_for_header }}
+    <!-- Shopify's required content_for_header -->
+    {{ 'application.css' | asset_url | stylesheet_tag }}
+    {{ 'index.css' | asset_url | stylesheet_tag }}
+    <!-- External libraries -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    {% section 'header' %}
+    <!-- Site Header -->
+    <header>
+      {% section 'header' %}
+    </header>
+
+    <!-- Main Content -->
     <main class="main" role="main">
       {{ content_for_layout }}
     </main>
+
+    <!-- Site Footer -->
+    <footer>
+      {% section 'footer' %}
+    </footer>
+
+    <!-- Footer Content: JavaScript Files -->
+    {{ 'application.js' | asset_url | script_tag }}
+    {{ 'index.js' | asset_url | script_tag }}
+    {{ content_for_footer }}
+    <!-- Shopify's required content_for_footer -->
+    <!-- External JavaScript libraries -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.slick/1.8.1/slick.min.js"></script>
   </body>
-  <style>
-    .main {
-      overflow-x: hidden;
-    }
-  </style>
 </html>
