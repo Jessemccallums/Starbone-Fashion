@@ -1,8 +1,7 @@
 <div class="container mx-auto py-12 px-4 md:px-6 2xl:px-20">
   <div class="md:flex md:flex-nowrap">
     <!-- Product Media Carousel -->
-  <div class="md:flex md:flex-nowrap">
-    <div class="md:w-1/2 lg:w-2/6 mb-6 md:mb-0 space-y-4">
+    <div class="sticky-section md:w-1/2 lg:w-2/6 mb-6 md:mb-0 space-y-4">
       {% for media in product.media %}
         <div class="carousel-image">
           {% render 'product-media', media: media %}
@@ -11,7 +10,7 @@
     </div>
 
     <!-- Product Information -->
-    <div class="md:w-1/2 lg:w-3/5 lg:pl-10">
+    <div class="content-section :w-1/2 lg:w-3/5 lg:pl-10">
       <div class="border-b border-gray-200 pb-6">
         <p class="text-sm text-gray-600">{{ product.vendor }}</p>
         <h1 class="text-2xl font-semibold text-gray-800 mt-2">{{ product.title }}</h1>
@@ -86,6 +85,7 @@
       </form>
     </div>
   </div>
+  <!-- This is the closing div for the outermost flex container -->
 </div>
 
 <!-- Tailwind CSS -->
@@ -109,4 +109,49 @@
       quantityInput.value = currentValue + 1;
     });
   });
+
+  // app.js
+  const stickySection = document.querySelector('.sticky-section');
+  const contentSection = document.querySelector('.content-section');
+
+  window.addEventListener('scroll', () => {
+    const scrollPosition = window.scrollY;
+    const contentTop = contentSection.offsetTop;
+
+    if (scrollPosition >= contentTop) {
+      stickySection.classList.add('sticky');
+    } else {
+      stickySection.classList.remove('sticky');
+    }
+  });
 </script>
+
+<!-- Tailwind CSS for Sticky Scrolling -->
+<style>
+  /* Additional styles for sticky scrolling */
+  .md:flex {
+    position: relative;
+  }
+
+  /* Making the product media sticky */
+  .carousel-image {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0; /* Adjust this value based on your header's height or desired offset */
+    height: calc(100vh - 20px); /* Full height minus offset */
+    overflow-y: auto;
+  }
+
+  /* Ensuring the product information scrolls normally */
+  .product-info {
+    height: auto;
+    overflow-y: auto;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .carousel-image {
+      position: relative; /* Disable sticky effect on smaller screens */
+    }
+  }
+</style>
