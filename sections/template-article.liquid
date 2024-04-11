@@ -2,7 +2,9 @@
   {% for block in section.blocks %}
     {% case block.type %}
       {% when 'article_title' %}
-        <div class="flex items-center justify-center">
+        <div
+          class="flex items-center justify-center"
+        >
           <div class="max-w-7xl text-center">
             <a href="{{ blog.url }}" class="text-base uppercase text-gray-500 hover:text-gray-900 font-bold">
               {{- blog.title -}}
@@ -49,7 +51,7 @@
           class="flex items-center justify-center"
           style="padding: 30px;"
         >
-          <div itemprop="articleBody" class="max-w-4xl">
+          <div data-aos="fade-up" itemprop="articleBody" class="max-w-4xl">
             {{ article.content }}
           </div>
         </div>
@@ -383,7 +385,14 @@
     transition: background-color 0.2s ease-in-out;
   }
 </style>
-
+<script>
+    {% if request.design_mode %}
+      document.addEventListener("shopify:section:load", function(event) {
+            AOS.init();
+      });
+  {% endif %}
+  AOS.init();
+</script>
 {% schema %}
 {
   "name": "Template Article",
