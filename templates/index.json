@@ -3,7 +3,7 @@
     "featured-Special-Offer": {
       "type": "featured-Special-Offer",
       "settings": {
-        "image": "shopify:\/\/shop_images\/girls.png"
+        "image": "shopify://shop_images/girls.png"
       }
     },
     "featured-collection": {
@@ -13,10 +13,72 @@
         "featured_collection": "all",
         "number_of_products_to_show": 4
       }
+    },
+    "featured-about-us": {
+      "type": "featured-about-us",
+      "settings": {
+        "title": "About Us",
+        "subtitle": "Starbone",
+        "description": "Welcome to Starbone, your go-to destination for high-quality women's clothing...",
+        "phone_number": "+1 123-456-7890",
+        "email_address": "contact@starbone.com",
+        "image": "shopify://shop_images/about_us.png",
+        "button_link": "/pages/about-us",
+        "button_label": "Learn More"
+      }
+    },
+    "multicolumn": {
+      "type": "multicolumn",
+      "settings": {
+        "section_bg_color": "#ffffff"
+      },
+      "presets": [
+        {
+          "name": "Default Multi-Column",
+          "category": "Custom",
+          "blocks": [
+            {
+              "type": "column",
+              "settings": {
+                "title": "First Column",
+                "description": "Description for the first column."
+              }
+            },
+            {
+              "type": "column",
+              "settings": {
+                "title": "Second Column",
+                "description": "Description for the second column."
+              }
+            },
+            {
+              "type": "column",
+              "settings": {
+                "title": "Third Column",
+                "description": "Description for the third column."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "multirow-section": {
+      "type": "multirow-section",
+      "settings": {
+        "button_bg_color": "#000000",
+        "button_padding_y": 10,
+        "button_padding_x": 20,
+        "title_font_size_desktop": 24,
+        "description_text_size_desktop": 16,
+        "button_text_size": 16
+      }
     }
   },
   "order": [
     "featured-Special-Offer",
-    "featured-collection"
+    "featured-collection",
+    "featured-about-us",
+    "multicolumn",
+    "multirow-section"
   ]
 }

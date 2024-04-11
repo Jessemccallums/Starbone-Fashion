@@ -8,7 +8,7 @@
     <div class="{% if section.settings.image2 != blank %}img_hero{% else %}img_one{% endif %}">
       <img
         class="img"
-        src="{% if section.settings.image1 != blank %}{{ section.settings.image1 | img_url: '3800x' }}{% else %}https://images.unsplash.com/photo-1711976972831-d81e4a3c9d33?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90oy1wYWdlfHx8fGVufDB8fHx8fA%3D%3D{% endif %}"
+        src="{% if section.settings.image1 != blank %}{{ section.settings.image1 | img_url: '3800x' }}{% else %}https://images.unsplash.com/photo-1520006403909-838d6b92c22e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D{% endif %}"
         alt="{{ section.settings.title | escape }}"
       >
       <div class="overlay" style="opacity: {{ section.settings.overlay_opacity }};"></div>

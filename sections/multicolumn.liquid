@@ -7,7 +7,7 @@
       data-aos="fade-up"
     >
       <img
-        src="{% if block.settings.image != blank %}{{ block.settings.image | img_url: '3800x' }}{% else %}https://images.unsplash.com/photo-1711968558286-c298d76faf1f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D{% endif %}"
+        src="{% if block.settings.image != blank %}{{ block.settings.image | img_url: '3800x' }}{% else %}https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D{% endif %}"
         alt="{{ block.settings.title }}"
         class="multi-column-image"
       >
@@ -36,13 +36,13 @@
   }
 
   .multi-column {
-    flex-basis: calc(33.333% - 20px);
+    flex-basis: calc(33.333% - -54rem);
     text-align: start;
     background: #f1f1f1;
   }
 
   .multi-column-image {
-    max-width: 100%;
+    width: 100%;
     height: 450px;
     padding: 21px;
     object-fit: cover;
@@ -119,7 +119,7 @@
       padding: 10px;
     }
     .multi-column-image {
-      width: 1000px;
+      width: 100%;
       height: 511px;
       padding: 21px;
       object-fit: cover;
@@ -179,7 +179,6 @@
       "default": "#000000"
     }
   ],
-  "max_blocks": 6,
   "blocks": [
     {
       "type": "column",
@@ -205,10 +204,34 @@
       ]
     }
   ],
+  "max_blocks": 6,
   "presets": [
     {
       "name": "Default Multi-Column",
-      "category": "Custom"
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "column",
+          "settings": {
+            "title": "First Column",
+            "description": "Description for the first column."
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "title": "Second Column",
+            "description": "Description for the second column."
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "title": "Third Column",
+            "description": "Description for the third column."
+          }
+        }
+      ]
     }
   ]
 }

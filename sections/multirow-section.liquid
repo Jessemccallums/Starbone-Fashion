@@ -17,7 +17,7 @@
     >
       <div class="multirow-image-wrapper w-full md:w-1/2">
         <img
-          src="{% if block.settings.image != blank %}{{ block.settings.image | img_url: '3800x' }}{% else %}https://images.unsplash.com/photo-1544198365-f5d60b6d8190?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D{% endif %}"
+          src="{% if block.settings.image != blank %}{{ block.settings.image | img_url: '3800x' }}{% else %}https://images.unsplash.com/photo-1580682312385-e94d8de1cf3c?q=80&w=1406&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D{% endif %}"
 
           alt="{{ block.settings.title }}"
           class="img_row multirow-image w-full h-full object-cover"
@@ -96,7 +96,7 @@
           "type": "textarea",
           "id": "description",
           "label": "Description",
-          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse porttitor id metus dictum imperdiet. Sed id arcu sapien. Sed leo purus, mattis et enim ac, luctus euismod lacus. Sed eu efficitur est, a porttitor libero. In eget tempor dui, ac interdum quam. Vestibulum sit amet ligula turpis. Phasellus ut mollis elit, vitae luctus turpis."
+          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse porttitor id metus dictum imperdiet."
         },
         {
           "type": "url",
@@ -107,7 +107,7 @@
           "type": "text",
           "id": "button_text",
           "label": "Button Text",
-          "default": "read more"
+          "default": "Read More"
         },
         {
           "type": "color",
@@ -150,8 +150,55 @@
   ],
   "presets": [
     {
-      "name": "Multirow Section",
-      "category": "Custom"
+      "name": "Default Multirow Section",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "multirow",
+          "settings": {
+            "title": "First Row Title",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse porttitor id metus dictum imperdiet.",
+            "button_url": "/first-row",
+            "button_text": "Read More",
+            "button_bg_color": "#000000",
+            "button_padding_y": 10,
+            "button_padding_x": 20,
+            "title_font_size_desktop": 24,
+            "description_text_size_desktop": 16,
+            "button_text_size": 16
+          }
+        },
+        {
+          "type": "multirow",
+          "settings": {
+            "title": "Second Row Title",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse porttitor id metus dictum imperdiet.",
+            "button_url": "/second-row",
+            "button_text": "Discover More",
+            "button_bg_color": "#333333",
+            "button_padding_y": 10,
+            "button_padding_x": 20,
+            "title_font_size_desktop": 24,
+            "description_text_size_desktop": 16,
+            "button_text_size": 16
+          }
+        },
+        {
+          "type": "multirow",
+          "settings": {
+            "title": "Third Row Title",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse porttitor id metus dictum imperdiet.",
+            "button_url": "/third-row",
+            "button_text": "Learn More",
+            "button_bg_color": "#555555",
+            "button_padding_y": 10,
+            "button_padding_x": 20,
+            "title_font_size_desktop": 24,
+            "description_text_size_desktop": 16,
+            "button_text_size": 16
+          }
+        }
+      ]
     }
   ]
 }
