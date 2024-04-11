@@ -1,4 +1,4 @@
-<div class="about-section">
+<div class="about-section" data-aos="fade-up">
   <div class="about-text">
     <h1 class="titley">{{ section.settings.title }}</h1>
     <h1 class="subtitley">{{ section.settings.subtitle }}</h1>
@@ -16,7 +16,7 @@
       </a>
     {% endif %}
   </div>
-  <div class="about-image">
+  <div class="animation about-image">
     {% if section.settings.image != blank %}
       <img src="{{ section.settings.image | img_url: '3800x' }}" alt="{{ section.settings.title | escape }}">
     {% else %}
@@ -27,7 +27,14 @@
     {% endif %}
   </div>
 </div>
-
+<script>
+    {% if request.design_mode %}
+      document.addEventListener("shopify:section:load", function(event) {
+            AOS.init();
+      });
+  {% endif %}
+  AOS.init();
+</script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
 

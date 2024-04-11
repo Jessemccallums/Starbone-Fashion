@@ -3,7 +3,9 @@
     font-family: testing;
     src: url(./Pierson-Light.woff); 
 }
-
+.sections{
+    overflow-y: hidden;
+}
 h1 {
     font-family: testing;
 }

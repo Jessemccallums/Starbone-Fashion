@@ -1,4 +1,4 @@
-<div class="boxcollection cardcollect">
+<div class="boxcollection_{{ section.id }} cardcollect">
   <h1 class="text-center title-collection">{{ section.settings.title }}</h1>
 
   <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -7,7 +7,11 @@
         <div
           class="product-cardoverflow-hidden"
         >
-          <a href="{{ collection.url }}" class="block">
+          <a
+            href="{{ collection.url }}"
+            class="block"
+            data-aos="fade-up"
+          >
             <div class="product-image" style="height: 50rem;">
               {% if collection.featured_image != blank %}
                 {% assign collection_image = collection.featured_image %}
@@ -35,7 +39,7 @@
 
 <style>
   @media (min-width: 768px) {
-    .boxcollection {
+    .boxcollection_{{ section.id }} {
       padding: 6rem;
     }
     .title-collection {
@@ -44,7 +48,7 @@
       padding: 2rem;
     }
   }
-  .boxcollection {
+  .boxcollection_{{ section.id }} {
     background: {{ section.settings.color }};
   }
 
@@ -107,5 +111,10 @@
 {% endschema %}
 
 <script>
-  ScrollReveal().reveal('.cardcollect');
+    {% if request.design_mode %}
+      document.addEventListener("shopify:section:load", function(event) {
+            AOS.init();
+      });
+  {% endif %}
+  AOS.init();
 </script>

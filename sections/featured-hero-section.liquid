@@ -1,4 +1,8 @@
-<div class="custom-section" style="height: {{ section.settings.banner_height }}%; position: relative;">
+<div
+  data-aos="fade-up"
+  class="custom-section"
+  style="height: {{ section.settings.banner_height }}%; position: relative;"
+>
   <div class="container-2 mx-auto flex items-center justify-{{ section.settings.desktop_alignment }} relative">
     <!-- Conditional check and display for Image 1 with a default fallback -->
     <div class="{% if section.settings.image2 != blank %}img_hero{% else %}img_one{% endif %}">
@@ -108,6 +112,15 @@
   }
   }
 </style>
+
+<script>
+    {% if request.design_mode %}
+      document.addEventListener("shopify:section:load", function(event) {
+            AOS.init();
+      });
+  {% endif %}
+  AOS.init();
+</script>
 
 {% schema %}
 {

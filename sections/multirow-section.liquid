@@ -11,6 +11,7 @@
     {% endif %}
 
     <div
+      data-aos="fade-up"
       class="multirow flex {{ row_class }} items-center  bg-white shadow-lg  overflow-hidden"
       style="width: 100%;"
     >
@@ -61,6 +62,16 @@
     }
   }
 </style>
+
+<script>
+    {% if request.design_mode %}
+      document.addEventListener("shopify:section:load", function(event) {
+            AOS.init();
+      });
+  {% endif %}
+  AOS.init();
+</script>
+
 {% schema %}
 {
   "name": "Multirow Section",

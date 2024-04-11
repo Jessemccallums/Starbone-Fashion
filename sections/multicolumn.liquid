@@ -2,7 +2,10 @@
 <div class="multi-column-container">
   <h1>{{ section.settings.heading }}</h1>
   {% for block in section.blocks %}
-    <div class="multi-column">
+    <div
+      class="multi-column"
+      data-aos="fade-up"
+    >
       <img
         src="{% if block.settings.image != blank %}{{ block.settings.image | img_url: '3800x' }}{% else %}https://images.unsplash.com/photo-1711968558286-c298d76faf1f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D{% endif %}"
         alt="{{ block.settings.title }}"
@@ -143,6 +146,15 @@
 
   /* Remaining styles unchanged... */
 </style>
+
+<script>
+    {% if request.design_mode %}
+      document.addEventListener("shopify:section:load", function(event) {
+            AOS.init();
+      });
+  {% endif %}
+  AOS.init();
+</script>
 
 {% schema %}
 {

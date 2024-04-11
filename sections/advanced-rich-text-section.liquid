@@ -1,21 +1,22 @@
 <!-- Advanced Rich Text Section -->
 <section
-  class="advanced-rich-text-section"
+  class="advanced-rich-text-section_{{ section.id }}"
   style="background-color: {{ section.settings.background_color }};"
 >
   {% for block in section.blocks %}
     <div
+      data-aos="fade-up"
       class="rich-text-block"
       style="text-align: {{ section.settings.content_position }}; "
     >
       <h1
-        class="rich-title"
+        class="rich-title_{{ section.id }}"
         style="color: {{ section.settings.title_color }}; "
       >
         {{ block.settings.title }}
       </h1>
       <div
-        class="rich-text-description"
+        class="rich-text-description_{{ section.id }}"
         style="color: {{ section.settings.text_color }}; "
       >
         {{ block.settings.description }}
@@ -23,7 +24,7 @@
       {% if block.settings.button_text %}
         <a
           href="{{ block.settings.button_url }}"
-          class="rich-text-button"
+          class="rich-text-button_{{ section.id }}"
           style="background-color: {{ block.settings.button_bg_color }}; color: {{ block.settings.button_text_color }}; border-color: {{ block.settings.button_border_color }}; padding: 10px {{ section.settings.button_padding }}px; "
         >
           {{ block.settings.button_text }}
@@ -37,34 +38,34 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
     @media (max-width: 767px) {
-      .rich-text-button{
+      .rich-text-button_{{ section.id }} {
           font-size: {{ section.settings.button_text_size_mobile }}px;
 
       }
-      .rich-text-description{
+      .rich-text-description_{{ section.id }}{
           font-size: {{ section.settings.description_text_size_mobile }}px;
       }
-      .rich-title{
+      .rich-title_{{ section.id }}{
           font-size: {{ section.settings.title_text_size_mobile }}px;
       }
-      .advanced-rich-text-section {
+      .advanced-rich-text-section_{{ section.id }} {
         text-align: {{ section.settings.content_position_mobile_text }};
         padding: {{ section.settings.section_padding_mobile }}px;
       }
   }
 
-      .advanced-rich-text-section .rich-text-block {
+      .advanced-rich-text-section_{{ section.id }} .rich-text-block {
         margin-bottom: 2rem;
       }
 
-      .advanced-rich-text-section .rich-text-description {
+      .advanced-rich-text-section_{{ section.id }} .rich-text-description_{{ section.id }} {
         margin-bottom: 1rem;
       }
-      .rich-text-description .rich-text-button {
+      .rich-text-description_{{ section.id }} .rich-text-button_{{ section.id }} {
       font-family: 'Libre Baskerville', serif;
     }
 
-      .advanced-rich-text-section .rich-text-button {
+      .advanced-rich-text-section_{{ section.id }} .rich-text-button_{{ section.id }} {
         display: inline-block;
         text-decoration: none;
         border: 2px solid transparent;
@@ -73,24 +74,33 @@
 
       /* Responsive adjustments */
       @media (min-width: 768px) {
-        .advanced-rich-text-section {
+        .advanced-rich-text-section_{{ section.id }} {
           text-align: {{ section.settings.content_position_desktop_text }};
         }
-        .rich-text-button{
+        .rich-text-button_{{ section.id }} {
             font-size: {{ section.settings.button_text_size }}px;
 
         }
-        .rich-text-description{
+        .rich-text-description_{{ section.id }} {
             font-size: {{ section.settings.description_text_size }}px;
         }
-        .rich-title{
+        .rich-title_{{ section.id }} {
             font-size: {{ section.settings.title_text_size }}px;
         }
-        .advanced-rich-text-section {
+        .advanced-rich-text-section_{{ section.id }} {
             padding: {{ section.settings.section_padding }}px;
         }
       }
 </style>
+
+<script>
+    {% if request.design_mode %}
+      document.addEventListener("shopify:section:load", function(event) {
+            AOS.init();
+      });
+  {% endif %}
+  AOS.init();
+</script>
 
 {% schema %}
 {

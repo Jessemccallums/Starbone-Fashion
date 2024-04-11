@@ -1,6 +1,6 @@
-<div class="features-section">
+<div class="features-section_{{ section.id }}">
   {% for block in section.blocks %}
-    <div class="feature" id="feature-{{ block.id }}">
+    <div data-aos="fade-up" class="feature" id="feature-{{ block.id }}">
       <div class="feature-icon">
         {% if block.settings.icon != blank %}
           <img src="{{ block.settings.icon | img_url: '3800x' }}" alt="{{ block.settings.title | escape }}">
@@ -12,7 +12,7 @@
   {% endfor %}
 </div>
 <style>
-  .features-section {
+  .features-section_{{ section.id }} {
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -46,7 +46,7 @@
   }
 
   @media (max-width: 768px) {
-    .features-section {
+    .features-section_{{ section.id }} {
       flex-direction: column;
     }
 
@@ -55,6 +55,15 @@
     }
   }
 </style>
+
+<script>
+    {% if request.design_mode %}
+      document.addEventListener("shopify:section:load", function(event) {
+            AOS.init();
+      });
+  {% endif %}
+  AOS.init();
+</script>
 {% schema %}
 {
   "name": "Ecommerce Features",

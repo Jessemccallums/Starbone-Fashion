@@ -1,7 +1,7 @@
-<div class="container mx-auto py-12 px-4 md:px-6 2xl:px-20">
-  <div class="md:flex md:flex-nowrap">
+<div class="container mx-auto py-12 px-4 md:px-6 2xl:px-20 desktop">
+  <div class="hidden md:flex md:flex-nowrap" id="wrapper">
     <!-- Product Media Carousel -->
-    <div class="sticky-section md:w-1/2 lg:w-2/6 mb-6 md:mb-0 space-y-4">
+    <div class="sticky-section md:w-1/2 lg:w-2/6 mb-6 md:mb-0 space-y-4" id="main">
       {% for media in product.media %}
         <div class="carousel-image">
           {% render 'product-media', media: media %}
@@ -10,79 +10,173 @@
     </div>
 
     <!-- Product Information -->
-    <div class="content-section :w-1/2 lg:w-3/5 lg:pl-10">
-      <div class="border-b border-gray-200 pb-6">
-        <p class="text-sm text-gray-600">{{ product.vendor }}</p>
-        <h1 class="text-2xl font-semibold text-gray-800 mt-2">{{ product.title }}</h1>
-      </div>
-
-      <div class="py-4">
-        {% if product.compare_at_price_max > product.price %}
-          <p class="text-sm line-through text-gray-500">{{ product.compare_at_price | money }}</p>
-        {% endif %}
-        <p class="text-2xl font-semibold text-gray-800">{{ product.price | money }}</p>
-        {% if product.compare_at_price_max > product.price %}
-          <p class="text-lg text-red-500">
-            Save
-            {{
-              product.compare_at_price_max
-              | minus: product.price
-              | times: 100.0
-              | divided_by: product.compare_at_price_max
-              | round
-            -}}
-            %
-          </p>
-        {% endif %}
-      </div>
-
-      <div class="py-4">
-        <p class="text-gray-600">{{ product.description }}</p>
-      </div>
-
-      <!-- Variants -->
-      {% if product.variants.size > 1 %}
-        <div class="variants space-y-4">
-          {% for variant in product.variants %}
-            <div class="flex items-center space-x-3">
-              <label class="text-gray-700">
-                {{ variant.title }}
-                {% if variant.available %}
-                  <input
-                    type="radio"
-                    name="id"
-                    value="{{ variant.id }}"
-                    {% if forloop.first %}
-                      checked
-                    {% endif %}
-                    class="ml-2"
-                  >
-                {% else %}
-                  <span class="text-gray-500 line-through">Sold out</span>
-                {% endif %}
-              </label>
-            </div>
-          {% endfor %}
+    <div class="content-section md:w-1/2 lg:w-3/5 lg:pl-10" id="sidebar">
+      <div id="sc">
+        <div class="border-b border-gray-200 pb-6">
+          <p class="text-sm text-gray-600">{{ product.vendor }}</p>
+          <h1 class="text-2xl font-semibold text-gray-800 mt-2">{{ product.title }}</h1>
         </div>
-      {% endif %}
+        <div class="py-4">
+          {% if product.compare_at_price_max > product.price %}
+            <p class="text-sm line-through text-gray-500">{{ product.compare_at_price | money }}</p>
+          {% endif %}
+          <p class="text-2xl font-semibold text-gray-800">{{ product.price | money }}</p>
+          {% if product.compare_at_price_max > product.price %}
+            <p class="text-lg text-red-500">
+              Save
+              {{
+                product.compare_at_price_max
+                | minus: product.price
+                | times: 100.0
+                | divided_by: product.compare_at_price_max
+                | round
+              -}}
+              %
+            </p>
+          {% endif %}
+        </div>
 
-      <!-- Quantity Selector -->
-      <div class="flex items-center mt-4">
-        <button class="quantity-decrease px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-600">-</button>
-        <input type="number" name="quantity" value="1" class="w-12 text-center bg-gray-200 mx-2" min="1">
-        <button class="quantity-increase px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-600">+</button>
+        <div class="py-4">
+          <p class="text-gray-600">{{ product.description }}</p>
+        </div>
+
+        <!-- Variants -->
+        {% if product.variants.size > 1 %}
+          <div class="variants space-y-4">
+            {% for variant in product.variants %}
+              <div class="flex items-center space-x-3">
+                <label class="text-gray-700">
+                  {{ variant.title }}
+                  {% if variant.available %}
+                    <input
+                      type="radio"
+                      name="id"
+                      value="{{ variant.id }}"
+                      {% if forloop.first %}
+                        checked
+                      {% endif %}
+                      class="ml-2"
+                    >
+                  {% else %}
+                    <span class="text-gray-500 line-through">Sold out</span>
+                  {% endif %}
+                </label>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <!-- Quantity Selector -->
+        <div class="flex items-center mt-4">
+          <button class="quantity-decrease px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-600">-</button>
+          <input type="number" name="quantity" value="1" class="w-12 text-center bg-gray-200 mx-2" min="1">
+          <button class="quantity-increase px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-600">+</button>
+        </div>
+
+        <!-- Add to Cart Button -->
+        <form action="/cart/add" method="post" enctype="multipart/form-data" class="mt-4">
+          <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+          <button
+            type="submit"
+            class="bg-black text-white py-4 w-full hover:bg-gray-900 transition duration-300 text-lg font-semibold"
+          >
+            Add to cart
+          </button>
+        </form>
       </div>
+    </div>
+  </div>
+  <!-- This is the closing div for the outermost flex container -->
+</div>
 
-      <!-- Add to Cart Button -->
-      <form action="/cart/add" method="post" enctype="multipart/form-data" class="mt-4">
-        <input type="hidden" name="id" value="{{ product.variants.first.id }}">
-        <button
-          type="submit"
-          class="bg-black text-white py-4 w-full hover:bg-gray-900 transition duration-300 text-lg font-semibold"
-        >
-          Add to cart
-        </button>
-      </form>
+{% comment %} //mobile {% endcomment %}
+
+<div class="container mx-auto py-12 px-4 md:px-6 2xl:px-20 mobile">
+  <div class="hidden md:flex md:flex-nowrap mobileflex">
+    <!-- Product Information -->
+    <div class="content-section md:w-1/2 lg:w-3/5 lg:pl-10 mobileflex">
+      <div class="mobileflex">
+        <div class="border-b border-gray-200 pb-6">
+          <p class="text-sm text-gray-600">{{ product.vendor }}</p>
+          <h1 class="text-2xl font-semibold text-gray-800 mt-2">{{ product.title }}</h1>
+        </div>
+        <div class="py-4">
+          {% if product.compare_at_price_max > product.price %}
+            <p class="text-sm line-through text-gray-500">{{ product.compare_at_price | money }}</p>
+          {% endif %}
+          <p class="text-2xl font-semibold text-gray-800">{{ product.price | money }}</p>
+          {% if product.compare_at_price_max > product.price %}
+            <p class="text-lg text-red-500">
+              Save
+              {{
+                product.compare_at_price_max
+                | minus: product.price
+                | times: 100.0
+                | divided_by: product.compare_at_price_max
+                | round
+              -}}
+              %
+            </p>
+          {% endif %}
+        </div>
+
+        <div class="py-4">
+          <p class="text-gray-600">{{ product.description }}</p>
+        </div>
+
+        <!-- Variants -->
+        {% if product.variants.size > 1 %}
+          <div class="variants space-y-4">
+            {% for variant in product.variants %}
+              <div class="flex items-center space-x-3">
+                <label class="text-gray-700">
+                  {{ variant.title }}
+                  {% if variant.available %}
+                    <input
+                      type="radio"
+                      name="id"
+                      value="{{ variant.id }}"
+                      {% if forloop.first %}
+                        checked
+                      {% endif %}
+                      class="ml-2"
+                    >
+                  {% else %}
+                    <span class="text-gray-500 line-through">Sold out</span>
+                  {% endif %}
+                </label>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <!-- Quantity Selector -->
+        <div class="flex items-center mt-4">
+          <button class="quantity-decrease px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-600">-</button>
+          <input type="number" name="quantity" value="1" class="w-12 text-center bg-gray-200 mx-2" min="1">
+          <button class="quantity-increase px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-600">+</button>
+        </div>
+
+        <!-- Add to Cart Button -->
+        <form action="/cart/add" method="post" enctype="multipart/form-data" class="mt-4">
+          <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+          <button
+            type="submit"
+            class="bg-black text-white py-4 w-full hover:bg-gray-900 transition duration-300 text-lg font-semibold"
+          >
+            Add to cart
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Product Media Carousel -->
+    <div class="sticky-section md:w-1/2 lg:w-2/6 mb-6 md:mb-0 space-y-4 mobileflex">
+      {% for media in product.media %}
+        <div class="carousel-image">
+          {% render 'product-media', media: media %}
+        </div>
+      {% endfor %}
     </div>
   </div>
   <!-- This is the closing div for the outermost flex container -->
@@ -92,38 +186,47 @@
 <link href="https://cdn.tailwindcss.com" rel="stylesheet">
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const decreaseButton = document.querySelector('.quantity-decrease');
-    const increaseButton = document.querySelector('.quantity-increase');
-    const quantityInput = document.querySelector('input[name="quantity"]');
-
-    decreaseButton.addEventListener('click', function (e) {
-      e.preventDefault();
-      const currentValue = Number(quantityInput.value);
-      quantityInput.value = currentValue > 1 ? currentValue - 1 : 1;
-    });
-
-    increaseButton.addEventListener('click', function (e) {
-      e.preventDefault();
-      const currentValue = Number(quantityInput.value);
-      quantityInput.value = currentValue + 1;
-    });
-  });
-
-  // app.js
-  const stickySection = document.querySelector('.sticky-section');
-  const contentSection = document.querySelector('.content-section');
-
-  window.addEventListener('scroll', () => {
-    const scrollPosition = window.scrollY;
-    const contentTop = contentSection.offsetTop;
-
-    if (scrollPosition >= contentTop) {
-      stickySection.classList.add('sticky');
-    } else {
-      stickySection.classList.remove('sticky');
+  var wrapper = document.getElementById('wrapper'),
+    main = document.getElementById('main'),
+    sidebar = document.getElementById('sc');
+  window.onscroll = function () {
+    document
+      .getElementById('sc')
+      .setAttribute('style', 'display:block;width:' + document.getElementById('sidebar').offsetWidth + 'px');
+    document.getElementById('sc').style.width = document.getElementById('sidebar').offsetWidth;
+    //if sidebar smaller than main
+    if (sidebar.offsetHeight < main.offsetHeight) {
+      //if sidebar smaller than screen - stick to top rather than bottom
+      if (sidebar.offsetHeight < window.innerHeight) {
+        if (
+          wrapper.getBoundingClientRect().bottom < window.innerHeight &&
+          wrapper.getBoundingClientRect().bottom < sidebar.offsetHeight
+        ) {
+          wrapper.classList.remove('fix-top-VP');
+          wrapper.classList.add('flex-bottom');
+        } else if (wrapper.getBoundingClientRect().top < 0) {
+          wrapper.classList.add('fix-top-VP');
+          wrapper.classList.remove('flex-bottom');
+        } else {
+          wrapper.classList.remove('fix-top-VP');
+          wrapper.classList.remove('flex-bottom');
+        }
+      }
+      //if wrapper taller than sidebar - stick to bottom
+      else if (sidebar.offsetHeight < wrapper.offsetHeight) {
+        if (wrapper.getBoundingClientRect().bottom < window.innerHeight) {
+          wrapper.classList.remove('fix-bottom-VP');
+          wrapper.classList.add('flex-bottom');
+        } else if (wrapper.getBoundingClientRect().bottom > sidebar.offsetHeight + window.innerHeight) {
+          wrapper.classList.remove('fix-bottom-VP');
+          wrapper.classList.remove('flex-bottom');
+        } else {
+          wrapper.classList.add('fix-bottom-VP');
+          wrapper.classList.remove('flex-bottom');
+        }
+      }
     }
-  });
+  };
 </script>
 
 <!-- Tailwind CSS for Sticky Scrolling -->
@@ -152,6 +255,87 @@
   @media (max-width: 768px) {
     .carousel-image {
       position: relative; /* Disable sticky effect on smaller screens */
+    }
+  }
+
+  #header,
+  #footer {
+    width: 100%;
+    height: 200px;
+    background-color: #eee;
+    text-align: center;
+  }
+  #main,
+  #wrapper,
+  #sc {
+    padding: 15px;
+  }
+  #main {
+    width: 37%;
+    height: 100%;
+  }
+  #sidebar {
+    position: relative;
+    width: 55%;
+  }
+  #sc {
+    height: 120vh;
+  }
+  #wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  #wrapper.fix-bottom-VP #sc,
+  #wrapper.fix-top-VP #sc {
+    position: fixed;
+  }
+  #wrapper.fix-bottom-VP #sc {
+    bottom: 15px;
+  }
+  #wrapper.fix-top-VP #sc {
+    top: 15px;
+  }
+  #wrapper.flex-bottom {
+    align-items: flex-end;
+  }
+</style>
+
+<style>
+  /* Base styles */
+  .desktop {
+    display: none; /* Hide desktop by default */
+  }
+  .mobile {
+    display: none; /* Hide mobile by default */
+  }
+
+  .mobileflex {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 20px;
+  }
+
+  /* Medium devices (tablets, 768px and up) */
+  @media (min-width: 768px) {
+    .desktop {
+      display: block; /* Show desktop content */
+    }
+    .mobile {
+      display: none; /* Ensure mobile content is hidden */
+    }
+  }
+
+  /* Extra small to small devices (phones to tablets, up to 767px) */
+  @media (max-width: 767px) {
+    .desktop {
+      display: none; /* Keep desktop content hidden */
+    }
+    .mobile {
+      display: block; /* Show mobile content */
     }
   }
 </style>

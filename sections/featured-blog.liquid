@@ -3,7 +3,7 @@
     {% assign blog = blogs[section.settings.blog] %}
     {% assign articles = blog.articles %}
 
-    <div class="containerx">
+    <div class="containerx" data-aos="fade-up">
       {% comment %} <h2>{{ blog.title }}</h2> {% endcomment %}
       <div class="blog-posts">
         {% for article in articles %}
@@ -149,7 +149,12 @@
 </style>
 
 <script>
-  ScrollReveal().reveal('.custom-blog-section');
+    {% if request.design_mode %}
+      document.addEventListener("shopify:section:load", function(event) {
+            AOS.init();
+      });
+  {% endif %}
+  AOS.init();
 </script>
 
 {% schema %}

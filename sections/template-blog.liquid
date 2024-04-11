@@ -2,10 +2,15 @@
   {% paginate blog.articles by section.settings.number_of_blog_posts %}
     <h1 class="text-center text-3xl">{{ blog.title }}</h1>
 
-    <div class="max-w-6xl mx-auto">
+    <div
+      class="max-w-6xl mx-auto"
+    >
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         {% for article in blog.articles %}
-          <div class="w-full py-6 px-3">
+          <div
+            class="w-full py-6 px-3"
+            data-aos="fade-up"
+          >
             <div class="bg-white shadow-xl rounded-lg overflow-hidden">
               {% if article.image %}
                 <a href="{{ article.url }}">
@@ -128,7 +133,14 @@
     background-color: #f7fafc;
   }
 </style>
-
+<script>
+    {% if request.design_mode %}
+      document.addEventListener("shopify:section:load", function(event) {
+            AOS.init();
+      });
+  {% endif %}
+  AOS.init();
+</script>
 {% schema %}
 {
   "name": "Blog",

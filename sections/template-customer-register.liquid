@@ -15,6 +15,7 @@
         <div class="my-2">
           <label for="first_name" class="sign sr-only">First name</label>
           <input
+            data-aos="fade-up"
             type="text"
             name="customer[first_name]"
             id="first_name"
@@ -27,6 +28,7 @@
         <div class="my-2">
           <label for="last_name" class="sign sr-only">Last name</label>
           <input
+            data-aos="fade-up"
             type="text"
             name="customer[last_name]"
             id="last_name"
@@ -39,6 +41,7 @@
         <div class="my-2">
           <label for="birthday" class="sign sr-only">Birthday</label>
           <input
+            data-aos="fade-up"
             type="date"
             name="customer[note][Birthday]"
             id="birthday"
@@ -49,6 +52,7 @@
         <div class="my-2">
           <label for="email_address" class="sign sr-only">Email address</label>
           <input
+            data-aos="fade-up"
             type="email"
             name="customer[email]"
             id="email_address"
@@ -61,6 +65,7 @@
         <div class="my-2">
           <label for="password" class="sign sr-only">Password</label>
           <input
+            data-aos="fade-up"
             type="password"
             name="customer[password]"
             id="password"
@@ -243,3 +248,11 @@
         font-weight: bold;
     }
 </style>
+<script>
+    {% if request.design_mode %}
+      document.addEventListener("shopify:section:load", function(event) {
+            AOS.init();
+      });
+  {% endif %}
+  AOS.init();
+</script>
